@@ -4,7 +4,7 @@ go 1.22.2
 
 require (
 	github.com/gin-contrib/gzip v1.0.1
-	github.com/gin-contrib/sessions v1.0.0
+	github.com/gin-contrib/sessions v1.0.1
 	github.com/gin-gonic/gin v1.9.1
 	github.com/goccy/go-json v0.10.2
 	github.com/mymmrac/telego v0.29.2
@@ -16,7 +16,7 @@ require (
 	github.com/valyala/fasthttp v1.52.0
 	github.com/xtls/xray-core v1.8.11
 	go.uber.org/atomic v1.11.0
-	golang.org/x/text v0.14.0
+	golang.org/x/text v0.15.0
 	google.golang.org/grpc v1.63.2
 	gorm.io/driver/sqlite v1.5.5
 	gorm.io/gorm v1.25.10
