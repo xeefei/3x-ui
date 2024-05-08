@@ -1,5 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+    <style>
+  @media (min-width: 769px) {
+    .ant-layout-content {
+      margin: 24px 16px;
+    }
+  }
+  @media (max-width: 768px) {
+    .ant-card-body {
+      padding: .5rem;
+    }
+  }
+  .ant-col-sm-24 {
+    margin: 0.5rem -2rem 0.5rem 2rem;
+  }
+  tr.hideExpandIcon .ant-table-row-expand-icon {
+    display: none;
+  }
+  .infinite-tag {
+    padding: 0 5px;
+    border-radius: 2rem;
+    min-width: 50px;
+  }
+  .infinite-bar .ant-progress-inner .ant-progress-bg {
+    background-color: #F2EAF1;
+    border: #D5BED2 solid 1px;
+  }
+  .dark .infinite-bar .ant-progress-inner .ant-progress-bg {
+    background-color: #7a316f;
+    border: #7a316f solid 1px;
+  }
+  .ant-collapse {
+    margin: 5px 0;
+  }
+  .info-large-tag {
+    max-width: 200px;
+    overflow: hidden;
+  }
+  .online-animation .ant-badge-status-dot {
+    animation: onlineAnimation 1.2s linear infinite;
+  }
+  @keyframes onlineAnimation {
+    0%,
+    50%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    10% {
+      transform: scale(1.5);
+      opacity: .2;
+    }
+  }
+</style>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
