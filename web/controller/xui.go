@@ -10,7 +10,7 @@ type XUIController struct {
 	inboundController     *InboundController
 	settingController     *SettingController
 	xraySettingController *XraySettingController
-	navigationController  *NavigationController
+	
 }
 
 func NewXUIController(g *gin.RouterGroup) *XUIController {
