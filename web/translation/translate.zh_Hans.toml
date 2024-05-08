@@ -68,6 +68,7 @@
 "xray" = "Xray 设置"
 "logout" = "退出登录"
 "link" = "管理"
+"navigation" = "实用导航"
 
 [pages.login]
 "hello" = "你好"
