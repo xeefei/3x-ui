@@ -32,7 +32,7 @@ func (a *XUIController) initRouter(g *gin.RouterGroup) {
 	a.inboundController = NewInboundController(g)
 	a.settingController = NewSettingController(g)
 	a.xraySettingController = NewXraySettingController(g)
-	a.navigationController = NewNavigationController(g)
+	
 }
 
 func (a *XUIController) index(c *gin.Context) {
