@@ -20,7 +20,10 @@
     </style>
 </head>
 <body>
-
+  <a-layout id="app" v-cloak :class="themeSwitcher.currentTheme">
+  {{ template "commonSider" . }}
+  <a-layout id="content-layout">
+    <a-layout-content>
 <h2>一、判断VPS服务器的IP是否【送中】？</h2>
 <p>点击打开：<a href="https://music.youtube.com/" target="_blank">https://music.youtube.com/</a>，能正常打开访问，就代表【没送中】，反之就是送中了。</p>
 
