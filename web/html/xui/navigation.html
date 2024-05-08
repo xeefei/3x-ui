@@ -1,106 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-    <style>
-  @media (min-width: 769px) {
-    .ant-layout-content {
-      margin: 24px 16px;
-    }
-  }
-  @media (max-width: 768px) {
-    .ant-card-body {
-      padding: .5rem;
-    }
-  }
-  .ant-col-sm-24 {
-    margin: 0.5rem -2rem 0.5rem 2rem;
-  }
-  tr.hideExpandIcon .ant-table-row-expand-icon {
-    display: none;
-  }
-  .infinite-tag {
-    padding: 0 5px;
-    border-radius: 2rem;
-    min-width: 50px;
-  }
-  .infinite-bar .ant-progress-inner .ant-progress-bg {
-    background-color: #F2EAF1;
-    border: #D5BED2 solid 1px;
-  }
-  .dark .infinite-bar .ant-progress-inner .ant-progress-bg {
-    background-color: #7a316f;
-    border: #7a316f solid 1px;
-  }
-  .ant-collapse {
-    margin: 5px 0;
-  }
-  .info-large-tag {
-    max-width: 200px;
-    overflow: hidden;
-  }
-  .online-animation .ant-badge-status-dot {
-    animation: onlineAnimation 1.2s linear infinite;
-  }
-  @keyframes onlineAnimation {
-    0%,
-    50%,
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    10% {
-      transform: scale(1.5);
-      opacity: .2;
-    }
-  }
-</style>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>实用导航&技巧</title>
     <style>
         body {
+            background-color: #151F31;
+            color: white;
             font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            display: flex;
         }
-        h2 {
-            margin-top: 20px;
+        .sidebar {
+            width: 150px;
+            background-color: #151F31;
+            padding: 20px;
         }
-        p, ol {
-            margin-top: 10px;
+        .sidebar h2 {
+            color: #fff;
+            margin-top: 0;
+        }
+        .sidebar button {
+            background-color: #2C3E56;
+            color: #008000; /* 绿色字体 */
+            border: none;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            border-radius: 15px; /* 增加圆角幅度 */
+            font-weight: bold; /* 加粗字体 */
+        }
+        .sidebar button:hover {
+            background-color: #4A90E2;
+        }
+        .sidebar .friend-links {
+            margin-top: auto;
+            text-align: center;
+            margin-bottom: 12px; /* 调整友情链接下边距 */
+        }
+        .sidebar .friend-links a {
+            color: #0080FF; /* 蓝色字体 */
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .separator {
+            width: 15px;
+            background-color: #34495e;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            padding-top: 0; /* 移除顶部空白 */
         }
     </style>
 </head>
 <body>
-<h2>一、判断VPS服务器的IP是否【送中】？</h2>
-<p>点击打开：<a href="https://music.youtube.com/" target="_blank">https://music.youtube.com/</a>，能正常打开访问，就代表【没送中】，反之就是送中了。</p>
+    <div class="sidebar">
+        <button onclick="history.back()">返回上一步</button>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <button onclick="window.scrollTo(0, 0)">回滚至顶部</button>
+        <div class="friend-links">
+            <a href="https://chat.openai.com/">ChatGPT</a>
+            <a href="https://www.youtube.com/results?search_query=4k%E6%B5%8B%E9%80%9F">油管4K测速</a>
+            <a href="https://whatismyipaddress.com/">我的IP查询</a>
+            <a href="https://translate.google.com/?hl=zh-CN">Google翻译</a>
+            <a href="https://xtls.github.io/">Project X</a>
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="content">
+        <h2>一、判断VPS服务器的IP是否【送中】？</h2>
+        <p>点击打开：<a href="https://music.youtube.com/">https://music.youtube.com/</a>，能正常打开访问，就代表【没送中】，反之就是送中了。</p>
 
-<h2>二、检测IP纯净度的方法：</h2>
-<p>网址：<a href="https://scamalytics.com/" target="_blank">https://scamalytics.com/</a>，输入IP进行检测，看【欺诈分数】，分数越高IP越脏。</p>
+        <h2>二、检测IP纯净度的方法：</h2>
+        <p>网址：<a href="https://scamalytics.com/">https://scamalytics.com/</a>，输入IP进行检测，看【欺诈分数】，分数越高IP越脏。</p>
 
-<h2>三、常见的软件工具：</h2>
-<ol>
-    <li><a href="https://github.com/2dust/v2rayN" target="_blank">v2rayN</a></li>
-    <li><a href="https://github.com/2dust/v2rayNG" target="_blank">安卓版v2rayNG</a></li>
-    <li>苹果手机【小火箭】：<a href="https://apple02.com/" target="_blank">https://apple02.com/</a></li>
-</ol>
+        <h2>三、常见的软件工具：</h2>
+        <ol>
+            <p>1、v2rayN：<a href="https://github.com/2dust/v2rayN">https://github.com/2dust/v2rayN</a></p>
+            <p>2、安卓版v2rayNG：<a href="https://github.com/2dust/v2rayNG">https://github.com/2dust/v2rayNG</a></p>
+            <p>3、苹果手机【小火箭】：<a href="https://apple02.com/">https://apple02.com/</a></p>
+        </ol>
 
-<h2>四、查看节点【指定端口】的网络连接数/命令：</h2>
-<p>netstat -ntu | grep :节点端口 | grep ESTABLISHED | awk '{print $5}'</p>
+        <h2>四、查看节点【指定端口】的网络连接数/命令：</h2>
+        <p>netstat -ntu | grep :节点端口 | grep ESTABLISHED | awk '{print $5}'</p>
 
-<h2>五、一些MJJ经常逛的网站和群主：</h2>
-<ol>
-    <li><a href="https://www.nodeseek.com/" target="_blank">NodeSeek.com论坛</a></li>
-    <li><a href="https://www.v2ex.com/" target="_blank">V2EX论坛</a></li>
-    <li><a href="https://t.me/BWHOfficial" target="_blank">搬瓦工TG群</a></li>
-    <li><a href="https://t.me/projectXray" target="_blank">Xray的官方群</a></li>
-    <li><a href="https://t.me/DmitChat" target="_blank">Dmit交流群</a></li>
-    <li><a href="https://t.me/+VHZLKELTQyzPNgOV" target="_blank">白丝云用户群</a></li>
-    <li><a href="https://www.namesilo.com/" target="_blank">域名注册</a></li>
-</ol>
+        <h2>五、【接码】网站：</h2>
+        <p>网址：<a href="https://sms-activate.org/cn">https://sms-activate.org/cn</a>，直接注册账号购买。</p>
 
-<h2>六、若需要进行GV保号，请主动发信息到：+12153466666</h2>
+        <h2>六、一些MJJ经常逛的网站和群主：</h2>
+        <ol>
+            <p>1、NodeSeek.com论坛：<a href="https://www.nodeseek.com/">https://www.nodeseek.com/</a></p>
+            <p>2、V2EX论坛：<a href="https://www.v2ex.com/">https://www.v2ex.com/</a></p>
+            <p>3、搬瓦工TG群：<a href="https://t.me/BWHOfficial">https://t.me/BWHOfficial</a></p>
+            <p>4、Xray的官方群：<a href="https://t.me/projectXray">https://t.me/projectXray</a></p>
+            <p>5、Dmit交流群：<a href="https://t.me/DmitChat">https://t.me/DmitChat</a></p>
+            <p>6、白丝云用户群：<a href="https://t.me/+VHZLKELTQyzPNgOV">https://t.me/+VHZLKELTQyzPNgOV</a></p>
+            <p>7、域名注册：<a href="https://www.namesilo.com/">https://www.namesilo.com/</a></p>
+        </ol>
 
+        <h2>七、若此项目对你有帮助，你正想购买VPS的话，可以走一下我的AFF：</h2>
+        <ol>
+            <p>1、搬瓦工：<a href="https://bandwagonhost.com/aff.php?aff=75015">https://bandwagonhost.com/aff.php?aff=75015</a></p>
+            <p>2、白丝云：<a href="https://cloudsilk.io/aff.php?aff=706">https://cloudsilk.io/aff.php?aff=706</a></p>
+        </ol>
+
+        <h2>八、若需要进行GV保号，请主动发信息到：+1 215 346 6666</h2>
+    </div>
 </body>
 </html>
