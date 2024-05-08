@@ -80,6 +80,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 ## 安装完成之后请放行指定端口
 - 放行【面板登录端口】
 - 放行出入站管理协议端口
+- 为保证能够每3个月【自动续签】证书，须放行80端口
 - 可通过此脚本的第【20】选项进行，如下图：
 ![9](./media/9.png)
 
