@@ -425,6 +425,9 @@
 "errorLog" = "错误日志"
 "errorLogDesc" = "错误日志的文件路径。特殊值 'none' 禁用错误日志"
 
+[pages.navigation]
+"title" = "实用导航"
+
 [pages.xray.rules]
 "first" = "置顶"
 "last" = "置底"
