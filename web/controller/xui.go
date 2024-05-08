@@ -52,5 +52,5 @@ func (a *XUIController) xraySettings(c *gin.Context) {
 }
 
 func (a *XUIController) navigation(c *gin.Context) {
-	html(c, "navigation.html", "pages.navigation.title", nil)
+	html(c, "navigation.html", "pages.navigation.title")
 }
