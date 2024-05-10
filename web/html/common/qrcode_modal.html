@@ -8,6 +8,7 @@
 .qr-modal-header {
   display: flex;
   justify-content: center; /* 在水平方向上居中 */
+  text-align: center; /* 文字居中 */
 }
 </style>
 
@@ -15,7 +16,7 @@
     :dialog-style="{ top: '60px' }"
     :closable="true"
     :class="themeSwitcher.currentTheme"
-    :footer="null" width="450px">
+    :footer="null" width="300px">
   <a-tag color="green" style="margin-bottom: 10px;display: block;text-align: center;">
     {{ i18n "pages.inbounds.clickOnQRcode" }}
   </a-tag>
