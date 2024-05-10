@@ -759,8 +759,8 @@ class RealityStreamSettings extends XrayCommonClass {
     
     constructor(
         show = false,xver = 0,
-        dest = 'sega.com:443',
-        serverNames = 'sega.com,www.sega.com',
+        dest = 'yahoo.com:443',
+        serverNames = 'yahoo.com,www.yahoo.com',
         privateKey = '',
         minClient = '',
         maxClient = '',
@@ -990,10 +990,16 @@ class StreamSettings extends XrayCommonClass {
 }
 
 class Sniffing extends XrayCommonClass {
-    constructor(enabled=true, destOverride=['http', 'tls', 'quic', 'fakedns']) {
+    constructor(
+        enabled=true,
+        destOverride=['http', 'tls', 'quic', 'fakedns'],
+        metadataOnly=false,
+        routeOnly=false) {
         super();
         this.enabled = enabled;
         this.destOverride = destOverride;
+        this.metadataOnly = metadataOnly;
+        this.routeOnly = routeOnly;
     }
 
     static fromJson(json={}) {
@@ -1006,6 +1012,8 @@ class Sniffing extends XrayCommonClass {
         return new Sniffing(
             !!json.enabled,
             destOverride,
+            json.metadataOnly,
+            json.routeOnly,
         );
     }
 }
@@ -2281,12 +2289,13 @@ Inbound.ShadowsocksSettings.Shadowsocks = class extends XrayCommonClass {
 };
 
 Inbound.DokodemoSettings = class extends Inbound.Settings {
-    constructor(protocol, address, port, network='tcp,udp', followRedirect=false) {
+    constructor(protocol, address, port, network='tcp,udp', followRedirect=false, timeout=0) {
         super(protocol);
         this.address = address;
         this.port = port;
         this.network = network;
         this.followRedirect = followRedirect;
+        this.timeout = timeout;
     }
 
     static fromJson(json={}) {
@@ -2296,6 +2305,7 @@ Inbound.DokodemoSettings = class extends Inbound.Settings {
             json.port,
             json.network,
             json.followRedirect,
+            json.timeout,
         );
     }
 
@@ -2305,6 +2315,7 @@ Inbound.DokodemoSettings = class extends Inbound.Settings {
             port: this.port,
             network: this.network,
             followRedirect: this.followRedirect,
+            timeout: this.timeout,
         };
     }
 };
@@ -2472,7 +2483,7 @@ Inbound.WireguardSettings.Peer = class extends XrayCommonClass {
             if (a.length>0 && !a.includes('/')) this.allowedIPs[index] += '/32';
         });
         return {
-            privateKey: this.privateKey,            
+            privateKey: this.privateKey,
             publicKey: this.publicKey,
             preSharedKey: this.psk.length>0 ? this.psk : undefined,
             allowedIPs: this.allowedIPs,
