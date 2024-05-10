@@ -1,9 +1,25 @@
 {{define "qrcodeModal"}}
+<style>
+.qr-container {
+  display: flex;
+  justify-content: center; /* 在水平方向上居中 */
+  align-items: center; /* 在垂直方向上居中 */
+  height: 100%; /* 设置容器的高度为100%，以确保垂直居中生效 */
+}
+
+.qr-bg {
+  position: absolute;
+  top: 50%; /* 将容器的顶部与父元素的中间对齐 */
+  left: 50%; /* 将容器的左侧与父元素的中间对齐 */
+  transform: translate(-50%, -50%); /* 使用 translate 属性将容器自身的中心与父元素的中心对齐 */
+}
+</style>
+
 <a-modal id="qrcode-modal" v-model="qrModal.visible" :title="qrModal.title"
     :dialog-style="{ top: '60px' }"
     :closable="true"
     :class="themeSwitcher.currentTheme"
-    :footer="null" width="450">
+    :footer="null" width="450px">
   <a-tag color="green" style="margin-bottom: 10px;display: block;text-align: center;">
     {{ i18n "pages.inbounds.clickOnQRcode" }}
   </a-tag>
