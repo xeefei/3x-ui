@@ -3,7 +3,7 @@
     :dialog-style="{ top: '60px' }"
     :closable="true"
     :class="themeSwitcher.currentTheme"
-    :footer="null" width="450px">
+    :footer="null" width="450">
   <a-tag color="green" style="margin-bottom: 10px;display: block;text-align: center;">
     {{ i18n "pages.inbounds.clickOnQRcode" }}
   </a-tag>
@@ -84,7 +84,7 @@ const qrModalApp = new Vue({
         setQrCode(elmentId, content) {
             new QRious({
                 element: document.querySelector('#' + elmentId),
-                size: 400px,
+                size: 400,
                 value: content,
                 background: 'white',
                 backgroundAlpha: 0,
