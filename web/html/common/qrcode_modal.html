@@ -4,7 +4,10 @@
   display: flex;
   justify-content: center; /* 在水平方向上居中 */
 }
-
+.qr-bg {
+  width: 500px; 
+  height: 500px;
+} 
 .qr-modal-header {
   display: flex;
   justify-content: center; /* 在水平方向上居中 */
@@ -103,7 +106,7 @@ const qrModalApp = new Vue({
                 backgroundAlpha: 0,
                 foreground: 'black',
                 padding: 4,
-                level: 'M'
+                level: 'L'
             });
         },
         genSubLink(subID) {
