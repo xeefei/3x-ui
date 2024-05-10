@@ -69,6 +69,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 ![11](./media/11.png)
 
 
+
 ## 安装指定版本
 
 要安装所需的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.1`:
@@ -270,6 +271,7 @@ systemctl restart x-ui
 - AlmaLinux 9+
 - Rocky Linux 9+
 - Oracle Linux 8+
+- OpenSUSE Tubleweed
 
 ## 支持的架构和设备
 <details>
@@ -508,6 +510,7 @@ Web 面板通过 Telegram Bot 支持每日流量、面板登录、数据库备�
 
 
 - [API 文档](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm)
+
 - [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/16802678-1a4c9270-ac77-40ed-959a-7aa56dc4a415?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D16802678-1a4c9270-ac77-40ed-959a-7aa56dc4a415%26entityType%3Dcollection%26workspaceId%3D2cd38c01-c851-4a15-a972-f181c23359d9)
 </details>
 

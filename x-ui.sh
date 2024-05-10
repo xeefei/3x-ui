@@ -71,6 +71,8 @@ elif [[ "${release}" == "manjaro" ]]; then
     echo "您的操作系统是 Manjaro"
 elif [[ "${release}" == "armbian" ]]; then
     echo "您的操作系统是 Armbian"
+elif [[ "${release}" == "opensuse-tumbleweed" ]]; then
+    echo "您的操作系统是 OpenSUSE Tumbleweed"
 elif [[ "${release}" == "oracle" ]]; then
     if [[ ${os_version} -lt 8 ]]; then
         echo -e "${red} 请使用 Oracle Linux 8 或更高版本 ${plain}\n" && exit 1
@@ -83,11 +85,13 @@ else
     echo "- CentOS 8+"
     echo "- Fedora 36+"
     echo "- Arch Linux"
+    echo "- Parch Linux"
     echo "- Manjaro"
     echo "- Armbian"
     echo "- AlmaLinux 9+"
     echo "- Rocky Linux 9+"
     echo "- Oracle Linux 8+"
+    echo "- OpenSUSE Tumbleweed"
     exit 1
 
 fi
