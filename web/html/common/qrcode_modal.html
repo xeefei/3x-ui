@@ -16,7 +16,7 @@
     :dialog-style="{ top: '60px' }"
     :closable="true"
     :class="themeSwitcher.currentTheme"
-    :footer="null" width="200px">
+    :footer="null" width="350px">
   <a-tag color="green" style="margin-bottom: 10px;display: block;text-align: center;">
     {{ i18n "pages.inbounds.clickOnQRcode" }}
   </a-tag>
@@ -102,8 +102,8 @@ const qrModalApp = new Vue({
                 background: 'white',
                 backgroundAlpha: 0,
                 foreground: 'black',
-                padding: 2,
-                level: 'L'
+                padding: 4,
+                level: 'M'
             });
         },
         genSubLink(subID) {
