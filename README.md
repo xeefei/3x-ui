@@ -550,8 +550,8 @@ XUI_BIN_FOLDER="bin" XUI_DB_FOLDER="/etc/x-ui" go build main.go
 
 ## 广告赞助
 - 如果你觉得本项目对你有用，而且你也恰巧有这方面的需求，你也可以选择通过我的购买链接赞助我。
-- [搬瓦工GIA高端线路,仅推荐购买GIA套餐](https://bandwagonhost.com/aff.php?aff=75015)
-- [白丝云4837线路量大实惠](https://cloudsilk.io/aff.php?aff=706)
+- [搬瓦工GIA高端线路，仅推荐购买GIA套餐](https://bandwagonhost.com/aff.php?aff=75015)
+- [白丝云【4837线路】实惠量大管饱](https://cloudsilk.io/aff.php?aff=706)
 
 ## 特别感谢
 
