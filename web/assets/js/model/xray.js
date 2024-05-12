@@ -759,8 +759,8 @@ class RealityStreamSettings extends XrayCommonClass {
     
     constructor(
         show = false,xver = 0,
-        dest = 'yahoo.com:443',
-        serverNames = 'yahoo.com,www.yahoo.com',
+        dest = 'midjourney.com:443',
+        serverNames = 'midjourney.com,www.midjourney.com',
         privateKey = '',
         minClient = '',
         maxClient = '',
