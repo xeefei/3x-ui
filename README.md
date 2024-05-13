@@ -86,6 +86,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 - 为保证能够每3个月【自动续签】证书，须放行80端口
 - 可通过此脚本的第【20】选项去安装防火墙进行管理，如下图：
 ![9](./media/9.png)
+- 若要一次性放行多个端口或一整个段的端口，用英文逗号隔开。
 
 
 ## 备份与恢复（以Debian系统为例）
@@ -93,8 +94,9 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 ![14](./media/14.png)
 - SSH登录服务器找到/etc/x-ui/x-ui.db和/usr/local/x-ui/bin/config.json
 ![12](./media/12.png)
-- 把下载得到的两个文件上传覆盖掉旧文件，重启x-ui面板即可成功
+- 把下载得到的两个文件上传覆盖掉旧文件，重启3x-ui面板即可成功
 ![13](./media/13.png)
+- 这时可在新的VPS中看到所有配置都是之前自己常用的，包括面板用户名、密码，入站、客户端，电报机器人配置等。
 
 
 ## 安装完成后如何设置调整成【中文界面】？
