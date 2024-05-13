@@ -15,6 +15,8 @@
 **如果此项目对你有用，请给一个**:star2:
 - 赞助地址（USDT/TRC20）：`TYQEmQp1P65u9bG7KPehgJdvuokfb72YkZ`
 
+## [3x-ui详细安装流程步骤https://xeefei.github.io/xufei/2024/05/3x-ui/](https://xeefei.github.io/xufei/2024/05/3x-ui/)
+
 ## 安装之前的准备
 - 请尽量更新系统是最新版
 - Debian系统可用如下命令：
