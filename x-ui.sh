@@ -159,7 +159,7 @@ update() {
 }
 
 custom_version() {
-    echo "输入面板版本 (例: 2.0.0):"
+    echo "输入面板版本 (例: 2.3.1):"
     read panel_version
 
     if [ -z "$panel_version" ]; then
