@@ -943,6 +943,14 @@ warp_cloudflare() {
     esac
 }
 
+subconverter() {
+        bash <(curl -fsSL https://get.docker.com | bash -s docker) && (docker run -d --name subweb --restart always \
+                          -p 18080:80 \
+                          stilleshan/subweb)
+    echo -e "${green}请按【回车键】以确定安装！"
+    echo -e "${green}【订阅转换功能】访问地址为：${plain}${green}http://$ipv4:18080{plain}"
+}
+
 run_speedtest() {
     # Check if Speedtest is already installed
     if ! command -v speedtest &>/dev/null; then
@@ -1278,6 +1286,7 @@ show_menu() {
   ${green}21.${plain} 启用 BBR 
   ${green}22.${plain} 更新 Geo 文件
   ${green}23.${plain} Speedtest by Ookla
+  ${green}24.${plain} 安装订阅转换
 "
     show_status
     echo && read -p "请输入选项 [0-23]: " num
@@ -1355,8 +1364,11 @@ show_menu() {
     23)
         run_speedtest
         ;;
+    24)
+        subconverter
+        ;;
     *)
-        LOGE "请输入正确的选项 [0-23]"
+        LOGE "请输入正确的选项 [0-24]"
         ;;
     esac
 }
