@@ -949,7 +949,6 @@ subconverter() {
                           stilleshan/subweb)
     echo -e "${yellow}【链接转换模块】安装完成！！！"
     ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
-    if [[ -n $ipv4 ]]; then
     echo -e "${green}【订阅转换功能】访问地址为：${plain}${green}http://$ipv4:18080"
     show_menu
 }
