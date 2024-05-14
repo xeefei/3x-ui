@@ -949,7 +949,7 @@ subconverter() {
                           stilleshan/subweb)
     echo -e "${yellow}请按【回车键】以确定安装！"
     echo -e "${green}【订阅转换功能】访问地址为：${plain}${green}http://$ipv4:18080"
-    esac
+    show_menu
 }
 
 run_speedtest() {
