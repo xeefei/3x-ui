@@ -1289,7 +1289,7 @@ show_menu() {
   ${green}24.${plain} 安装订阅转换
 "
     show_status
-    echo && read -p "请输入选项 [0-23]: " num
+    echo && read -p "请输入选项 [0-24]: " num
 
     case "${num}" in
     0)
