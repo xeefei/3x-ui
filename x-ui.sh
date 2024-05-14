@@ -947,8 +947,9 @@ subconverter() {
         bash <(curl -fsSL https://get.docker.com | bash -s docker) && (docker run -d --name subweb --restart always \
                           -p 18080:80 \
                           stilleshan/subweb)
-    echo -e "${green}请按【回车键】以确定安装！"
-    echo -e "${green}【订阅转换功能】访问地址为：${plain}${green}http://$ipv4:18080{plain}"
+    echo -e "${yellow}请按【回车键】以确定安装！"
+    echo -e "${green}【订阅转换功能】访问地址为：${plain}${green}http://$ipv4:18080"
+    esac
 }
 
 run_speedtest() {
@@ -1289,7 +1290,7 @@ show_menu() {
   ${green}24.${plain} 安装订阅转换
 "
     show_status
-    echo && read -p "请输入选项 [0-24]: " num
+    echo && read -p "请输入选项 [0-23]: " num
 
     case "${num}" in
     0)
