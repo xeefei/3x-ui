@@ -64,7 +64,7 @@
 ```
 bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh)
 ```
-####如果执行了上面的代码但是报错，证明你的系统里面没有curl这个软件，请执行以下命令先安装curl软件，安装curl之后再去执行上面代码，
+#### 如果执行了上面的代码但是报错，证明你的系统里面没有curl这个软件，请执行以下命令先安装curl软件，安装curl之后再去执行上面代码，
 ```
 apt update -y&&apt install -y curl&&apt install -y socat
 ```
