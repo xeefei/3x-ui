@@ -63,7 +63,6 @@
     <div class="sidebar">
         <button onclick="history.back()">返回上一步</button>
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <button onclick="window.scrollTo(0, 0)">回滚至顶部</button>
         <div class="friend-links">
             <a href="https://chat.openai.com/">ChatGPT</a>
             <a href="https://github.com/xeefei/3x-ui">项目地址</a>
@@ -73,7 +72,9 @@
             <a href="https://xtls.github.io/">Project X</a>
             <a href="https://t.me/i_gaoqian">预留&占位</a>
             <a href="https://t.me/Kensimon_xee">联系作者</a>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <button onclick="window.scrollTo(0, 0)">回滚至顶部</button>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <button onclick="history.back()">返回到面板</button>
         </div>
     </div>
@@ -96,10 +97,21 @@ Google IP定位错误，使用Location Guard修改GPS位置地址；7：谷歌�
 4、在得到【转换链接】之后，只要你的VPS服务器25500端口是能ping通的，就能导入Clash/Surge等软件成功下载配置，
 5、此功能集成到3x-ui面板中，是为了保证安全，通过调取24选项把【订阅转换】功能部署在自己的VPS中，不会造成链接泄露。</p>
 
-        <h3>四、检测IP纯净度的方法：</h3>
+        <h3>四、如何保护自己的IP不被墙被封？</h3>
+        <p>1、使用的代理协议要安全，加密是必备，推荐使用vless+reality+vision协议组合，
+2、因为有时节点会共享，在不同的地区，多个省份之间不要共同连接同一个IP，
+3、连接同一个IP就算了，不要同一个端口，不要同IP+同端口到处漫游，要分开，
+4、同一台VPS，不要在一天内一直大流量去下载东西使用，不要流量过高要切换，
+5、创建【入站协议】的时候，尽量用【高位端口】，比如40000--65000之间的端口号。
+提醒：为什么在特殊时期，比如：两会，春节等被封得最严重最惨？
+尼玛同一个IP+同一个端口号，多个省份去漫游，跟开飞机场一样！不封你，封谁的IP和端口？
+总结：不要多终端/多省份/多个朋友/共同使用同一个IP和端口号！使用3x-ui多创建几个【入站】，
+多做几条备用，各用各的！各行其道才比较安全！GFW的思维模式是干掉机场，机场的特征个人用户不要去沾染，自然IP就保护好了。</p>
+
+        <h3>五、检测IP纯净度的方法：</h3>
         <p>网址：<a href="https://scamalytics.com/">https://scamalytics.com/</a>，输入IP进行检测，看【欺诈分数】，分数越高IP越脏。</p>
 
-        <h3>五、常见的软件工具：</h3>
+        <h3>六、常见的软件工具：</h3>
         <ol>
             <p>1、Windows系统v2rayN：<a href="https://github.com/2dust/v2rayN">https://github.com/2dust/v2rayN</a></p>
             <p>2、安卓手机版【v2rayNG】：<a href="https://github.com/2dust/v2rayNG">https://github.com/2dust/v2rayNG</a></p>
@@ -107,10 +119,10 @@ Google IP定位错误，使用Location Guard修改GPS位置地址；7：谷歌�
             <p>4、苹果MacOS电脑【Clash Verge】：<a href="https://github.com/clash-verge-rev/clash-verge-rev/releases/tag/v1.6.2">https://github.com/clash-verge-rev/clash-verge-rev/releases/tag/v1.6.2</a></p>
         </ol>
 
-        <h3>六、查看节点【指定端口】的网络连接数/命令：</h3>
+        <h3>七、查看节点【指定端口】的网络连接数/命令：</h3>
         <p>netstat -ntu | grep :节点端口 | grep ESTABLISHED | awk '{print $5}'</p>
 
-        <h3>七、用3x-ui如何实现【自己偷自己】？</h3>
+        <h3>八、用3x-ui如何实现【自己偷自己】？</h3>
                 <p>其实很简单，只要你为面板设置了证书，
                        开启了HTTPS登录，就可以将3x-ui自身作为web server，
                        无需Nginx等，这里给一个示例：
@@ -120,10 +132,10 @@ Google IP定位错误，使用Location Guard修改GPS位置地址；7：谷歌�
                        将目标网站改为对应监听端口也可。
                        需要说明的是，如果您处于白名单地区，自己“偷”自己并不适合你；其次，可选域名一项实际上可以填写任意SNI，只要客户端保持一致即可，不过并不推荐这样做。</p>
 
-        <h3>八、【接码】网站：</h3>
+        <h3>九、【接码】网站：</h3>
         <p>网址：<a href="https://sms-activate.org/cn">https://sms-activate.org/cn</a>，直接注册账号购买。</p>
 
-        <h3>九、一些MJJ经常逛的网站和群组：</h3>
+        <h3>十、一些MJJ经常逛的网站和群组：</h3>
         <ol>
             <p>1、NodeSeek.com论坛：<a href="https://www.nodeseek.com/">https://www.nodeseek.com/</a></p>
             <p>2、V2EX论坛：<a href="https://www.v2ex.com/">https://www.v2ex.com/</a></p>
@@ -134,14 +146,14 @@ Google IP定位错误，使用Location Guard修改GPS位置地址；7：谷歌�
             <p>7、域名注册：<a href="https://www.namesilo.com/">https://www.namesilo.com/</a></p>
         </ol>
 
-        <h3>十、若此项目对你有帮助，你正想购买VPS的话，可以走一下我的AFF：</h3>
+        <h3>十一、若此项目对你有帮助，你正想购买VPS的话，可以走一下我的AFF：</h3>
         <ol>
             <p>1、搬瓦工GIA线路：<a href="https://bandwagonhost.com/aff.php?aff=75015">https://bandwagonhost.com/aff.php?aff=75015</a></p>
             <p>2、Dmit高端GIA：<a href="https://www.dmit.io/aff.php?aff=9326">https://www.dmit.io/aff.php?aff=9326</a></p>
             <p>3、白丝云【4837】：<a href="https://cloudsilk.io/aff.php?aff=706">https://cloudsilk.io/aff.php?aff=706</a></p>
         </ol>
 
-        <h3>十一、若需要进行GV保号，请主动发信息到：+1 215 346 6666</h3>
+        <h3>十二、若需要进行GV保号，请主动发信息到：+1 215 346 6666</h3>
     </div>
 </body>
 </html>
