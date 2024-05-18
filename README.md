@@ -15,6 +15,7 @@
 **如果此项目对你有用，请给一个**:star2:
 - 赞助地址（USDT/TRC20）：`TYQEmQp1P65u9bG7KPehgJdvuokfb72YkZ`
 
+## [【3x-ui】中文交流群：https://t.me/XUI_CN](https://t.me/XUI_CN)
 ## [【3x-ui】详细安装流程步骤：https://xeefei.github.io/xufei/2024/05/3x-ui/](https://xeefei.github.io/xufei/2024/05/3x-ui/)
 
 ## 安装之前的准备
