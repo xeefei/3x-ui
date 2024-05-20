@@ -96,10 +96,14 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 
 ## 创建【入站协议】和添加【客户端】，并测试上网
 ##### 1、点击左边【入站列表】，然后【添加入站】，传输方式保持【TCP】不变，尽量选择主流的vless+reality+vision协议组合，
+![23](./media/23.png)
 ##### 2、在选择reality协议时，偷的域名可以使用默认的，要使用其他的，请替换尽量保持一致就行，比如Apple、Yahoo，VPS所在地区的旅游、学校网站等；如果要实现【偷自己】，请参看后续【如何偷自己】的说明部分；而私钥/公钥部分，可以直接点击下方的【Get New Cert】获取一个随机的，
 ##### 3、在创建reality协议过程中，至于其他诸如：PROXY Protocol，HTTP 伪装，TPROXY，External Proxy等等选项，若无特殊要求，保持默认设置即可，不用去动它们，
+![24](./media/24.png)
 ##### 4、创建好入站协议之后，默认只有一个客户端，可根据自己需求继续添加；重点：并编辑客户端，选择【Flow流控】为xtls-rprx-vision-udp443，
+![19](./media/19.png)
 ##### 5、其他：流量限制，到期时间，客户TG的ID等选项根据自己需求填写，
+![4](./media/4.png)
 ##### 6、一定要放行端口之后，确保端口能够ping通，再导入软件，
 ##### 7、点击二维码或者复制链接导入到v2rayN等软件中进行测试。
 
@@ -582,8 +586,6 @@ XUI_BIN_FOLDER="bin" XUI_DB_FOLDER="/etc/x-ui" go build main.go
 ![1](./media/1.png)
 ![2](./media/2.png)
 ![3](./media/3.png)
-![4](./media/4.png)
-![19](./media/19.png)
 ![5](./media/5.png)
 ![6](./media/6.png)
 ![7](./media/7.png)
