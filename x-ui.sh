@@ -1055,7 +1055,7 @@ iplimit_remove_conflicts() {
         # Check for [3x-ipl] config in jail file then remove it
         if test -f "${file}" && grep -qw '3x-ipl' ${file}; then
             sed -i "/\[3x-ipl\]/,/^$/d" ${file}
-            echo -e "${yellow}消除监狱中 [3x-ipl] 的冲突 (${file})!${plain}\n"
+            echo -e "${yellow}消除系统环境中 [3x-ipl] 的冲突 (${file})!${plain}\n"
         fi
     done
 }
