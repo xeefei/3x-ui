@@ -238,9 +238,9 @@ func migrateDb() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Start migrating database...")
+	fmt.Println("Start migrating database...---->>开始迁移数据库...")
 	inboundService.MigrateDB()
-	fmt.Println("Migration done!")
+	fmt.Println("Migration done!------------>>迁移完成！")
 }
 
 func removeSecret() {
