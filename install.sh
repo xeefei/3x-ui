@@ -128,25 +128,31 @@ config_after_install() {
         echo -e "${yellow}您的密码将是: ${config_password}${plain}"
         read -p "请设置面板端口: " config_port
         echo -e "${yellow}您的面板端口号为: ${config_port}${plain}"
+        read -p "请设置面板登录访问路径: " config_webBasePath
+        echo -e "${yellow}您的面板访问路径为: ${config_webBasePath}${plain}"
         echo -e "${yellow}正在初始化，请稍候...${plain}"
         /usr/local/x-ui/x-ui setting -username ${config_account} -password ${config_password}
         echo -e "${yellow}用户名和密码设置成功!${plain}"
         /usr/local/x-ui/x-ui setting -port ${config_port}
         echo -e "${yellow}面板端口号设置成功!${plain}"
+        /usr/local/x-ui/x-ui setting -webBasePath ${config_webBasePath}
+        echo -e "${yellow}面板登录访问路径设置成功!${plain}"
     else
-        echo -e "${red}cancel...${plain}"
+        echo -e "${red}Cancel...${plain}"
         if [[ ! -f "/etc/x-ui/x-ui.db" ]]; then
             local usernameTemp=$(head -c 6 /dev/urandom | base64)
             local passwordTemp=$(head -c 6 /dev/urandom | base64)
-            /usr/local/x-ui/x-ui setting -username ${usernameTemp} -password ${passwordTemp}
+            local webBasePathTemp=$(head -c 6 /dev/urandom | base64)
+            /usr/local/x-ui/x-ui setting -username ${usernameTemp} -password ${passwordTemp} -webBasePath ${webBasePathTemp}
             echo -e "检测到为全新安装，出于安全考虑将生成随机登录信息:"
             echo -e "###############################################"
             echo -e "${green}用户名: ${usernameTemp}${plain}"
             echo -e "${green}密  码: ${passwordTemp}${plain}"
+            echo -e "${green}访问路径: ${webBasePathTemp}${plain}"
             echo -e "###############################################"
-            echo -e "${red} 如果您忘记了登录信息，可以在安装后输入 x-ui 然后输入 8 选项进行检查 ${plain}"
+            echo -e "${red}如果您忘记了登录信息，可以在安装后输入 x-ui 然后输入 8 选项进行检查${plain}"
         else
-            echo -e "${red} 这是您的升级，将保留旧设置，如果您忘记了登录信息，您可以输入 x-ui 然后输入 8 选项进行检查 ${plain}"
+            echo -e "${red}这是您的升级，将保留旧设置，如果您忘记了登录信息，您可以输入 x-ui 然后输入 8 选项进行检查${plain}"
         fi
     fi
     /usr/local/x-ui/x-ui migrate

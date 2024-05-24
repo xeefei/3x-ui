@@ -78,13 +78,12 @@ apt update -y&&apt install -y curl&&apt install -y socat
 
 
 
-
 ## 安装指定版本
 
-若要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.3`:
+若要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.4`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.3
+bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.4
 ```
 
 ## 安装完成之后请放行指定端口
