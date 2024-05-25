@@ -114,9 +114,9 @@ func resetSetting() {
 	settingService := service.SettingService{}
 	err = settingService.ResetSettings()
 	if err != nil {
-		fmt.Println("reset setting failed:", err)
+		fmt.Println("reset setting failed（重置设置失败）:", err)
 	} else {
-		fmt.Println("reset setting success")
+		fmt.Println("reset setting success---->>重置设置成功")
 	}
 }
 
@@ -125,34 +125,34 @@ func showSetting(show bool) {
 		settingService := service.SettingService{}
 		port, err := settingService.GetPort()
 		if err != nil {
-			fmt.Println("get current port failed, error info:", err)
+			fmt.Println("get current port failed, error info（获取当前端口失败，错误信息）:", err)
 		}
 
 		webBasePath, err := settingService.GetBasePath()
 		if err != nil {
-			fmt.Println("get webBasePath failed, error info:", err)
+			fmt.Println("get webBasePath failed, error info（获取访问路径失败，错误信息）:", err)
 		}
 
 		userService := service.UserService{}
 		userModel, err := userService.GetFirstUser()
 		if err != nil {
-			fmt.Println("get current user info failed, error info:", err)
+			fmt.Println("get current user info failed, error info（获取当前用户信息失败，错误信息）:", err)
 		}
 
 		username := userModel.Username
 		userpasswd := userModel.Password
 		if username == "" || userpasswd == "" {
-			fmt.Println("current username or password is empty")
+			fmt.Println("current username or password is empty--->>当前用户名或密码为空")
 		}
 
-		fmt.Println("current panel settings as follows:")
-		fmt.Println("username:", username)
-		fmt.Println("userpasswd:", userpasswd)
-		fmt.Println("port:", port)
+		fmt.Println("current panel settings as follows（当前面板设置如下）:")
+		fmt.Println("username（用户名）:", username)
+		fmt.Println("userpasswd（密码）:", userpasswd)
+		fmt.Println("port（端口号）:", port)
 		if webBasePath != "" {
-			fmt.Println("webBasePath:", webBasePath)
+			fmt.Println("webBasePath（访问路径）:", webBasePath)
 		} else {
-			fmt.Println("webBasePath is not set")
+			fmt.Println("webBasePath is not set----->>未设置访问路径")
 		}
 	}
 }
@@ -191,7 +191,7 @@ func updateTgbotSetting(tgBotToken string, tgBotChatid string, tgBotRuntime stri
 			fmt.Println(err)
 			return
 		} else {
-			logger.Info("updateTgbotSetting tgBotToken success")
+			logger.Info("updateTgbotSetting tgBotToken success----->>更新电报机器人令牌成功")
 		}
 	}
 
@@ -211,7 +211,7 @@ func updateTgbotSetting(tgBotToken string, tgBotChatid string, tgBotRuntime stri
 			fmt.Println(err)
 			return
 		} else {
-			logger.Info("updateTgbotSetting tgBotChatid success")
+			logger.Info("updateTgbotSetting tgBotChatid success----->>更新电报机器人管理者ID成功")
 		}
 	}
 }
@@ -228,7 +228,7 @@ func updateSetting(port int, username string, password string) {
 	if port > 0 {
 		err := settingService.SetPort(port)
 		if err != nil {
-			fmt.Println("set port failed:", err)
+			fmt.Println("set port failed（设置端口失败）:", err)
 		} else {
 			fmt.Printf("set port %v success", port)
 		}
@@ -238,9 +238,9 @@ func updateSetting(port int, username string, password string) {
 		userService := service.UserService{}
 		err := userService.UpdateFirstUser(username, password)
 		if err != nil {
-			fmt.Println("set username and password failed:", err)
+			fmt.Println("set username and password failed（设置用户名和密码失败）:", err)
 		} else {
-			fmt.Println("set username and password success")
+			fmt.Println("set username and password success------>>用户名和密码设置成功")
 		}
 	}
 }
@@ -372,7 +372,7 @@ func main() {
 			updateTgbotEnableSts(enabletgbot)
 		}
 	default:
-		fmt.Println("Invalid subcommands")
+		fmt.Println("Invalid subcommands----->>无效命令")
 		fmt.Println()
 		runCmd.Usage()
 		fmt.Println()
