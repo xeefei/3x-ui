@@ -247,9 +247,9 @@ func updateSetting(port int, username string, password string, webBasePath strin
 	if webBasePath != "" {
 		err := settingService.SetBasePath(webBasePath)
 		if err != nil {
-			fmt.Println("set base URI path failed:", err)
+			fmt.Println("set base URI path failed（设置根路径失败）:", err)
 		} else {
-			fmt.Println("set base URI path success")
+			fmt.Println("set base URI path success------>>设置根路径成功")
 		}
 	}
 }
@@ -265,19 +265,19 @@ func updateCert(publicKey string, privateKey string) {
 		settingService := service.SettingService{}
 		err = settingService.SetCertFile(publicKey)
 		if err != nil {
-			fmt.Println("set certificate public key failed:", err)
+			fmt.Println("set certificate public key failed（设置证书公钥失败）:", err)
 		} else {
-			fmt.Println("set certificate public key success")
+			fmt.Println("set certificate public key success--------->>设置证书公钥成功")
 		}
 
 		err = settingService.SetKeyFile(privateKey)
 		if err != nil {
-			fmt.Println("set certificate private key failed:", err)
+			fmt.Println("set certificate private key failed（设置证书私钥失败）:", err)
 		} else {
-			fmt.Println("set certificate private key success")
+			fmt.Println("set certificate private key success--------->>设置证书私钥成功")
 		}
 	} else {
-		fmt.Println("both public and private key should be entered.")
+		fmt.Println("both public and private key should be entered.------>>须输入证书公钥和私钥")
 	}
 }
 
