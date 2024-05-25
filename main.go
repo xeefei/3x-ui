@@ -150,7 +150,7 @@ func showSetting(show bool) {
 		fmt.Println("userpasswd（密码）:", userpasswd)
 		fmt.Println("port（端口号）:", port)
 		if webBasePath != "" {
-			fmt.Println("webBasePath（访问路径）:", webBasePath)
+			fmt.Println("webBasePath（访问根路径）:", webBasePath)
 		} else {
 			fmt.Println("webBasePath is not set----->>未设置访问路径")
 		}
