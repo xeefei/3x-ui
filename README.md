@@ -137,7 +137,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 
 ## 用3x-ui如何实现【自己偷自己】？
 - 其实很简单，只要你为面板设置了证书，
-- 开启了HTTPS登录，就可以将3x-ui自身作为web server，
+- 开启了HTTPS登录，就可以将3x-ui自身作为Web Server，
 - 无需Nginx等，这里给一个示例：
 - 其中目标网站（Dest）请填写面板监听端口，
 - 可选域名（SNI）填写面板登录域名，
