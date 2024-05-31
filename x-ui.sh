@@ -948,7 +948,7 @@ subconverter() {
         bash <(curl -fsSL https://get.docker.com | bash -s docker) && (docker run -d --name subweb --restart always \
                           -p 18080:80 \
                           -p 25500:25500 \
-                          -e API_URL=http://$ipv4 \
+                          -e API_URL=http://$ipv4:25500 \
                           stilleshan/subweb)
     echo -e "${yellow}【链接转换模块】安装完成！！！"
     echo -e "${green}【订阅转换功能】访问地址为：${plain}${green}http://$ipv4:18080"
