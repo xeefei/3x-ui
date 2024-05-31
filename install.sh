@@ -138,7 +138,7 @@ config_after_install() {
         /usr/local/x-ui/x-ui setting -webBasePath ${config_webBasePath}
         echo -e "${yellow}面板登录访问路径设置成功!${plain}"
     else
-        echo -e "${red}Cancel...${plain}"
+        echo -e "${red}Cancel...取消...${plain}"
         if [[ ! -f "/etc/x-ui/x-ui.db" ]]; then
             local usernameTemp=$(head -c 6 /dev/urandom | base64)
             local passwordTemp=$(head -c 6 /dev/urandom | base64)
@@ -218,9 +218,9 @@ install_x-ui() {
     systemctl start warp-go >/dev/null 2>&1
     wg-quick up wgcf >/dev/null 2>&1
 
-    echo -e "${green}x-ui ${last_version}${plain} 安装成功，正在启动..."
+    echo -e "${green}3x-ui ${last_version}${plain} 安装成功，正在启动..."
     echo -e ""
-    echo -e "x-ui 控制菜单用法: "
+    echo -e "3x-ui 控制菜单用法: "
     echo -e "----------------------------------------------"
     echo -e "x-ui              - 进入管理脚本"
     echo -e "x-ui start        - 启动 x-ui"
@@ -237,12 +237,12 @@ install_x-ui() {
     echo -e "----------------------------------------------"
     echo ""
     if [[ -n $ipv4 ]]; then
-        echo -e "${yellow}面板 IPv4 访问地址为：${plain}${green}http://$ipv4:$config_port${plain}"
+        echo -e "${yellow}面板 IPv4 访问地址为：${plain}${green}http://$ipv4:${config_port}${plain}"
     fi
     if [[ -n $ipv6 ]]; then
-        echo -e "${yellow}面板 IPv6 访问地址为：${plain}${green}http://[$ipv6]:$config_port${plain}"
+        echo -e "${yellow}面板 IPv6 访问地址为：${plain}${green}http://[$ipv6]:${config_port}${plain}"
     fi
-    echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${plain}${red} $config_port ${plain}${yellow}端口已放行${plain}"
+    echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${plain}${red} ${config_port} ${plain}${yellow}端口已放行${plain}"
 }
 
 install_base
