@@ -15,11 +15,11 @@
 **如果此项目对你有用，请给一个**:star2:
 - 赞助地址（USDT/TRC20）：`TYQEmQp1P65u9bG7KPehgJdvuokfb72YkZ`
 
-## [【3x-ui】中文交流群：https://t.me/XUI_CN](https://t.me/XUI_CN)
-## [【3x-ui】详细安装流程步骤：https://xeefei.github.io/xufei/2024/05/3x-ui/](https://xeefei.github.io/xufei/2024/05/3x-ui/)
+## [【3X-UI】中文交流群：https://t.me/XUI_CN](https://t.me/XUI_CN)
+## [【3X-UI】详细安装流程步骤：https://xeefei.github.io/xufei/2024/05/3x-ui/](https://xeefei.github.io/xufei/2024/05/3x-ui/)
 
 ## 安装之前的准备
-- 购买一台性能还不错的VPS，可通过本页链接购买，
+- 购买一台性能还不错的VPS，可通过本页底部链接购买，
 - PS：若你不想升级系统，则可以跳过此步骤。
 - 若你需要更新/升级系统，Debian系统可用如下命令：
   ```
