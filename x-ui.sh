@@ -947,7 +947,6 @@ subconverter() {
         ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
         bash <(curl -fsSL https://get.docker.com | bash -s docker) && (docker run -d --name subweb --restart always \
                           -p 18080:80 \
-                          -p 25500:25500 \
                           -e API_URL=http://$ipv4:25500 \
                           stilleshan/subweb)
     echo -e "${yellow}【链接转换模块】安装完成！！！"
