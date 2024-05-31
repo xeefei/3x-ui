@@ -118,7 +118,7 @@ confirm() {
 }
 
 confirm_restart() {
-    confirm "重启面板，注意：重启面板也会重启 xray" "y"
+    confirm "重启面板，注意：重启面板也会重启 Xray" "y"
     if [[ $? == 0 ]]; then
         restart
     else
@@ -159,7 +159,7 @@ update() {
 }
 
 custom_version() {
-    echo "输入面板版本 (例: 2.3.1):"
+    echo "输入面板版本 (例: 2.3.5):"
     read panel_version
 
     if [ -z "$panel_version" ]; then
@@ -183,7 +183,7 @@ delete_script() {
 }
 
 uninstall() {
-    confirm "您确定要卸载面板吗? xray 也将被卸载!" "n"
+    confirm "您确定要卸载面板吗? Xray 也将被卸载!" "n"
     if [[ $? != 0 ]]; then
         if [[ $# == 0 ]]; then
             show_menu
@@ -225,7 +225,7 @@ reset_user() {
     echo -e "面板登录用户名已重置为：${green} ${config_account} ${plain}"
     echo -e "面板登录密码已重置为：${green} ${config_password} ${plain}"
     echo -e "${yellow} 面板 Secret Token 已禁用 ${plain}"
-    echo -e "${green} 请使用新的登录用户名和密码访问 X-UI 面板。也请记住它们！${plain}"
+    echo -e "${green} 请使用新的登录用户名和密码访问 3X-UI 面板。也请记住它们！${plain}"
     confirm_restart
 }
 
@@ -294,7 +294,7 @@ stop() {
         sleep 2
         check_status
         if [[ $? == 1 ]]; then
-            LOGI "x-ui 和 xray 已成功关闭"
+            LOGI "x-ui 和 Xray 已成功关闭"
         else
             LOGE "面板关闭失败，可能是停止时间超过两秒，请稍后查看日志信息"
         fi
@@ -310,7 +310,7 @@ restart() {
     sleep 2
     check_status
     if [[ $? == 0 ]]; then
-        LOGI "x-ui and xray 已成功重启"
+        LOGI "x-ui and Xray 已成功重启"
     else
         LOGE "面板重启失败，可能是启动时间超过两秒，请稍后查看日志信息"
     fi
@@ -553,9 +553,9 @@ check_xray_status() {
 show_xray_status() {
     check_xray_status
     if [[ $? == 0 ]]; then
-        echo -e "xray 状态: ${green}运行中${plain}"
+        echo -e "Xray 状态: ${green}运行中${plain}"
     else
-        echo -e "xray 状态: ${red}未运行${plain}"
+        echo -e "Xray 状态: ${red}未运行${plain}"
     fi
 }
 
@@ -1240,7 +1240,7 @@ remove_iplimit() {
 }
 
 show_usage() {
-    echo -e "x-ui 控制菜单用法: "
+    echo -e "3x-ui 控制菜单用法: "
     echo -e "----------------------------------------------"
     echo -e "x-ui              - 进入管理脚本"
     echo -e "x-ui start        - 启动 x-ui"
@@ -1259,7 +1259,7 @@ show_usage() {
 
 show_menu() {
     echo -e "
-  ${green}3X-ui 面板管理脚本${plain}
+  ${green}3X-UI 面板管理脚本${plain}
   ${green}0.${plain} 退出脚本
 ————————————————
   ${green}1.${plain} 安装面板
