@@ -237,7 +237,7 @@ install_x-ui() {
     echo -e "----------------------------------------------"
     echo ""
     settingService := service.SettingService{}
-	port, err := settingService.GetPort()
+    port
     if [[ -n $ipv4 ]]; then
         echo -e "${yellow}面板 IPv4 访问地址为：${green}http://$ipv4:${port}${plain}"
     fi
