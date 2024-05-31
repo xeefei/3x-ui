@@ -236,7 +236,8 @@ install_x-ui() {
     echo -e "x-ui uninstall    - 卸载 x-ui"
     echo -e "----------------------------------------------"
     echo ""
-    /usr/local/x-ui/x-ui setting -port ${port}
+    settingService := service.SettingService{}
+	port, err := settingService.GetPort()
     if [[ -n $ipv4 ]]; then
         echo -e "${yellow}面板 IPv4 访问地址为：${green}http://$ipv4:${port}${plain}"
     fi
