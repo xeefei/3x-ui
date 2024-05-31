@@ -237,12 +237,12 @@ install_x-ui() {
     echo -e "----------------------------------------------"
     echo ""
     if [[ -n $ipv4 ]]; then
-        echo -e "${yellow}面板 IPv4 访问地址为：${green}http://$ipv4:${config_port}${plain}"
+        echo -e "${yellow}面板 IPv4 访问地址为：${green}http://$ipv4:${port}${plain}"
     fi
     if [[ -n $ipv6 ]]; then
-        echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${config_port}${plain}"
+        echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${port}${plain}"
     fi
-    echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${config_port} ${yellow}端口已放行${plain}"
+    echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${port} ${yellow}端口已放行${plain}"
 }
 
 install_base
