@@ -243,8 +243,8 @@ install_x-ui() {
         echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${config_port}${plain}"
     fi
     echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${config_port} ${yellow}端口已放行${plain}"
-    echo -e "${green}安装/更新完成，若在使用过程中有任何问题，${yellow}请加〔3X-UI〕中文交流群：${red} https://t.me/XUI_CN ${yellow}进行反馈${plain}"
 }
-
 install_base
 install_x-ui $1
+/usr/local/x-ui/x-ui setting -show true
+echo -e "${green}安装/更新完成，若在使用过程中有任何问题，${yellow}请加〔3X-UI〕中文交流群：${red} https://t.me/XUI_CN ${yellow}进行反馈${plain}"
