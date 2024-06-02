@@ -251,4 +251,7 @@ echo -e "----------------------------------------------"
 /usr/local/x-ui/x-ui setting -show true
 echo -e "----------------------------------------------"
 echo ""
-echo -e "${green}安装/更新完成，若在使用过程中有任何问题，${yellow}请加〔3X-UI〕中文交流群：${red} https://t.me/XUI_CN ${yellow}截图进行反馈${plain}"
+echo -e "${green}安装/更新完成，若在使用过程中有任何问题${plain}"
+echo -e "${yellow}请先描述清楚所遇问题加〔3X-UI〕中文交流群${plain}"
+echo -e "${red} https://t.me/XUI_CN ${yellow}截图进行反馈${plain}"
+echo ""
