@@ -246,5 +246,9 @@ install_x-ui() {
 }
 install_base
 install_x-ui $1
+echo ""
+echo -e "----------------------------------------------"
 /usr/local/x-ui/x-ui setting -show true
-echo -e "${green}安装/更新完成，若在使用过程中有任何问题，${yellow}请加〔3X-UI〕中文交流群：${red} https://t.me/XUI_CN ${yellow}进行反馈${plain}"
+echo -e "----------------------------------------------"
+echo ""
+echo -e "${green}安装/更新完成，若在使用过程中有任何问题，${yellow}请加〔3X-UI〕中文交流群：${red} https://t.me/XUI_CN ${yellow}截图进行反馈${plain}"
