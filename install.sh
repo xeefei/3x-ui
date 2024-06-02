@@ -257,3 +257,5 @@ echo -e "${green}安装/更新完成，若在使用过程中有任何问题${pla
 echo -e "${yellow}请先描述清楚所遇问题加〔3X-UI〕中文交流群${plain}"
 echo -e "${yellow}在TG群中${red} https://t.me/XUI_CN ${yellow}截图进行反馈${plain}"
 echo ""
+echo -e "----------------------------------------------"
+echo ""
