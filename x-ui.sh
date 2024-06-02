@@ -1290,7 +1290,9 @@ show_menu() {
   ${green}21.${plain} 启用 BBR 
   ${green}22.${plain} 更新 Geo 文件
   ${green}23.${plain} Speedtest by Ookla
-  ${green}24.${plain} 安装订阅转换
+  ${green}24.${plain} 安装订阅转换 
+————————————————
+${green}安装/更新完成，若在使用过程中有任何问题，${yellow}请加〔3X-UI〕中文交流群：${red} https://t.me/XUI_CN ${yellow}进行反馈${plain}
 "
     show_status
     echo && read -p "请输入选项 [0-24]: " num
