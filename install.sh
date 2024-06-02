@@ -138,7 +138,7 @@ config_after_install() {
         /usr/local/x-ui/x-ui setting -webBasePath ${config_webBasePath}
         echo -e "${yellow}面板登录访问路径设置成功!${plain}"
     else
-        echo -e "${red}Cancel...取消...${plain}"
+        echo -e "${red}Cancel...取消修改...${plain}"
         if [[ ! -f "/etc/x-ui/x-ui.db" ]]; then
             local usernameTemp=$(head -c 6 /dev/urandom | base64)
             local passwordTemp=$(head -c 6 /dev/urandom | base64)
@@ -150,9 +150,9 @@ config_after_install() {
             echo -e "${green}密  码: ${passwordTemp}${plain}"
             echo -e "${green}访问路径: ${webBasePathTemp}${plain}"
             echo -e "###############################################"
-            echo -e "${red}如果您忘记了登录信息，可以在安装后输入 x-ui 然后输入 8 选项进行检查${plain}"
+            echo -e "${red}如果您忘记了登录信息，可以在安装后输入 x-ui 然后输入数字 8 选项进行检查${plain}"
         else
-            echo -e "${red}这是您的升级，将保留旧设置，如果您忘记了登录信息，您可以输入 x-ui 然后输入 8 选项进行检查${plain}"
+            echo -e "${red}这是您的升级，将保留旧设置，如果您忘记了登录信息，您可以输入 x-ui 然后输入数字 8 选项进行检查${plain}"
         fi
     fi
     /usr/local/x-ui/x-ui migrate
@@ -164,22 +164,22 @@ install_x-ui() {
     if [ $# == 0 ]; then
         last_version=$(curl -Ls "https://api.github.com/repos/xeefei/3x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         if [[ ! -n "$last_version" ]]; then
-            echo -e "${red}获取 x-ui 版本失败，可能是 Github API 限制，请稍后再试${plain}"
+            echo -e "${red}获取 3x-ui 版本失败，可能是 Github API 限制，请稍后再试${plain}"
             exit 1
         fi
-        echo -e "获取 x-ui 最新版本：${last_version}，开始安装..."
+        echo -e "获取 3x-ui 最新版本：${last_version}，开始安装..."
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz
         if [[ $? -ne 0 ]]; then
-            echo -e "${red}下载 x-ui 失败, 请检查服务器是否可以连接至 GitHub ${plain}"
+            echo -e "${red}下载 3x-ui 失败, 请检查服务器是否可以连接至 GitHub ${plain}"
             exit 1
         fi
     else
         last_version=$1
         url="https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz"
-        echo -e "开始安装 x-ui $1"
+        echo -e "开始安装 3x-ui $1"
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz ${url}
         if [[ $? -ne 0 ]]; then
-            echo -e "${red}下载 x-ui $1 失败, 请检查此版本是否存在 ${plain}"
+            echo -e "${red}下载 3x-ui $1 失败, 请检查此版本是否存在 ${plain}"
             exit 1
         fi
     fi
@@ -243,6 +243,7 @@ install_x-ui() {
         echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${config_port}${plain}"
     fi
     echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${config_port} ${yellow}端口已放行${plain}"
+    echo -e "${green}安装/更新完成，若在使用过程中有任何问题，${yellow}请加〔3X-UI〕中文交流群：${red} https://t.me/XUI_CN ${yellow}进行反馈${plain}"
 }
 
 install_base
