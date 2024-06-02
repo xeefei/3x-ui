@@ -1293,8 +1293,8 @@ show_menu() {
   ${green}24.${plain} 安装订阅转换 
 ————————————————
   ${green}若在使用过程中有任何问题${plain}
-  ${yellow}请加〔3X-UI〕中文交流群${plain}
-  ${red} https://t.me/XUI_CN ${yellow}截图进行反馈${plain}
+  ${yellow}请加入〔3X-UI〕中文交流群${plain}
+  ${red}https://t.me/XUI_CN ${yellow}截图进行反馈${plain}
 ————————————————
 "
     show_status
