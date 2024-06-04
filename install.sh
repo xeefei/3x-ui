@@ -128,7 +128,7 @@ config_after_install() {
         echo -e "${yellow}您的密码将是: ${config_password}${plain}"
         read -p "请设置面板端口: " config_port
         echo -e "${yellow}您的面板端口号为: ${config_port}${plain}"
-        read -p "请设置面板登录访问路径: " config_webBasePath
+        read -p "请设置面板登录访问路径（ip:端口号/路径/）: " config_webBasePath
         echo -e "${yellow}您的面板访问路径为: ${config_webBasePath}${plain}"
         echo -e "${yellow}正在初始化，请稍候...${plain}"
         /usr/local/x-ui/x-ui setting -username ${config_account} -password ${config_password}

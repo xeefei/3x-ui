@@ -1068,7 +1068,8 @@ iplimit_main() {
     echo -e "${green}\t3.${plain} 解禁所有 IP"
     echo -e "${green}\t4.${plain} 查看日志"
     echo -e "${green}\t5.${plain} Fail2ban 状态"
-    echo -e "${green}\t6.${plain} 卸载 IP 限制"
+    echo -e "${green}\t6.${plain} 重启 Fail2ban"
+    echo -e "${green}\t7.${plain} 卸载 IP 限制"
     echo -e "${green}\t0.${plain} 返回主菜单"
     read -p "请输入选项: " choice
     case "$choice" in
@@ -1111,8 +1112,10 @@ iplimit_main() {
     5)
         service fail2ban status
         ;;
-
     6)
+        systemctl restart fail2ban
+        ;;
+    7)
         remove_iplimit
         ;;
     *) echo "无效选项" ;;
@@ -1125,7 +1128,14 @@ install_iplimit() {
 
         # Check the OS and install necessary packages
         case "${release}" in
-        ubuntu | debian | armbian)
+        ubuntu)
+            if [[ "${os_version}" -ge 24 ]]; then
+                apt update && apt install python3-pip -y
+                python3 -m pip install pyasynchat --break-system-packages
+            fi
+            apt update && apt install fail2ban -y
+            ;;
+        debian | armbian)
             apt update && apt install fail2ban -y
             ;;
         centos | almalinux | rocky | oracle)
@@ -1135,9 +1145,9 @@ install_iplimit() {
         fedora)
             dnf -y update && dnf -y install fail2ban
             ;;
-        arch | manjaro)
-        pacman -Syu --noconfirm fail2ban
-        ;;
+        arch | manjaro | parch)
+            pacman -Syu --noconfirm fail2ban
+            ;;
         *)
             echo -e "${red}不支持的操作系统，请检查脚本并手动安装必要的软件包.${plain}\n"
             exit 1
