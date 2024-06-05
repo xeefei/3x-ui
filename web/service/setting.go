@@ -46,7 +46,7 @@ var defaultValueMap = map[string]string{
 	"tgBotBackup":        "false",
 	"tgBotLoginNotify":   "true",
 	"tgCpu":              "0",
-	"tgLang":             "en-US",
+	"tgLang":             "zh-Hans",
 	"secretEnable":       "false",
 	"subEnable":          "false",
 	"subListen":          "",
