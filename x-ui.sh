@@ -1271,6 +1271,8 @@ show_usage() {
 show_menu() {
     echo -e "
   ${green}3X-UI 面板管理脚本${plain}
+  ${yellow}    一个更好的面板${plain}
+  ${yellow}  基于Xray Core构建${plain}
   ${green}0.${plain} 退出脚本
 ————————————————
   ${green}1.${plain} 安装面板
