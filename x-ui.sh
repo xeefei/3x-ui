@@ -944,11 +944,14 @@ warp_cloudflare() {
 }
 
 subconverter() {
-        bash <(curl -fsSL https://get.docker.com | bash -s docker) && (docker run -d --name subweb --restart always \
+        bash <(curl -fsSL https://get.docker.com | bash -s docker) 
+        ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
+        docker run -d --name subweb --restart always \
                           -p 18080:80 \
                           -p 25500:25500 \
-                          stilleshan/subweb)
-        ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
+                          -e API_URL=http://$ipv4 \
+                          stilleshan/subweb
+      # ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
     echo -e "${yellow}【链接转换模块】安装完成！！！"
     echo -e "${green}【订阅转换功能】访问地址为：${plain}${green}http://$ipv4:18080"
     echo -e "${green}【后端服务】拉取地址为：${plain}${green}http://$ipv4:25500"
