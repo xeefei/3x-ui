@@ -1251,7 +1251,9 @@ remove_iplimit() {
 }
 
 show_usage() {
-    echo -e "3x-ui 控制菜单用法: "
+    echo -e "${green}3X-UI 控制菜单用法:${plain}"
+    echo -e "${yellow}    一个更好的面板${plain}"   
+    echo -e "${yellow}  基于Xray Core构建${plain}"  
     echo -e "----------------------------------------------"
     echo -e "x-ui              - 进入管理脚本"
     echo -e "x-ui start        - 启动 3x-ui 面板"
