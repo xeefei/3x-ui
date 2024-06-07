@@ -1248,10 +1248,11 @@ remove_iplimit() {
 }
 
 show_usage() {
-    echo -e "${green}3X-UI 控制菜单用法:${plain}"
-    echo -e "${yellow}    一个更好的面板${plain}"   
-    echo -e "${yellow}  基于Xray Core构建${plain}"  
-    echo -e "----------------------------------------------"
+    echo -e "         ---------------------"
+    echo -e "         |${green}3X-UI 控制菜单用法 ${plain}|${plain}"
+    echo -e "         |   ${yellow}一个更好的面板  ${plain}|${plain}"   
+    echo -e "         | ${yellow}基于Xray Core构建 ${plain}|${plain}"  
+    echo -e "--------------------------------------------"
     echo -e "x-ui              - 进入管理脚本"
     echo -e "x-ui start        - 启动 3x-ui 面板"
     echo -e "x-ui stop         - 关闭 3x-ui 面板"
@@ -1264,7 +1265,7 @@ show_usage() {
     echo -e "x-ui update       - 更新 3x-ui 面板"
     echo -e "x-ui install      - 安装 3x-ui 面板"
     echo -e "x-ui uninstall    - 卸载 3x-ui 面板"
-    echo -e "----------------------------------------------"
+    echo -e "--------------------------------------------"
 }
 
 show_menu() {
