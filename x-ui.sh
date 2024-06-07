@@ -144,7 +144,7 @@ install() {
 }
 
 update() {
-    confirm "该功能将强制安装最新版本，并且数据不会丢失。你想继续吗?" "y"
+    confirm "$(echo -e "${green}该功能将强制安装最新版本，并且数据不会丢失。${red}你想继续吗？${plain} ---->>")" "y"
     if [[ $? != 0 ]]; then
         LOGE "已取消"
         if [[ $# == 0 ]]; then
