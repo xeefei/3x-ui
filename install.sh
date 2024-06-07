@@ -137,8 +137,10 @@ config_after_install() {
         echo -e "${yellow}面板端口号设置成功!${plain}"
         /usr/local/x-ui/x-ui setting -webBasePath ${config_webBasePath}
         echo -e "${yellow}面板登录访问路径设置成功!${plain}"
+        echo ""
     else
-        echo -e "${red}Cancel...取消修改...${plain}"
+        echo -e "${red}--------------->>>>Cancel...取消修改...${plain}"
+        echo ""
         if [[ ! -f "/etc/x-ui/x-ui.db" ]]; then
             local usernameTemp=$(head -c 6 /dev/urandom | base64)
             local passwordTemp=$(head -c 6 /dev/urandom | base64)
@@ -152,12 +154,15 @@ config_after_install() {
             echo -e "###############################################"
             echo -e "${red}如果您忘记了登录信息，可以在安装后输入 x-ui 然后输入数字 8 选项进行检查${plain}"
         else
-            echo -e "${red}这是您的升级，将保留旧设置，如果您忘记了登录信息，您可以输入 x-ui 然后输入数字 8 选项进行检查${plain}"
+            echo -e "${green}这是您的升级，将保留旧设置，如果您忘记了登录信息，您可以输入 x-ui 然后输入${red}数字 8 选项进行检查${plain}"
+            echo ""
+            echo ""
         fi
     fi
     /usr/local/x-ui/x-ui migrate
 }
 
+echo ""
 install_x-ui() {
     cd /usr/local/
 
@@ -167,7 +172,11 @@ install_x-ui() {
             echo -e "${red}获取 3x-ui 版本失败，可能是 Github API 限制，请稍后再试${plain}"
             exit 1
         fi
+        echo ""
+        echo -e "--------------------------------------------"
         echo -e "${green}------->>>>获取 3x-ui 最新版本：${last_version}，开始安装...${plain}"
+        echo -e "--------------------------------------------"
+        echo ""
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 3x-ui 失败, 请检查服务器是否可以连接至 GitHub ${plain}"
@@ -218,7 +227,8 @@ install_x-ui() {
     systemctl start warp-go >/dev/null 2>&1
     wg-quick up wgcf >/dev/null 2>&1
 
-    echo -e "${green}3x-ui ${last_version}${plain} 安装成功，正在启动..."
+    echo ""
+    echo -e "----------->>>>>>${green}3x-ui ${last_version}${plain} 安装成功，正在启动..."
     echo -e "         ---------------------"
     echo -e "         |${green}3X-UI 控制菜单用法 ${plain}|${plain}"
     echo -e "         |   ${yellow}一个更好的面板  ${plain}|${plain}"   
