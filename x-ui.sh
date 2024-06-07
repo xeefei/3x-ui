@@ -33,7 +33,8 @@ else
     exit 1
 fi
 
-echo "目前服务器的操作系统为: $release"
+echo ""
+echo -e "当前服务器的操作系统为:${red} $release${plain}"
 
 os_version=$(grep -i version_id /etc/os-release | cut -d \" -f2 | cut -d . -f1)
 
