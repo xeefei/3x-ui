@@ -18,10 +18,12 @@ elif [[ -f /usr/lib/os-release ]]; then
     source /usr/lib/os-release
     release=$ID
 else
+    echo ""
     echo "${red}检查服务器操作系统失败，请联系作者!${plain}" >&2
     exit 1
 fi
-echo "${green}---------->>>>>目前服务器的操作系统为: $release${plain}"
+echo ""
+echo -e "${green}---------->>>>>目前服务器的操作系统为: $release${plain}"
 
 arch() {
     case "$(uname -m)" in
@@ -139,6 +141,7 @@ config_after_install() {
         echo -e "${yellow}面板登录访问路径设置成功!${plain}"
         echo ""
     else
+        echo ""
         echo -e "${red}--------------->>>>Cancel...取消修改...${plain}"
         echo ""
         if [[ ! -f "/etc/x-ui/x-ui.db" ]]; then
@@ -174,7 +177,7 @@ install_x-ui() {
         fi
         echo ""
         echo -e "--------------------------------------------"
-        echo -e "${green}------->>>>获取 3x-ui 最新版本：${last_version}，开始安装...${plain}"
+        echo -e "${green}--------->>获取 3x-ui 最新版本：${last_version}，开始安装...${plain}"
         echo -e "--------------------------------------------"
         echo ""
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz
@@ -229,6 +232,7 @@ install_x-ui() {
 
     echo ""
     echo -e "----------->>>>>>${green}3x-ui ${last_version}${plain} 安装成功，正在启动..."
+    echo ""
     echo -e "         ---------------------"
     echo -e "         |${green}3X-UI 控制菜单用法 ${plain}|${plain}"
     echo -e "         |   ${yellow}一个更好的面板  ${plain}|${plain}"   
