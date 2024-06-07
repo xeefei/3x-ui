@@ -1251,7 +1251,7 @@ remove_iplimit() {
 show_usage() {
     echo -e "         ---------------------"
     echo -e "         |${green}3X-UI 控制菜单用法 ${plain}|${plain}"
-    echo -e "         |   ${yellow}一个更好的面板  ${plain}|${plain}"   
+    echo -e "         |  ${yellow}一个更好的面板  ${plain}|${plain}"   
     echo -e "         | ${yellow}基于Xray Core构建 ${plain}|${plain}"  
     echo -e "--------------------------------------------"
     echo -e "x-ui              - 进入管理脚本"
