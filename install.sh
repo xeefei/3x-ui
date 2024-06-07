@@ -177,9 +177,9 @@ install_x-ui() {
             exit 1
         fi
         echo ""
-        echo -e "-------------------------------------------------------"
+        echo -e "---------------------------------------------------"
         echo -e "${green}--------->>获取 3x-ui 最新版本：${last_version}，开始安装...${plain}"
-        echo -e "-------------------------------------------------------"
+        echo -e "---------------------------------------------------"
         echo ""
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz
         if [[ $? -ne 0 ]]; then
