@@ -122,7 +122,8 @@ install_base() {
 # This function will be called when user installed x-ui out of security
 config_after_install() {
     echo -e "${yellow}安装/更新完成！ 为了您的面板安全，建议修改面板设置 ${plain}"
-    read -p "想继续修改吗？选择N以保留旧设置 [y/n]?": config_confirm
+    echo ""
+    read -p "想继续修改吗？${red}选择N以保留旧设置 [y/n]?": config_confirm
     if [[ "${config_confirm}" == "y" || "${config_confirm}" == "Y" ]]; then
         read -p "请设置您的用户名: " config_account
         echo -e "${yellow}您的用户名将是: ${config_account}${plain}"
@@ -176,9 +177,9 @@ install_x-ui() {
             exit 1
         fi
         echo ""
-        echo -e "--------------------------------------------"
+        echo -e "-------------------------------------------------------"
         echo -e "${green}--------->>获取 3x-ui 最新版本：${last_version}，开始安装...${plain}"
-        echo -e "--------------------------------------------"
+        echo -e "-------------------------------------------------------"
         echo ""
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz
         if [[ $? -ne 0 ]]; then
