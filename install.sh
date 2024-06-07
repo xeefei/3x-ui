@@ -123,7 +123,7 @@ install_base() {
 config_after_install() {
     echo -e "${yellow}安装/更新完成！ 为了您的面板安全，建议修改面板设置 ${plain}"
     echo ""
-    read -p "\e[32m想继续修改吗？\e[31m选择“n”以保留旧设置 [y/n]?\e[0m": config_confirm
+    read -p "\e[32m想继续修改吗？\e[31m选择“n”以保留旧设置 [y/n]?\e[0m" config_confirm
     if [[ "${config_confirm}" == "y" || "${config_confirm}" == "Y" ]]; then
         read -p "请设置您的用户名: " config_account
         echo -e "${yellow}您的用户名将是: ${config_account}${plain}"
