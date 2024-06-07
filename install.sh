@@ -219,11 +219,11 @@ install_x-ui() {
     wg-quick up wgcf >/dev/null 2>&1
 
     echo -e "${green}3x-ui ${last_version}${plain} 安装成功，正在启动..."
-    echo -e "           ----------------------"
-    echo -e "           |${green}3X-UI 控制菜单用法:${plain}|${plain}"
-    echo -e "           |   ${yellow}一个更好的面板  ${plain}|${plain}"   
-    echo -e "           | ${yellow}基于Xray Core构建 ${plain}|${plain}"  
-    echo -e "----------------------------------------------"
+    echo -e "         ---------------------"
+    echo -e "         |${green}3X-UI 控制菜单用法 ${plain}|${plain}"
+    echo -e "         |   ${yellow}一个更好的面板  ${plain}|${plain}"   
+    echo -e "         | ${yellow}基于Xray Core构建 ${plain}|${plain}"  
+    echo -e "--------------------------------------------"
     echo -e "x-ui              - 进入管理脚本"
     echo -e "x-ui start        - 启动 3x-ui 面板"
     echo -e "x-ui stop         - 关闭 3x-ui 面板"
@@ -236,7 +236,7 @@ install_x-ui() {
     echo -e "x-ui update       - 更新 3x-ui 面板"
     echo -e "x-ui install      - 安装 3x-ui 面板"
     echo -e "x-ui uninstall    - 卸载 3x-ui 面板"
-    echo -e "----------------------------------------------"
+    echo -e "--------------------------------------------"
     echo ""
     if [[ -n $ipv4 ]]; then
         echo -e "${yellow}面板 IPv4 访问地址为：${green}http://$ipv4:${config_port}${plain}"
