@@ -123,7 +123,7 @@ install_base() {
 config_after_install() {
     echo -e "${yellow}安装/更新完成！ 为了您的面板安全，建议修改面板设置 ${plain}"
     echo ""
-    read -p "${green}想继续修改吗？${red}选择N以保留旧设置 [y/n]?${plain}": config_confirm
+    read -p "\e[32m想继续修改吗？\e[31m选择“n”以保留旧设置 [y/n]?\e[0m": config_confirm
     if [[ "${config_confirm}" == "y" || "${config_confirm}" == "Y" ]]; then
         read -p "请设置您的用户名: " config_account
         echo -e "${yellow}您的用户名将是: ${config_account}${plain}"
@@ -150,7 +150,7 @@ config_after_install() {
             local passwordTemp=$(head -c 6 /dev/urandom | base64)
             local webBasePathTemp=$(head -c 6 /dev/urandom | base64)
             /usr/local/x-ui/x-ui setting -username ${usernameTemp} -password ${passwordTemp} -webBasePath ${webBasePathTemp}
-            echo -e "检测到为全新安装，出于安全考虑将生成随机登录信息:"
+            echo -e "${yellow}检测到为全新安装，出于安全考虑将生成随机登录信息:${plain}"
             echo -e "###############################################"
             echo -e "${green}用户名: ${usernameTemp}${plain}"
             echo -e "${green}密  码: ${passwordTemp}${plain}"
