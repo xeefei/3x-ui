@@ -38,7 +38,7 @@ arch() {
     esac
 }
 
-echo "架构: $(arch)"
+echo -e "${yellow}---------->>>>>当前系统的架构为: $(arch)${plain}"
 
 os_version=$(grep -i version_id /etc/os-release | cut -d \" -f2 | cut -d . -f1)
 
@@ -231,7 +231,7 @@ install_x-ui() {
     wg-quick up wgcf >/dev/null 2>&1
 
     echo ""
-    echo -e "----------->>>>>>${green}3x-ui ${last_version}${plain} 安装成功，正在启动..."
+    echo -e "------->>>>${green}3x-ui ${last_version}${plain}<<<<安装成功，正在启动..."
     echo ""
     echo -e "         ---------------------"
     echo -e "         |${green}3X-UI 控制菜单用法 ${plain}|${plain}"
