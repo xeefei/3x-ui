@@ -18,10 +18,10 @@ elif [[ -f /usr/lib/os-release ]]; then
     source /usr/lib/os-release
     release=$ID
 else
-    echo "检查服务器操作系统失败，请联系作者!" >&2
+    echo "${red}检查服务器操作系统失败，请联系作者!${plain}" >&2
     exit 1
 fi
-echo "目前服务器的操作系统为: $release"
+echo "${green}---------->>>>>目前服务器的操作系统为: $release${plain}"
 
 arch() {
     case "$(uname -m)" in
@@ -167,7 +167,7 @@ install_x-ui() {
             echo -e "${red}获取 3x-ui 版本失败，可能是 Github API 限制，请稍后再试${plain}"
             exit 1
         fi
-        echo -e "获取 3x-ui 最新版本：${last_version}，开始安装..."
+        echo -e "${green}------->>>>获取 3x-ui 最新版本：${last_version}，开始安装...${plain}"
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 3x-ui 失败, 请检查服务器是否可以连接至 GitHub ${plain}"
@@ -176,7 +176,7 @@ install_x-ui() {
     else
         last_version=$1
         url="https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz"
-        echo -e "开始安装 3x-ui $1"
+        echo -e "${green}---------------->>>>开始安装 3x-ui $1${plain}"
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz ${url}
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 3x-ui $1 失败, 请检查此版本是否存在 ${plain}"
