@@ -1270,40 +1270,40 @@ show_usage() {
 show_menu() {
     echo -e "
   ${green}3X-UI 面板管理脚本${plain}
-  ${yellow}    一个更好的面板${plain}
-  ${yellow}  基于Xray Core构建${plain}
+  ${yellow}  一个更好的面板${plain}
+  ${yellow} 基于Xray Core构建${plain}
+——————————————————————
   ${green}0.${plain} 退出脚本
-————————————————
   ${green}1.${plain} 安装面板
   ${green}2.${plain} 更新面板
   ${green}3.${plain} 自定义版本
   ${green}4.${plain} 卸载面板
-————————————————
+——————————————————————
   ${green}5.${plain} 重置用户名、密码和 Secret Token
   ${green}6.${plain} 重置面板设置
   ${green}7.${plain} 修改面板端口
   ${green}8.${plain} 查看面板设置
-————————————————
+——————————————————————
   ${green}9.${plain} 启动面板
   ${green}10.${plain} 关闭面板
   ${green}11.${plain} 重启面板
   ${green}12.${plain} 检查面板状态
   ${green}13.${plain} 检查面板日志
-————————————————
+——————————————————————
   ${green}14.${plain} 启用开机启动
   ${green}15.${plain} 禁用开机启动
-————————————————
+——————————————————————
   ${green}16.${plain} SSL 证书管理
   ${green}17.${plain} CF SSL 证书
   ${green}18.${plain} IP 限制管理
   ${green}19.${plain} WARP 管理
   ${green}20.${plain} 防火墙管理
-————————————————
+——————————————————————
   ${green}21.${plain} 启用 BBR 
   ${green}22.${plain} 更新 Geo 文件
   ${green}23.${plain} Speedtest by Ookla
   ${green}24.${plain} 安装订阅转换 
-————————————————
+——————————————————————
   ${green}若在使用过程中有任何问题${plain}
   ${yellow}请加入〔3X-UI〕中文交流群${plain}
   ${red}https://t.me/XUI_CN ${yellow}截图进行反馈${plain}
@@ -1311,7 +1311,7 @@ show_menu() {
   ${yellow}https://github.com/xeefei/3x-ui${plain}
   ${green}详细〔安装配置〕教程${plain}
   ${yellow}https://xeefei.github.io/xufei/2024/05/3x-ui${plain}
-————————————————
+——————————————————————
 "
     show_status
     echo && read -p "请输入选项 [0-24]: " num
