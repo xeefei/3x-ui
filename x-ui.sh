@@ -554,9 +554,9 @@ check_xray_status() {
 show_xray_status() {
     check_xray_status
     if [[ $? == 0 ]]; then
-        echo -e "Xray 状态: ${green}运行中${plain}"
+        echo -e "Xray状态: ${green}运行中${plain}"
     else
-        echo -e "Xray 状态: ${red}未运行${plain}"
+        echo -e "Xray状态: ${red}未运行${plain}"
     fi
 }
 
