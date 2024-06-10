@@ -29,7 +29,7 @@ elif [[ -f /usr/lib/os-release ]]; then
     source /usr/lib/os-release
     release=$ID
 else
-    echo "检查服务器操作系统失败，请联系作者!" >&2
+    echo -e "${red}检查服务器操作系统失败，请联系作者!${plain}" >&2
     exit 1
 fi
 
