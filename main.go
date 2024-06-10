@@ -121,6 +121,8 @@ func resetSetting() {
 }
 
 func showSetting(show bool) {
+	ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
+        ipv6=$(curl -s6m8 ip.p3terx.com -k | sed -n 1p)
 	if show {
 		settingService := service.SettingService{}
 		port, err := settingService.GetPort()
@@ -154,6 +156,14 @@ func showSetting(show bool) {
 		} else {
 			fmt.Println("webBasePath is not set----->>未设置访问路径")
 		}
+               echo ""
+               if [[ -n $ipv4 ]]; then
+               echo -e "${yellow}面板 IPv4 访问地址为：${green}http://$ipv4:${port}/${webBasePath}${plain}"
+               fi
+               if [[ -n $ipv6 ]]; then
+               echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${port}/${webBasePath}${plain}"
+               fi
+               echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${port} ${yellow}端口已放行${plain}"
 	}
 }
 
