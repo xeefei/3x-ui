@@ -268,7 +268,7 @@ install_x-ui $1
 echo ""
 echo -e "----------------------------------------------"
 info=$(/usr/local/x-ui/x-ui setting -show true)
-echo -e "${green}${info}${plain}"
+echo -e "${info}${plain}"
 echo -e "若你忘记了上述面板信息，后期可通过x-ui命令进入脚本${red}输入数字〔8〕选项获取${plain}"
 echo -e "----------------------------------------------"
 echo ""
