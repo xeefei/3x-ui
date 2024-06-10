@@ -154,9 +154,8 @@ func showSetting(show bool) {
 		} else {
 			fmt.Println("webBasePath is not set----->>未设置访问路径")
 		}
-               echo ""
            
-		        fmt.Println("面板访问地址为：http://ip:port/webBasePath")
+		fmt.Println("面板访问地址为----->> http://ip:", port, "/", webBasePath")
 	}
 }
 
