@@ -19,7 +19,7 @@ elif [[ -f /usr/lib/os-release ]]; then
     release=$ID
 else
     echo ""
-    echo "${red}检查服务器操作系统失败，请联系作者!${plain}" >&2
+    echo -e "${red}检查服务器操作系统失败，请联系作者!${plain}" >&2
     exit 1
 fi
 echo ""
@@ -143,7 +143,7 @@ config_after_install() {
         echo ""
     else
         echo ""
-        echo -e "${red}--------------->>>>Cancel...取消修改...${plain}"
+        echo -e "${red}--------------->>>>Cancel...--------------->>>>>>>取消修改...${plain}"
         echo ""
         if [[ ! -f "/etc/x-ui/x-ui.db" ]]; then
             local usernameTemp=$(head -c 6 /dev/urandom | base64)
@@ -183,7 +183,7 @@ install_x-ui() {
         echo ""
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz
         if [[ $? -ne 0 ]]; then
-            echo -e "${red}下载 3x-ui 失败, 请检查服务器是否可以连接至 GitHub ${plain}"
+            echo -e "${red}下载 3x-ui 失败, 请检查服务器是否可以连接至 GitHub？ ${plain}"
             exit 1
         fi
     else
