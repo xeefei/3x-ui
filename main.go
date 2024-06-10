@@ -150,7 +150,7 @@ func showSetting(show bool) {
 		fmt.Println("password（密 码）:", userpasswd)
 		fmt.Println("port（端口号）:", port)
 		if webBasePath != "" {
-			fmt.Println("webBasePath（访问根路径）:", webBasePath)
+			fmt.Println("webBasePath（访问路径）:", webBasePath)
 		} else {
 			fmt.Println("webBasePath is not set----->>未设置访问路径")
 		}
@@ -247,9 +247,9 @@ func updateSetting(port int, username string, password string, webBasePath strin
 	if webBasePath != "" {
 		err := settingService.SetBasePath(webBasePath)
 		if err != nil {
-			fmt.Println("set base URI path failed（设置根路径失败）:", err)
+			fmt.Println("set base URI path failed（设置访问路径失败）:", err)
 		} else {
-			fmt.Println("set base URI path success------>>设置根路径成功")
+			fmt.Println("set base URI path success------>>设置访问路径成功")
 		}
 	}
 }
