@@ -1,6 +1,5 @@
 package main
-ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
-ipv6=$(curl -s6m8 ip.p3terx.com -k | sed -n 1p)
+
 import (
 	"flag"
 	"fmt"
@@ -156,13 +155,8 @@ func showSetting(show bool) {
 			fmt.Println("webBasePath is not set----->>未设置访问路径")
 		}
                echo ""
-               if [[ -n $ipv4 ]]; then
-		        fmt.Println("面板 IPv4 访问地址为：http://$ipv4:port/webBasePath")
-               fi
-               if [[ -n $ipv6 ]]; then
-		        fmt.Println("面板 IPv6 访问地址为：http://$ipv6:port/webBasePath")
-               fi
-		        fmt.Println("请自行确保此端口没有被其他程序占用，并且确保port端口已放行")
+           
+		        fmt.Println("面板访问地址为：http://ip:port/webBasePath")
 	}
 }
 
