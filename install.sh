@@ -131,7 +131,7 @@ config_after_install() {
         echo -e "${yellow}您的密码将是: ${config_password}${plain}"
         read -p "请设置面板端口: " config_port
         echo -e "${yellow}您的面板端口号为: ${config_port}${plain}"
-        read -p "请设置面板登录访问路径（ip:端口号/路径/）: " config_webBasePath
+        read -p "请设置面板登录访问路径（访问方式演示：ip:端口号/路径/）: " config_webBasePath
         echo -e "${yellow}您的面板访问路径为: ${config_webBasePath}${plain}"
         echo -e "${yellow}正在初始化，请稍候...${plain}"
         /usr/local/x-ui/x-ui setting -username ${config_account} -password ${config_password}
@@ -256,10 +256,10 @@ install_x-ui() {
     echo -e "--------------------------------------------"
     echo ""
     if [[ -n $ipv4 ]]; then
-        echo -e "${yellow}面板 IPv4 访问地址为：${green}http://$ipv4:${config_port}${plain}"
+        echo -e "${yellow}面板 IPv4 访问地址为：${green}http://$ipv4:${config_port}/${config_webBasePath}${plain}"
     fi
     if [[ -n $ipv6 ]]; then
-        echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${config_port}${plain}"
+        echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${config_port}/${config_webBasePath}${plain}"
     fi
     echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${config_port} ${yellow}端口已放行${plain}"
 }
