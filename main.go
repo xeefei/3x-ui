@@ -173,20 +173,20 @@ func showSetting(show bool) {
 		}
 
 		fmt.Println(Green + "Current panel settings as follows (当前面板设置如下):" + Reset)
-	        fmt.Println(Green + fmt.Sprintf("username: %s", username) + Reset)
-	        fmt.Println(Green + fmt.Sprintf("password: %s", userpasswd) + Reset)
-	        fmt.Println(Green + fmt.Sprintf("port: %d", port) + Reset)
+	        fmt.Println(Green + fmt.Sprintf("username（用户名）: %s", username) + Reset)
+	        fmt.Println(Green + fmt.Sprintf("password（密 码）: %s", userpasswd) + Reset)
+	        fmt.Println(Green + fmt.Sprintf("port（端口号）: %d", port) + Reset)
 		if webBasePath != "" {
-			fmt.Println(Green + fmt.Sprintf("webBasePath: %s", webBasePath) + Reset)
+			fmt.Println(Green + fmt.Sprintf("webBasePath（访问路径）: %s", webBasePath) + Reset)
 		} else {
 			fmt.Println("webBasePath is not set----->>未设置访问路径")
 		}
                 fmt.Println("")
   // 根据条件打印带颜色的字符串
         if ipv4 != "" {
-		formattedIPv4 := fmt.Sprintf("%s http://%s:%s/%s" + Reset,
+		formattedIPv4 := fmt.Sprintf("%s %s:%s/%s" + Reset,
 			Green+"面板 IPv4 访问地址------>>",
-			Yellow+"http://",
+		  //	Yellow+"http://",
 			Yellow+ipv4,
 			Yellow+fmt.Sprintf("%d", port),
 			Yellow+webBasePath)
@@ -194,15 +194,16 @@ func showSetting(show bool) {
 	}
 
 	if ipv6 != "" {
-		formattedIPv6 := fmt.Sprintf("%s http://%s:%s/%s" + Reset,
+		formattedIPv6 := fmt.Sprintf("%s %s:%s/%s" + Reset,
 			Green+"面板 IPv6 访问地址------>>",
-			Yellow+"http://",
+		   //	Yellow+"http://",
 			Yellow+ipv6,
 			Yellow+fmt.Sprintf("%d", port),
 			Yellow+webBasePath)
 		fmt.Println(formattedIPv6)
 	}
-	fmt.Println(fmt.Sprintf("%s若要登录访问面板，请复制上面的地址，并确保 %s%d%s 端口开放%s",Green, Red, port, Green, Reset))
+	fmt.Println("")
+	fmt.Println(fmt.Sprintf("%s若要登录访问面板，请复制上面的地址，并确保 %s%d%s 端口必须打开放行%s",Green, Red, port, Green, Reset))
 	}
 }
 
