@@ -212,7 +212,7 @@ func showSetting(show bool) {
 		fmt.Println("")
 		fmt.Println("--------------------------------------------------")
 	}
-	fmt.Println("")
+	fmt.Println("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
 	fmt.Println(fmt.Sprintf("%s请确保 %s%d%s 端口已打开放行%s",Green, Red, port, Green, Reset))	
 	fmt.Println("请自行确保此端口没有被其他程序占用")
 	fmt.Println(Green + "若要登录访问面板，请复制上面的地址到浏览器" + Reset)
