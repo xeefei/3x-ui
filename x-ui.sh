@@ -249,7 +249,7 @@ check_config() {
         LOGE "获取当前设置错误，请检查日志"
         show_menu
     fi
-    LOGI "${info}"
+    echo -e "${info}${plain}"
 }
 
 set_port() {
