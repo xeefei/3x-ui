@@ -184,21 +184,21 @@ func showSetting(show bool) {
                 fmt.Println("")
   // 根据条件打印带颜色的字符串
         if ipv4 != "" {
-		formattedIPv4 := fmt.Sprintf("%s http://%s:%d/%s" + Reset,
+		formattedIPv4 := fmt.Sprintf("%s http://%s:%s/%s" + Reset,
 			Green+"面板 IPv4 访问地址------>>",
 			Yellow+"http://",
 			Yellow+ipv4,
-			Yellow+port,
+			Yellow+fmt.Sprintf("%d", port),
 			Yellow+webBasePath)
 		fmt.Println(formattedIPv4)
 	}
 
 	if ipv6 != "" {
-		formattedIPv6 := fmt.Sprintf("%s http://%s:%d/%s" + Reset,
+		formattedIPv6 := fmt.Sprintf("%s http://%s:%s/%s" + Reset,
 			Green+"面板 IPv6 访问地址------>>",
 			Yellow+"http://",
 			Yellow+ipv6,
-			Yellow+port,
+			Yellow+fmt.Sprintf("%d", port),
 			Yellow+webBasePath)
 		fmt.Println(formattedIPv6)
 	}
