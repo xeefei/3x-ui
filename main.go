@@ -184,6 +184,7 @@ func showSetting(show bool) {
                 fmt.Println("")
   // 根据条件打印带颜色的字符串
         if ipv4 != "" {
+		fmt.Println("--------------------------------------------------")
 		formattedIPv4 := fmt.Sprintf("%s http://%s:%s%s" + Reset,
 			Green+"面板 IPv4 访问地址------>>",
 		  	Yellow+"http://",
@@ -191,9 +192,11 @@ func showSetting(show bool) {
 			Yellow+fmt.Sprintf("%d", port),
 			Yellow+webBasePath)
 		fmt.Println(formattedIPv4)
+		fmt.Println("--------------------------------------------------")
 	}
 
 	if ipv6 != "" {
+		fmt.Println("--------------------------------------------------")
 		formattedIPv6 := fmt.Sprintf("%s http://%s:%s%s" + Reset,
 			Green+"面板 IPv6 访问地址------>>",
 		   	Yellow+"http://",
@@ -201,6 +204,7 @@ func showSetting(show bool) {
 			Yellow+fmt.Sprintf("%d", port),
 			Yellow+webBasePath)
 		fmt.Println(formattedIPv6)
+		fmt.Println("--------------------------------------------------")
 	}
 	fmt.Println("")
 	fmt.Println(fmt.Sprintf("%s若要登录访问面板，请复制上面的地址，并确保 %s%d%s 端口必须打开放行%s",Green, Red, port, Green, Reset))
