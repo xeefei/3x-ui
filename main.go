@@ -1,8 +1,5 @@
 package main
-red='\033[0;31m'
-green='\033[0;32m'
-yellow='\033[0;33m'
-plain='\033[0m'
+
 import (
 	"flag"
 	"fmt"
@@ -161,12 +158,12 @@ func showSetting(show bool) {
 		}
                echo ""
                if [[ -n $ipv4 ]]; then
-               echo -e "${yellow}面板 IPv4 访问地址为：${green}http://$ipv4:${port}/${webBasePath}${plain}"
+		        fmt.Println("面板 IPv4 访问地址为：http://$ipv4:port/webBasePath")
                fi
                if [[ -n $ipv6 ]]; then
-               echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${port}/${webBasePath}${plain}"
+		        fmt.Println("面板 IPv6 访问地址为：http://$ipv6:port/webBasePath")
                fi
-               echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${port} ${yellow}端口已放行${plain}"
+		        fmt.Println("请自行确保此端口没有被其他程序占用，并且确保port端口已放行")
 	}
 }
 
