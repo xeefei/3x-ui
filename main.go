@@ -171,7 +171,8 @@ func showSetting(show bool) {
 		if username == "" || userpasswd == "" {
 			fmt.Println("current username or password is empty--->>当前用户名或密码为空")
 		}
-
+		fmt.Println("")
+                fmt.Println(Yellow + "----->>>以下为面板重要信息，请自行记录保存<<<-----" + Reset)
 		fmt.Println(Green + "Current panel settings as follows (当前面板设置如下):" + Reset)
 	        fmt.Println(Green + fmt.Sprintf("username（用户名）: %s", username) + Reset)
 	        fmt.Println(Green + fmt.Sprintf("password（密 码）: %s", userpasswd) + Reset)
@@ -213,6 +214,7 @@ func showSetting(show bool) {
 	fmt.Println("")
 	fmt.Println("请自行确保此端口没有被其他程序占用")
 	fmt.Println(fmt.Sprintf("%s若要登录访问面板，请复制上面的地址，并确保 %s%d%s 端口已打开放行%s",Green, Red, port, Green, Reset))
+	fmt.Println("")
 	}
 }
 
