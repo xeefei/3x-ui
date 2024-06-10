@@ -186,11 +186,11 @@ func showSetting(show bool) {
         if ipv4 != "" {
 		fmt.Println("--------------------------------------------------")
 		fmt.Println("")
-		formattedIPv4 := fmt.Sprintf("%s %s:%s%s" + Reset,
+		formattedIPv4 := fmt.Sprintf("%s %s%s:%d%s" + Reset,
 			Green+"面板 IPv4 访问地址------>>",
 		  	Yellow+"http://",
-			Yellow+ipv4,
-			Yellow+fmt.Sprintf("%d", port),
+			ipv4,
+			port,
 			Yellow+webBasePath + Reset)
 		fmt.Println(formattedIPv4)
 		fmt.Println("")
@@ -200,11 +200,11 @@ func showSetting(show bool) {
 	if ipv6 != "" {
 		fmt.Println("--------------------------------------------------")
 		fmt.Println("")
-		formattedIPv6 := fmt.Sprintf("%s %s:%s%s" + Reset,
+		formattedIPv6 := fmt.Sprintf("%s %s%s:%d%s" + Reset,
 			Green+"面板 IPv6 访问地址------>>",
 		   	Yellow+"http://",
-			Yellow+ipv6,
-			Yellow+fmt.Sprintf("%d", port),
+			ipv6,
+			port,
 			Yellow+webBasePath + Reset)
 		fmt.Println(formattedIPv6)
 		fmt.Println("")
