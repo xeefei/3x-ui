@@ -255,13 +255,14 @@ install_x-ui() {
     echo -e "x-ui uninstall    - 卸载 3x-ui 面板"
     echo -e "--------------------------------------------"
     echo ""
-    if [[ -n $ipv4 ]]; then
-        echo -e "${yellow}面板 IPv4 访问地址为：${green}http://$ipv4:${config_port}/${config_webBasePath}${plain}"
-    fi
-    if [[ -n $ipv6 ]]; then
-        echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${config_port}/${config_webBasePath}${plain}"
-    fi
-    echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${config_port} ${yellow}端口已放行${plain}"
+    # if [[ -n $ipv4 ]]; then
+    #    echo -e "${yellow}面板 IPv4 访问地址为：${green}http://$ipv4:${config_port}/${config_webBasePath}${plain}"
+    # fi
+    # if [[ -n $ipv6 ]]; then
+    #    echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${config_port}/${config_webBasePath}${plain}"
+    # fi
+    #    echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${config_port} ${yellow}端口已放行${plain}"
+    echo -e "${yellow}----->>>3X-UI面板和Xray启动成功<<<-----${plain}"
 }
 install_base
 install_x-ui $1
