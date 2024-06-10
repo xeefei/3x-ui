@@ -195,6 +195,7 @@ func showSetting(show bool) {
 			port,
 			Yellow+webBasePath + Reset)
 		fmt.Println(formattedIPv4)
+		fmt.Println(Green + "注：若安装了证书，请把IP换成你的域名用https方式登录" + Reset)
 		fmt.Println("")
 		fmt.Println("--------------------------------------------------")
 	}
@@ -209,6 +210,7 @@ func showSetting(show bool) {
 			port,
 			Yellow+webBasePath + Reset)
 		fmt.Println(formattedIPv6)
+		fmt.Println(Green + "注：若安装了证书，请把IP换成你的域名用https方式登录" + Reset)
 		fmt.Println("")
 		fmt.Println("--------------------------------------------------")
 	}
