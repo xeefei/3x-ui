@@ -7,7 +7,6 @@ import (
 	"os"
 	"os/signal"
 	"os/exec"
-        "github.com/fatih/color"
         "strings"
 	"syscall"
 	_ "unsafe"
@@ -141,9 +140,13 @@ func showSetting(show bool) {
     // 去除命令输出中的换行符
     ipv4 := strings.TrimSpace(string(outputIPv4))
     ipv6 := strings.TrimSpace(string(outputIPv6))
-    // 创建颜色对象
-    green := color.New(color.FgGreen).SprintFunc()
-    yellow := color.New(color.FgYellow).SprintFunc()
+    // 定义转义字符，定义不同颜色的转义字符
+	const (
+		Reset      = "\033[0m"
+		Red        = "\033[31m"
+		Green      = "\033[32m"
+		Yellow     = "\033[33m"
+	)
 	
 	if show {
 		settingService := service.SettingService{}
@@ -169,38 +172,34 @@ func showSetting(show bool) {
 			fmt.Println("current username or password is empty--->>当前用户名或密码为空")
 		}
 
-		fmt.Println(green("current panel settings as follows（当前面板设置如下）:"))
-                fmt.Println(green(fmt.Sprintf("username（用户名）: %s", username)))
-                fmt.Println(green(fmt.Sprintf("password（密 码）: %s", userpasswd)))
-                fmt.Println(green(fmt.Sprintf("port（端口号）: %d", port)))
+		fmt.Println(Green + "Current panel settings as follows (当前面板设置如下):" + Reset)
+	        fmt.Println(Green + fmt.Sprintf("username: %s", username) + Reset)
+	        fmt.Println(Green + fmt.Sprintf("password: %s", userpasswd) + Reset)
+	        fmt.Println(Green + fmt.Sprintf("port: %d", port) + Reset)
 		if webBasePath != "" {
-			fmt.Println(green(fmt.Sprintf("webBasePath（访问路径）: %s", webBasePath)))
+			fmt.Println(Green + fmt.Sprintf("webBasePath: %s", webBasePath) + Reset)
 		} else {
 			fmt.Println("webBasePath is not set----->>未设置访问路径")
 		}
                 fmt.Println("")
   // 根据条件打印带颜色的字符串
-    if ipv4 != "" {
-        formattedIPv4 := fmt.Sprintf("%s http://%s:%d/%s",
-            green("面板 IPv4 访问地址为-------->>>"),
-            yellow(ipv4),
-	    yellow("http://"),
-            yellow(":"),
-            yellow(port),
-            yellow(webBasePath))
-        fmt.Println(formattedIPv4)
-    }
+        if ipv4 != "" {
+		formattedIPv4 := fmt.Sprintf("%s http://%s:%d/%s" + Reset,
+			Yellow+"面板 IPv4 访问地址：",
+			ipv4,
+			port,
+			webBasePath)
+		fmt.Println(formattedIPv4)
+	}
 
-    if ipv6 != "" {
-        formattedIPv6 := fmt.Sprintf("%s http://%s:%d/%s",
-            green("面板 IPv6 访问地址为-------->>>"),
-            yellow(ipv6),
-            yellow("http://"),
-            yellow(":"),
-            yellow(port),
-            yellow(webBasePath))
-        fmt.Println(formattedIPv6)
-    }
+	if ipv6 != "" {
+		formattedIPv6 := fmt.Sprintf("%s http://%s:%d/%s" + Reset,
+			Yellow+"面板 IPv6 访问地址：",
+			ipv6,
+			port,
+			webBasePath)
+		fmt.Println(formattedIPv6)
+	}
 	}
 }
 
