@@ -1,5 +1,6 @@
 package main
-
+ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
+ipv6=$(curl -s6m8 ip.p3terx.com -k | sed -n 1p)
 import (
 	"flag"
 	"fmt"
@@ -121,8 +122,6 @@ func resetSetting() {
 }
 
 func showSetting(show bool) {
-	ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
-        ipv6=$(curl -s6m8 ip.p3terx.com -k | sed -n 1p)
 	if show {
 		settingService := service.SettingService{}
 		port, err := settingService.GetPort()
