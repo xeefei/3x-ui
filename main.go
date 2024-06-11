@@ -195,6 +195,7 @@ func showSetting(show bool) {
 			port,
 			Yellow+webBasePath + Reset)
 		fmt.Println(formattedIPv4)
+		fmt.Println("")
 		fmt.Println(Green + "注：若安装了证书，请把IP换成你的域名用https方式登录" + Reset)
 		fmt.Println("")
 		fmt.Println("--------------------------------------------------")
@@ -210,14 +211,17 @@ func showSetting(show bool) {
 			port,
 			Yellow+webBasePath + Reset)
 		fmt.Println(formattedIPv6)
+		fmt.Println("")
 		fmt.Println(Green + "注：若安装了证书，请把IP换成你的域名用https方式登录" + Reset)
 		fmt.Println("")
 		fmt.Println("--------------------------------------------------")
 	}
-	fmt.Println("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+	fmt.Println("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
 	fmt.Println(fmt.Sprintf("%s请确保 %s%d%s 端口已打开放行%s",Green, Red, port, Green, Reset))	
 	fmt.Println("请自行确保此端口没有被其他程序占用")
 	fmt.Println(Green + "若要登录访问面板，请复制上面的地址到浏览器" + Reset)
+	fmt.Println("")
+	fmt.Println("--------------------------------------------------")
 	fmt.Println("")
 	}
 }
