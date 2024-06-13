@@ -358,6 +358,7 @@ func migrateDb() {
 	}
 	fmt.Println("Start migrating database...---->>开始迁移数据库...")
 	inboundService.MigrateDB()
+	fmt.Println("")
 	fmt.Println("Migration done!------------>>迁移完成！")
 }
 
