@@ -186,9 +186,9 @@ install_x-ui() {
         echo -e "${green}--------->>获取 3x-ui 最新版本：${yellow}${last_version}${plain}${green}，开始安装...${plain}"
         echo -e "-----------------------------------------------------"
         echo ""
-        sleep 1
-        echo -e "${green}---------------->>>>>>>>>安装进度50%${plain}"
         sleep 2
+        echo -e "${green}---------------->>>>>>>>>安装进度50%${plain}"
+        sleep 3
         echo ""
         echo -e "${green}---------------->>>>>>>>>>>>>>>>>>>>>安装进度100%${plain}"
         echo ""
@@ -205,9 +205,9 @@ install_x-ui() {
         echo -e "${green}---------------->>>>开始安装 3x-ui $1${plain}"
         echo -e "--------------------------------------------"
         echo ""
-        sleep 1
-        echo -e "${green}---------------->>>>>>>>>安装进度50%${plain}"
         sleep 2
+        echo -e "${green}---------------->>>>>>>>>安装进度50%${plain}"
+        sleep 3
         echo ""
         echo -e "${green}---------------->>>>>>>>>>>>>>>>>>>>>安装进度100%${plain}"
         echo ""
@@ -223,7 +223,7 @@ install_x-ui() {
         rm /usr/local/x-ui/ -rf
     fi
     
-    sleep 2
+    sleep 3
     echo -e "${green}------->>>>>>>>>>>检查并保存安装目录${plain}"
     echo ""
     tar zxvf x-ui-linux-$(arch).tar.gz
