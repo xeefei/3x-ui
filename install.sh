@@ -288,7 +288,7 @@ install_x-ui() {
     #    echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${config_port}/${config_webBasePath}${plain}"
     # fi
     #    echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${config_port} ${yellow}端口已放行${plain}"
-    sleep 1
+    sleep 3
     echo -e ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
     echo ""
     echo -e "${yellow}----->>>3X-UI面板和Xray启动成功<<<-----${plain}"
@@ -297,12 +297,14 @@ install_base
 install_x-ui $1
 echo ""
 echo -e "----------------------------------------------"
+sleep 3
 info=$(/usr/local/x-ui/x-ui setting -show true)
 echo -e "${info}${plain}"
 echo ""
 echo -e "若你忘记了上述面板信息，后期可通过x-ui命令进入脚本${red}输入数字〔8〕选项获取${plain}"
 echo -e "----------------------------------------------"
 echo ""
+sleep 2
 echo -e "${green}安装/更新完成，若在使用过程中有任何问题${plain}"
 echo -e "${yellow}请先描述清楚所遇问题加〔3X-UI〕中文交流群${plain}"
 echo -e "${yellow}在TG群中${red} https://t.me/XUI_CN ${yellow}截图进行反馈${plain}"
