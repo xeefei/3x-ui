@@ -300,7 +300,7 @@ install_base
 install_x-ui $1
 echo ""
 echo -e "----------------------------------------------"
-sleep 3
+sleep 5
 info=$(/usr/local/x-ui/x-ui setting -show true)
 echo -e "${info}${plain}"
 echo ""
