@@ -167,6 +167,7 @@ config_after_install() {
     fi
     sleep 1
     echo -e ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo ""
     /usr/local/x-ui/x-ui migrate
 }
 
@@ -182,7 +183,7 @@ install_x-ui() {
         fi
         echo ""
         echo -e "-----------------------------------------------------"
-        echo -e "${green}--------->>获取 3x-ui 最新版本：${yellow}${last_version}${plain}，开始安装...${plain}"
+        echo -e "${green}--------->>获取 3x-ui 最新版本：${yellow}${last_version}${plain}${green}，开始安装...${plain}"
         echo -e "-----------------------------------------------------"
         echo ""
         sleep 1
@@ -243,6 +244,7 @@ install_x-ui() {
     chmod +x /usr/bin/x-ui
     sleep 2
     echo -e "${green}------->>>>>>>>>>>保存成功${plain}"
+    echo ""
     config_after_install
 
     systemctl daemon-reload
@@ -258,6 +260,7 @@ install_x-ui() {
 
     echo ""
     echo -e "------->>>>${green}3x-ui ${last_version}${plain}<<<<安装成功，正在启动..."
+    sleep 1
     echo ""
     echo -e "         ---------------------"
     echo -e "         |${green}3X-UI 控制菜单用法 ${plain}|${plain}"
@@ -285,6 +288,9 @@ install_x-ui() {
     #    echo -e "${yellow}面板 IPv6 访问地址为：${green}http://[$ipv6]:${config_port}/${config_webBasePath}${plain}"
     # fi
     #    echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${config_port} ${yellow}端口已放行${plain}"
+    sleep 1
+    echo -e ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo ""
     echo -e "${yellow}----->>>3X-UI面板和Xray启动成功<<<-----${plain}"
 }
 install_base
