@@ -143,6 +143,7 @@ config_after_install() {
         echo ""
     else
         echo ""
+        sleep 1
         echo -e "${red}--------------->>>>Cancel...--------------->>>>>>>取消修改...${plain}"
         echo ""
         if [[ ! -f "/etc/x-ui/x-ui.db" ]]; then
@@ -181,6 +182,11 @@ install_x-ui() {
         echo -e "${green}--------->>获取 3x-ui 最新版本：${yellow}${last_version}，开始安装...${plain}"
         echo -e "-----------------------------------------------------"
         echo ""
+        sleep 1
+        echo -e "${green}---------------->>>>>>>>>安装进度50%${plain}"
+        sleep 2
+        echo -e "${green}---------------->>>>>>>>>>>>>>>>>>>>>安装进度100%${plain}"
+        echo ""
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 3x-ui 失败, 请检查服务器是否可以连接至 GitHub？ ${plain}"
@@ -189,9 +195,16 @@ install_x-ui() {
     else
         last_version=$1
         url="https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz"
+        echo ""
         echo -e "--------------------------------------------"
         echo -e "${green}---------------->>>>开始安装 3x-ui $1${plain}"
         echo -e "--------------------------------------------"
+        echo ""
+        sleep 1
+        echo -e "${green}---------------->>>>>>>>>安装进度50%${plain}"
+        sleep 2
+        echo -e "${green}---------------->>>>>>>>>>>>>>>>>>>>>安装进度100%${plain}"
+        echo ""
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz ${url}
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 3x-ui $1 失败, 请检查此版本是否存在 ${plain}"
@@ -203,7 +216,9 @@ install_x-ui() {
         systemctl stop x-ui
         rm /usr/local/x-ui/ -rf
     fi
-
+    
+    sleep 2
+    echo -e "${green}---------------->>>保存安装目录${plain}"
     tar zxvf x-ui-linux-$(arch).tar.gz
     rm x-ui-linux-$(arch).tar.gz -f
     cd x-ui
