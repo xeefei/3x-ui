@@ -38,6 +38,7 @@ arch() {
     esac
 }
 
+echo ""
 echo -e "${yellow}---------->>>>>当前系统的架构为: $(arch)${plain}"
 
 os_version=$(grep -i version_id /etc/os-release | cut -d \" -f2 | cut -d . -f1)
@@ -164,6 +165,8 @@ config_after_install() {
             echo ""
         fi
     fi
+    sleep 1
+    echo -e ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
     /usr/local/x-ui/x-ui migrate
 }
 
@@ -179,12 +182,13 @@ install_x-ui() {
         fi
         echo ""
         echo -e "-----------------------------------------------------"
-        echo -e "${green}--------->>获取 3x-ui 最新版本：${yellow}${last_version}，开始安装...${plain}"
+        echo -e "${green}--------->>获取 3x-ui 最新版本：${yellow}${last_version}${plain}，开始安装...${plain}"
         echo -e "-----------------------------------------------------"
         echo ""
         sleep 1
         echo -e "${green}---------------->>>>>>>>>安装进度50%${plain}"
         sleep 2
+        echo ""
         echo -e "${green}---------------->>>>>>>>>>>>>>>>>>>>>安装进度100%${plain}"
         echo ""
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz
@@ -203,6 +207,7 @@ install_x-ui() {
         sleep 1
         echo -e "${green}---------------->>>>>>>>>安装进度50%${plain}"
         sleep 2
+        echo ""
         echo -e "${green}---------------->>>>>>>>>>>>>>>>>>>>>安装进度100%${plain}"
         echo ""
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz ${url}
@@ -218,7 +223,8 @@ install_x-ui() {
     fi
     
     sleep 2
-    echo -e "${green}---------------->>>保存安装目录${plain}"
+    echo -e "${green}------->>>>>>>>>>>检查并保存安装目录${plain}"
+    echo ""
     tar zxvf x-ui-linux-$(arch).tar.gz
     rm x-ui-linux-$(arch).tar.gz -f
     cd x-ui
@@ -235,6 +241,8 @@ install_x-ui() {
     wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/xeefei/3x-ui/main/x-ui.sh
     chmod +x /usr/local/x-ui/x-ui.sh
     chmod +x /usr/bin/x-ui
+    sleep 2
+    echo -e "${green}------->>>>>>>>>>>保存成功${plain}"
     config_after_install
 
     systemctl daemon-reload
