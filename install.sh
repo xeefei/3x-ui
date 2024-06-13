@@ -192,6 +192,7 @@ install_x-ui() {
         echo ""
         echo -e "${green}---------------->>>>>>>>>>>>>>>>>>>>>安装进度100%${plain}"
         echo ""
+        sleep 2
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz https://github.com/xeefei/3x-ui/releases/download/${last_version}/x-ui-linux-$(arch).tar.gz
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 3x-ui 失败, 请检查服务器是否可以连接至 GitHub？ ${plain}"
@@ -211,6 +212,7 @@ install_x-ui() {
         echo ""
         echo -e "${green}---------------->>>>>>>>>>>>>>>>>>>>>安装进度100%${plain}"
         echo ""
+        sleep 2
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(arch).tar.gz ${url}
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 3x-ui $1 失败, 请检查此版本是否存在 ${plain}"
@@ -244,6 +246,7 @@ install_x-ui() {
     chmod +x /usr/bin/x-ui
     sleep 2
     echo -e "${green}------->>>>>>>>>>>保存成功${plain}"
+    sleep 2
     echo ""
     config_after_install
 
