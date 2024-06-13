@@ -204,12 +204,15 @@ func showSetting(show bool) {
 	if ipv6 != "" {
 		fmt.Println("--------------------------------------------------")
 		fmt.Println("")
-		formattedIPv6 := fmt.Sprintf("%s %s%s:%d%s" + Reset,
-			Green+"面板 IPv6 访问地址------>>",
-		   	Yellow+"http://",
-			ipv6,
-			port,
-			Yellow+webBasePath + Reset)
+		formattedIPv6 := fmt.Sprintf("%s %s[%s%s%s]:%d%s%s",
+	        	Green+"面板 IPv6 访问地址------>>", // 绿色的提示信息
+		        Yellow+"http://",                 // 黄色的 http:// 部分
+		        Yellow,                           // 开始黄色的左
+		        ipv6,                             // IPv6 地址
+		        Yellow,                           // 保持黄色
+		        port,                             // 端口号
+	        	Yellow+webBasePath,               // 黄色的 Web 基础路径
+	         	Reset)                            // 重置颜色
 		fmt.Println(formattedIPv6)
 		fmt.Println("")
 		fmt.Println(Green + ">>>>>>>>注：若你安装了证书，请把IP换成你的域名用https方式登录" + Reset)
