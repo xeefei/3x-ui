@@ -158,7 +158,7 @@ config_after_install() {
             echo -e "${green}密  码: ${passwordTemp}${plain}"
             echo -e "${green}访问路径: ${webBasePathTemp}${plain}"
             echo -e "###############################################"
-            echo -e "${red}如果您忘记了登录信息，可以在安装后输入 x-ui 然后输入数字 8 选项进行检查${plain}"
+            echo -e "${green}如果您忘记了登录信息，可以在安装后通过 x-ui 命令然后输入${red}数字 8 选项${green}进行查看${plain}"
         else
             echo -e "${green}此次操作属于版本升级，保留之前旧设置项，登录方式保持不变；如果您忘记了登录信息，您可以通过 x-ui 命令然后输入${red}数字 8 选项${green}进行查看${plain}"
             echo ""
@@ -304,7 +304,7 @@ sleep 4
 info=$(/usr/local/x-ui/x-ui setting -show true)
 echo -e "${info}${plain}"
 echo ""
-echo -e "若你忘记了上述面板信息，后期可通过x-ui命令进入脚本${red}输入数字〔8〕选项获取${plain}"
+echo -e "若您忘记了上述面板信息，后期可通过x-ui命令进入脚本${red}输入数字〔8〕选项获取${plain}"
 echo ""
 echo -e "----------------------------------------------"
 echo ""
