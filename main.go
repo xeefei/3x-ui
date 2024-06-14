@@ -212,7 +212,7 @@ func showSetting(show bool) {
 		fmt.Println(formattedIPv6)
 		fmt.Println("")
 	}
-	fmt.Println(Green + ">>>>>>>>注：若您安装了证书，请把IP换成您的域名用https方式登录" + Reset)
+	fmt.Println(Green + ">>>>>>>>注：若您安装了〔证书〕，请把IP换成您的域名用https方式登录" + Reset)
 	fmt.Println("")
 	fmt.Println("--------------------------------------------------")
 	fmt.Println("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
