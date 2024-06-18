@@ -83,9 +83,23 @@
           </template>
           <a-input v-model.trim="outbound.settings.address"></a-input>
         </a-form-item>
-        <a-form-item label='{{ i18n "pages.xray.wireguard.secretKey" }}'>
+        <a-form-item>
+          <template slot="label">
+              <a-tooltip>
+                  <template slot="title">
+                      <span>{{ i18n "reset" }}</span>
+                  </template>
+                  {{ i18n "pages.xray.wireguard.secretKey" }}
+                  <a-icon type="sync"
+                      @click="[outbound.settings.pubKey, outbound.settings.secretKey] = Object.values(Wireguard.generateKeypair())">
+                  </a-icon>
+              </a-tooltip>
+          </template>
           <a-input v-model.trim="outbound.settings.secretKey"></a-input>
-        </a-form-item>
+      </a-form-item>
+      <a-form-item label='{{ i18n "pages.xray.wireguard.publicKey" }}'>
+          <a-input disabled v-model="outbound.settings.pubKey"></a-input>
+      </a-form-item>
         <a-form-item label='{{ i18n "pages.xray.wireguard.domainStrategy" }}'>
           <a-select v-model="outbound.settings.domainStrategy" :dropdown-class-name="themeSwitcher.currentTheme">
             <a-select-option v-for="wds in ['', ...WireguardDomainStrategy]" :value="wds">[[ wds ]]</a-select-option>
@@ -213,14 +227,13 @@
             <a-select-option value="quic">QUIC</a-select-option>
             <a-select-option value="grpc">gRPC</a-select-option>
             <a-select-option value="httpupgrade">HTTPUpgrade</a-select-option>
+            <a-select-option value="splithttp">SplitHTTP</a-select-option>
         </a-select>
     </a-form-item>
     <template v-if="outbound.stream.network === 'tcp'">
-        <a-form-item label='HTTP {{ i18n "camouflage" }}'>
-            <a-switch :checked="outbound.stream.tcp.type === 'http'"
-                @change="checked => outbound.stream.tcp.type = checked ? 'http' : 'none'">
-            </a-switch>
-        </a-form-item>
+          <a-form-item label='HTTP {{ i18n "camouflage" }}'>
+            <a-switch :checked="outbound.stream.tcp.type === 'http'" @change="checked => outbound.stream.tcp.type = checked ? 'http' : 'none'"></a-switch>
+          </a-form-item>
         <template v-if="outbound.stream.tcp.type == 'http'">
             <a-form-item label='{{ i18n "host" }}'>
                 <a-input v-model.trim="outbound.stream.tcp.host"></a-input>
@@ -334,9 +347,19 @@
         </a-form-item>
         <a-form-item label='{{ i18n "path" }}'>
             <a-input v-model.trim="outbound.stream.httpupgrade.path"></a-input>
-        </a-form-item>
-    </template>
-</template>
+          </a-form-item>
+        </template>
+
+        <!-- splithttp -->
+        <template v-if="outbound.stream.network === 'splithttp'">
+          <a-form-item label='{{ i18n "host" }}'>
+            <a-input v-model="outbound.stream.splithttp.host"></a-input>
+          </a-form-item>
+          <a-form-item label='{{ i18n "path" }}'>
+            <a-input v-model.trim="outbound.stream.splithttp.path"></a-input>
+          </a-form-item>
+        </template>
+      </template>
 
 <!-- tls settings -->
 <template v-if="outbound.canEnableTls()">

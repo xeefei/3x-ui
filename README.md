@@ -107,10 +107,10 @@ apt update -y&&apt install -y curl&&apt install -y socat
 ------------
 ## 安装指定版本
 
-若要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.5`:
+若要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.6`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.5
+bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.6
 ```
 ------------
 ## 若你的VPS默认有防火墙，请在安装完成之后放行指定端口
@@ -468,8 +468,10 @@ systemctl restart x-ui
  
 </details>
 
+
 ------------
 ## [WARP 配置](https://gitlab.com/fscarmen/warp)
+
 
 <details>
   <summary>点击查看 WARP 配置</summary>
