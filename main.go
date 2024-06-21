@@ -203,9 +203,9 @@ func showSetting(show bool) {
 		formattedIPv6 := fmt.Sprintf("%s %s[%s%s%s]:%d%s%s",
 	        	Green+"面板 IPv6 访问地址------>>", // 绿色的提示信息
 		        Yellow+"http://",                 // 黄色的 http:// 部分
-		        Yellow,                           // 黄色的[左方括号
+		        Yellow,                           // 黄色的[ 左方括号
 		        ipv6,                             // IPv6 地址
-		        Yellow,                           // 黄色的]右方括号
+		        Yellow,                           // 黄色的] 右方括号
 		        port,                             // 端口号
 	        	Yellow+webBasePath,               // 黄色的 Web 基础路径
 	         	Reset)                            // 重置颜色
