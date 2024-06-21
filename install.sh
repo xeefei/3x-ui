@@ -41,7 +41,7 @@ arch() {
 echo ""
 echo -e "${yellow}---------->>>>>当前系统的架构为: $(arch)${plain}"
 echo ""
-xui_version = config.GetVersion()
+xui_version=$(/usr/local/x-ui/x-ui -v)
 echo -e "${green}---------->>>>>当前代理面板的版本为: 〔3X-UI优化版〕${red}${xui_version}${green}（最新版为：${last_version}）${plain}"
 
 
