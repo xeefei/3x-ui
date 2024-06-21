@@ -292,7 +292,7 @@ install_x-ui() {
     # fi
     #    echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${config_port} ${yellow}端口已放行${plain}"
     sleep 3
-    echo -e ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo -e ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
     echo ""
     echo -e "${yellow}----->>>3X-UI面板和Xray启动成功<<<-----${plain}"
 }
