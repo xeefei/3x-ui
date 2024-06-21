@@ -41,7 +41,8 @@ arch() {
 echo ""
 echo -e "${yellow}---------->>>>>当前系统的架构为: $(arch)${plain}"
 echo ""
-echo -e "${green}---------->>>>>当前代理面板的版本为: 〔3X-UI优化版〕${red}vconfig.GetVersion()${green}（最新版为：${last_version}）${plain}"
+xui_version = config.GetVersion()
+echo -e "${green}---------->>>>>当前代理面板的版本为: 〔3X-UI优化版〕${red}${xui_version}${green}（最新版为：${last_version}）${plain}"
 
 
 os_version=$(grep -i version_id /etc/os-release | cut -d \" -f2 | cut -d . -f1)
