@@ -38,7 +38,7 @@ echo -e "当前服务器的操作系统为:${red} $release${plain}"
 echo ""
 xui_version=$(/usr/local/x-ui/x-ui -v)
 last_version=$(curl -Ls "https://api.github.com/repos/xeefei/3x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-echo -e "${green}当前代理面板的版本为: ${red}〔3X-UI优化版〕v${xui_version}${green}----->>（最新版为：${last_version}）${plain}"
+echo -e "${green}当前代理面板的版本为: ${red}〔3X-UI优化版〕v${xui_version}${green}  ----->>（最新版为：${last_version}）${plain}"
 
 os_version=$(grep -i version_id /etc/os-release | cut -d \" -f2 | cut -d . -f1)
 
@@ -1275,6 +1275,7 @@ show_usage() {
 
 show_menu() {
     echo -e "
+——————————————————————
   ${green}3X-UI 面板管理脚本${plain}
   ${yellow}  一个更好的面板${plain}
   ${yellow} 基于Xray Core构建${plain}
