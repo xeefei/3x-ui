@@ -786,6 +786,8 @@ ssl_cert_issue() {
         local certInfo=$(~/.acme.sh/acme.sh --list)
         LOGE "系统已经有证书，无法再次颁发，当前证书详细信息:"
         LOGI "$certInfo"
+        echo ""
+        echo -e "${green}如果要申请安装证书并每3个月〔自动续签〕证书，请确保${red} 80 ${green}和 ${red}443 ${green}端口已打开放行${plain}"
         exit 1
     else
         LOGI "您的域现在已准备好颁发证书..."
@@ -829,6 +831,8 @@ ssl_cert_issue() {
         exit 1
     else
         LOGI "安装证书成功，启用自动续订..."
+        echo ""
+        echo -e "${green}如果要申请安装证书并每3个月〔自动续签〕证书，请确保${red} 80 ${green}和 ${red}443 ${green}端口已打开放行${plain}"
     fi
 
     ~/.acme.sh/acme.sh --upgrade --auto-upgrade
@@ -841,6 +845,8 @@ ssl_cert_issue() {
         LOGI "自动续订成功，证书详细信息:"
         ls -lah cert/*
         chmod 755 $certPath/*
+        echo ""
+        echo -e "${green}如果要申请安装证书并每3个月〔自动续签〕证书，请确保${red} 80 ${green}和 ${red}443 ${green}端口已打开放行${plain}"
     fi
 }
 
@@ -904,6 +910,8 @@ ssl_cert_issue_CF() {
             exit 1
         else
             LOGI "证书安装成功，开启自动更新..."
+            echo ""
+            echo -e "${green}如果要申请安装证书并每3个月〔自动续签〕证书，请确保${red} 80 ${green}和 ${red}443 ${green}端口已打开放行${plain}"
         fi
         ~/.acme.sh/acme.sh --upgrade --auto-upgrade
         if [ $? -ne 0 ]; then
@@ -915,6 +923,8 @@ ssl_cert_issue_CF() {
             LOGI "证书已安装并开启自动续订，具体信息如下:"
             ls -lah cert
             chmod 755 $certPath
+            echo ""
+            echo -e "${green}如果要申请安装证书并每3个月〔自动续签〕证书，请确保${red} 80 ${green}和 ${red}443 ${green}端口已打开放行${plain}"
         fi
     else
         show_menu
