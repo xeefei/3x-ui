@@ -45,7 +45,7 @@ xui_version=$(/usr/local/x-ui/x-ui -v)
 last_version=$(curl -Ls "https://api.github.com/repos/xeefei/3x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 echo -e "${green}---------->>>>>当前代理面板的版本为: ${red}〔3X-UI优化版〕v${xui_version}${plain}"
 echo ""
-echo -e "${yellow}------------------->>>>>〔3X-UI优化版〕最新版为：${last_version}${plain}"
+echo -e "${yellow}---------------------->>>>>〔3X-UI优化版〕最新版为：${last_version}${plain}"
 sleep 4
 
 os_version=$(grep -i version_id /etc/os-release | cut -d \" -f2 | cut -d . -f1)
@@ -167,7 +167,9 @@ config_after_install() {
             echo -e "###############################################"
             echo -e "${green}如果您忘记了登录信息，可以在安装后通过 x-ui 命令然后输入${red}数字 8 选项${green}进行查看${plain}"
         else
-            echo -e "${green}此次操作属于版本升级，保留之前旧设置项，登录方式保持不变；如果您忘记了登录信息，您可以通过 x-ui 命令然后输入${red}数字 8 选项${green}进行查看${plain}"
+            echo -e "${green}此次操作属于版本升级，保留之前旧设置项，登录方式保持不变${plain}"
+            echo ""
+            echo -e "${green}如果您忘记了登录信息，您可以通过 x-ui 命令然后输入${red}数字 8 选项${green}进行查看${plain}"
             echo ""
             echo ""
         fi
