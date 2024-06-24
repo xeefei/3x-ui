@@ -250,9 +250,9 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 2. 输入“x-ui”命令并选择“SSL 证书管理”，
 3. 您将看到以下选项：
 
-   - **获取证书** 获取SSL证书
-   - **吊销证书** 吊销现有的SSL证书
-   - **续签证书** 强制续签SSL证书
+   - **获取证书** ----获取SSL证书
+   - **吊销证书** ----吊销现有的SSL证书
+   - **续签证书** ----强制续签SSL证书
 
 ### Certbot
 
