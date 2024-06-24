@@ -127,6 +127,12 @@ install_base() {
     esac
 }
 
+gen_random_string() {
+    local length="$1"
+    local random_string=$(LC_ALL=C tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w "$length" | head -n 1)
+    echo "$random_string"
+}
+
 # This function will be called when user installed x-ui out of security
 config_after_install() {
     echo -e "${yellow}安装/更新完成！ 为了您的面板安全，建议修改面板设置 ${plain}"
@@ -157,7 +163,7 @@ config_after_install() {
         if [[ ! -f "/etc/x-ui/x-ui.db" ]]; then
             local usernameTemp=$(head -c 6 /dev/urandom | base64)
             local passwordTemp=$(head -c 6 /dev/urandom | base64)
-            local webBasePathTemp=$(head -c 6 /dev/urandom | base64)
+            local webBasePathTemp=$(gen_random_string 10)
             /usr/local/x-ui/x-ui setting -username ${usernameTemp} -password ${passwordTemp} -webBasePath ${webBasePathTemp}
             echo -e "${yellow}检测到为全新安装，出于安全考虑将生成随机登录信息:${plain}"
             echo -e "###############################################"

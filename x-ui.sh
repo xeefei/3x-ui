@@ -165,6 +165,30 @@ update() {
     fi
 }
 
+update_menu() {
+    echo -e "${yellow}更新菜单项${plain}"
+    confirm "此功能会将所有菜单项更新为最新显示状态" "y"
+    if [[ $? != 0 ]]; then
+        LOGE "Cancelled"
+        if [[ $# == 0 ]]; then
+            before_show_menu
+        fi
+        return 0
+    fi
+    
+    wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/xeefei/3x-ui/main/x-ui.sh
+    chmod +x /usr/local/x-ui/x-ui.sh
+    chmod +x /usr/bin/x-ui
+    
+     if [[ $? == 0 ]]; then
+        echo -e "${green}更新成功，面板已自动重启${plain}"
+        exit 0
+    else
+        echo -e "${red}更新菜单项失败${plain}"
+        return 1
+    fi
+}
+
 custom_version() {
     echo "输入面板版本 (例: 2.3.8):"
     read panel_version
@@ -236,23 +260,30 @@ reset_user() {
     confirm_restart
 }
 
+gen_random_string() {
+    local length="$1"
+    local random_string=$(LC_ALL=C tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w "$length" | head -n 1)
+    echo "$random_string"
+}
+
 reset_webbasepath() {
-    echo -e "${yellow}Resetting Web Base Path${plain}"
+    echo -e "${yellow}修改访问路径${plain}"
     
     # Prompt user to set a new web base path
-    read -rp "Please set the new web base path [default is a random path]: " config_webBasePath
+    read -rp "请设置新的访问路径（若默认则为随机路径）: " config_webBasePath
     
     # If user input is empty, generate a random path
     if [[ -z $config_webBasePath ]]; then
-        config_webBasePath=$(head -c 6 /dev/urandom | base64)
+        config_webBasePath=$(gen_random_string 10)
     fi
     
     # Apply the new web base path setting
     /usr/local/x-ui/x-ui setting -webBasePath "${config_webBasePath}" >/dev/null 2>&1
+    systemctl restart x-ui
     
     # Display confirmation message
-    echo -e "Web base path has been reset to: ${green} ${config_webBasePath} ${plain}"
-    echo -e "${green} Please use the new web base path to access the panel. ${plain}"
+    echo -e "面板访问路径已重置为: ${green}${config_webBasePath}${plain}"
+    echo -e "${green}请使用新的路径登录访问面板${plain}"
 }
 
 reset_config() {
@@ -1316,34 +1347,35 @@ show_menu() {
   ${green}0.${plain} 退出脚本
   ${green}1.${plain} 安装面板
   ${green}2.${plain} 更新面板
-  ${green}3.${plain} 自定义版本
-  ${green}4.${plain} 卸载面板
+  ${green}3.${plain} 更新菜单项
+  ${green}4.${plain} 自定义版本
+  ${green}5.${plain} 卸载面板
 ——————————————————————
-  ${green}5.${plain} 重置用户名、密码和Secret Token
-  ${green}6.${plain} 修改访问路径
-  ${green}7.${plain} 重置面板设置
-  ${green}8.${plain} 修改面板端口
-  ${green}9.${plain} 查看面板设置
+  ${green}6.${plain} 重置用户名、密码和Secret Token
+  ${green}7.${plain} 修改访问路径
+  ${green}8.${plain} 重置面板设置
+  ${green}9.${plain} 修改面板端口
+  ${green}10.${plain} 查看面板设置
 ——————————————————————
-  ${green}10.${plain} 启动面板
-  ${green}11.${plain} 关闭面板
-  ${green}12.${plain} 重启面板
-  ${green}13.${plain} 检查面板状态
-  ${green}14.${plain} 检查面板日志
+  ${green}11.${plain} 启动面板
+  ${green}12.${plain} 关闭面板
+  ${green}13.${plain} 重启面板
+  ${green}14.${plain} 检查面板状态
+  ${green}15.${plain} 检查面板日志
 ——————————————————————
-  ${green}15.${plain} 启用开机启动
-  ${green}16.${plain} 禁用开机启动
+  ${green}16.${plain} 启用开机启动
+  ${green}17.${plain} 禁用开机启动
 ——————————————————————
-  ${green}17.${plain} SSL 证书管理
-  ${green}18.${plain} CF SSL 证书
-  ${green}19.${plain} IP 限制管理
-  ${green}20.${plain} WARP 管理
-  ${green}21.${plain} 防火墙管理
+  ${green}18.${plain} SSL 证书管理
+  ${green}19.${plain} CF SSL 证书
+  ${green}20.${plain} IP 限制管理
+  ${green}21.${plain} WARP 管理
+  ${green}22.${plain} 防火墙管理
 ——————————————————————
-  ${green}22.${plain} 启用 BBR 
-  ${green}23.${plain} 更新 Geo 文件
-  ${green}24.${plain} Speedtest by Ookla
-  ${green}25.${plain} 安装订阅转换 
+  ${green}23.${plain} 启用 BBR 
+  ${green}24.${plain} 更新 Geo 文件
+  ${green}25.${plain} Speedtest by Ookla
+  ${green}26.${plain} 安装订阅转换 
 ——————————————————————
   ${green}若在使用过程中有任何问题${plain}
   ${yellow}请加入〔3X-UI〕中文交流群${plain}
@@ -1355,7 +1387,7 @@ show_menu() {
 ——————————————————————
 "
     show_status
-    echo && read -p "请输入选项 [0-25]: " num
+    echo && read -p "请输入选项 [0-26]: " num
 
     case "${num}" in
     0)
@@ -1368,76 +1400,79 @@ show_menu() {
         check_install && update
         ;;
     3)
-        check_install && custom_version
+        check_install && update_menu
         ;;
     4)
-        check_install && uninstall
+        check_install && custom_version
         ;;
     5)
-        check_install && reset_user
+        check_install && uninstall
         ;;
     6)
-        check_install && reset_webbasepath
+        check_install && reset_user
         ;;
     7)
-        check_install && reset_config
+        check_install && reset_webbasepath
         ;;
     8)
-        check_install && set_port
+        check_install && reset_config
         ;;
     9)
-        check_install && check_config
+        check_install && set_port
         ;;
     10)
-        check_install && start
+        check_install && check_config
         ;;
     11)
-        check_install && stop
+        check_install && start
         ;;
     12)
-        check_install && restart
+        check_install && stop
         ;;
     13)
-        check_install && status
+        check_install && restart
         ;;
     14)
-        check_install && show_log
+        check_install && status
         ;;
     15)
-        check_install && enable
+        check_install && show_log
         ;;
     16)
-        check_install && disable
+        check_install && enable
         ;;
     17)
-        ssl_cert_issue_main
+        check_install && disable
         ;;
     18)
-        ssl_cert_issue_CF
+        ssl_cert_issue_main
         ;;
     19)
-        iplimit_main
+        ssl_cert_issue_CF
         ;;
     20)
-        warp_cloudflare
+        iplimit_main
         ;;
     21)
-        firewall_menu
+        warp_cloudflare
         ;;
     22)
-        bbr_menu
+        firewall_menu
         ;;
     23)
-        update_geo
+        bbr_menu
         ;;
     24)
-        run_speedtest
+        update_geo
         ;;
     25)
+        run_speedtest
+        ;;
+    26)
         subconverter
         ;;
     *)
-        LOGE "请输入正确的选项 [0-25]"
+        LOGE "请输入正确的数字选项 [0-26]"
         ;;
     esac
 }
