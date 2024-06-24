@@ -262,7 +262,6 @@ install_x-ui() {
     systemctl daemon-reload
     systemctl enable x-ui
     systemctl start x-ui
-
     systemctl stop warp-go >/dev/null 2>&1
     wg-quick down wgcf >/dev/null 2>&1
     ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
@@ -284,11 +283,13 @@ install_x-ui() {
     echo -e "x-ui stop         - 关闭 3x-ui 面板"
     echo -e "x-ui restart      - 重启 3x-ui 面板"
     echo -e "x-ui status       - 查看 3x-ui 状态"
+    echo -e "x-ui settings     - 查看当前设置信息"
     echo -e "x-ui enable       - 启用 3x-ui 开机启动"
     echo -e "x-ui disable      - 禁用 3x-ui 开机启动"
     echo -e "x-ui log          - 查看 3x-ui 运行日志"
     echo -e "x-ui banlog       - 检查 Fail2ban 禁止日志"
     echo -e "x-ui update       - 更新 3x-ui 面板"
+    echo -e "x-ui custom       - 自定义 3x-ui 版本"
     echo -e "x-ui install      - 安装 3x-ui 面板"
     echo -e "x-ui uninstall    - 卸载 3x-ui 面板"
     echo -e "--------------------------------------------"

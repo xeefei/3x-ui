@@ -1,5 +1,3 @@
-# 3X-UI
-
 <p align="center"><a href="#"><img src="./media/3X-UI.png" alt="Image"></a></p>
 
 **------------------一个更好的面板 • 基于Xray Core构建----------------**
@@ -244,6 +242,28 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 <details>
   <summary>点击查看 SSL 认证</summary>
 
+### ACME
+
+要使用 ACME 管理 SSL 证书：
+
+1. 确保您的域名已正确解析到服务器，
+2. 输入“x-ui”命令并选择“SSL 证书管理”，
+3. 您将看到以下选项：
+
+   - **获取证书** 获取SSL证书
+   - **吊销证书** 吊销现有的SSL证书
+   - **续签证书** 强制续签SSL证书
+
+### Certbot
+
+安装和使用 Certbot：
+
+```sh
+apt-get install certbot -y
+certbot certonly --standalone --agree-tos --register-unsafely-without-email -d yourdomain.com
+certbot renew --dry-run
+```
+
 ### Cloudflare
 
 管理脚本具有用于 Cloudflare 的内置 SSL 证书应用程序。若要使用此脚本申请证书，需要满足以下条件：
@@ -252,17 +272,18 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 - Cloudflare Global API Key
 - 域名已通过 cloudflare 解析到当前服务器
 
-**1:** 在终端中运行`x-ui`， 选择 `Cloudflare SSL Certificate`.
+**如何获取 Cloudflare全局API密钥:**
 
+1. 在终端中输入“x-ui”命令，然后选择“CF SSL 证书”。
+2. 访问链接: [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens).
+3. 点击“查看全局 API 密钥”（如下图所示）：
+   ![](media/APIKey1.PNG)
+4. 您可能需要重新验证您的帐户。之后，将显示 API 密钥（请参见下面的屏幕截图）：
+   ![](media/APIKey2.png)
 
-### Certbot
-```
-apt-get install certbot -y
-certbot certonly --standalone --agree-tos --register-unsafely-without-email -d yourdomain.com
-certbot renew --dry-run
-```
+使用时，只需输入您的“域名”、“电子邮件”和“API KEY”即可。示意图如下：
+   ![](media/DetailEnter.png)
 
-***Tip:*** *管理脚本具有 Certbot 。使用 `x-ui` 命令， 选择 `SSL Certificate Management`.*
 
 </details>
 
@@ -330,26 +351,28 @@ systemctl restart x-ui
 
 #### 使用
 
-1. 安装Docker：
+
+1. **安装Docker**
 
    ```sh
    bash <(curl -sSL https://get.docker.com)
    ```
 
-2. 克隆仓库：
+
+2. **克隆项目仓库**
 
    ```sh
    git clone https://github.com/xeefei/3x-ui.git
    cd 3x-ui
    ```
 
-3. 运行服务：
+3. **启动服务**：
 
    ```sh
    docker compose up -d
    ```
 
-   或
+   **或**
 
    ```sh
    docker run -itd \
@@ -362,22 +385,22 @@ systemctl restart x-ui
       ghcr.io/xeefei/3x-ui:latest
    ```
 
-更新至最新版本
+4. **更新至最新版本**
 
    ```sh
-    cd 3x-ui
-    docker compose down
-    docker compose pull 3x-ui
-    docker compose up -d
+   cd 3x-ui
+   docker compose down
+   docker compose pull 3x-ui
+   docker compose up -d
    ```
 
-从Docker中删除3x-ui 
+5. **从Docker中删除3x-ui **
 
    ```sh
-    docker stop 3x-ui
-    docker rm 3x-ui
-    cd --
-    rm -r 3x-ui
+   docker stop 3x-ui
+   docker rm 3x-ui
+   cd --
+   rm -r 3x-ui
    ```
 
 </details>
@@ -430,43 +453,45 @@ systemctl restart x-ui
 - Ukrainian（乌克兰语）
 
 ------------
-## Features
+## 项目特点
 
-- 系统状态监控
-- 在所有入站和客户端中搜索
-- 深色/浅色主题
+- 系统状态查看与监控
+- 可搜索所有入站和客户端信息
+- 深色/浅色主题随意切换
 - 支持多用户和多协议
 - 支持多种协议，包括 VMess、VLESS、Trojan、Shadowsocks、Dokodemo-door、Socks、HTTP、wireguard
 - 支持 XTLS 原生协议，包括 RPRX-Direct、Vision、REALITY
 - 流量统计、流量限制、过期时间限制
 - 可自定义的 Xray配置模板
-- 支持HTTPS访问面板（自建域名+SSL证书）
-- 支持一键式SSL证书申请和自动续费
-- 更多高级配置项目请参考面板
+- 支持HTTPS访问面板（自备域名+SSL证书）
+- 支持一键式SSL证书申请和自动续签证书
+- 更多高级配置项目请参考面板去进行设定
 - 修复了 API 路由（用户设置将使用 API 创建）
 - 支持通过面板中提供的不同项目更改配置。
 - 支持从面板导出/导入数据库
 
 ------------
-## 默认设置
+## 默认面板设置
+
 
 <details>
   <summary>点击查看 默认设置</summary>
 
-  ### 信息
+  ### 默认信息
 
-- **端口：** 2053
-- **用户名 & 密码：** 当您跳过设置时，此项会随机生成。
+- **端口** 
+    - 2053
+- **用户名 & 密码 & 访问路径** 
+    - 当您跳过设置时，这些信息会随机生成。
 - **数据库路径：**
   - /etc/x-ui/x-ui.db
 - **Xray 配置路径：**
   - /usr/local/x-ui/bin/config.json
 - **面板链接（无SSL）：**
-  - http://ip:2053/panel
-  - http://domain:2053/panel
+  - http://ip:2053/访问路径/panel
 - **面板链接（有SSL）：**
-  - https://domain:2053/panel
- 
+  - https://你的域名:2053/访问路径/panel
+
 </details>
 
 
@@ -479,7 +504,11 @@ systemctl restart x-ui
 
 #### 使用
 
-如果要在 v2.1.0 之前使用 WARP 路由，请按照以下步骤操作：
+**对于版本 `v2.1.0` 及更高版本：**
+
+WARP 是内置的，无需额外安装；只需在面板中打开必要的配置即可。
+
+**如果要在 v2.1.0 之前使用 WARP 路由**，请按照以下步骤操作：
 
 **1.** 在 **SOCKS Proxy Mode** 模式中安装Wrap
 
@@ -498,7 +527,7 @@ systemctl restart x-ui
    配置:
 
    - Block Ads
-   - Route Google + Netflix + Spotify + OpenAI (ChatGPT) to WARP
+   - Route Google, Netflix, Spotify, and OpenAI (ChatGPT) traffic to WARP
    - Fix Google 403 error
 
 </details>
@@ -513,11 +542,11 @@ systemctl restart x-ui
 
 **注意：** 使用 IP 隧道时，IP 限制无法正常工作。
 
-- 适用于最高 `v1.6.1` ：
+- 对于 `v1.6.1`之前的版本 ：
 
   - IP 限制 已被集成在面板中。
 
-- 适用于 `v1.7.0` 以及更新的版本：
+- 对于 `v1.7.0` 以及更新的版本：
 
   - 要使 IP 限制正常工作，您需要按照以下步骤安装 fail2ban 及其所需的文件：
 
@@ -533,7 +562,10 @@ systemctl restart x-ui
       "dnsLog": false,
       "loglevel": "warning"
     },
-  ```
+    ```
+
+- **For versions `v2.1.3` and newer:**
+  - There is an option for configuring `access.log` directly from the panel.
 
 </details>
 

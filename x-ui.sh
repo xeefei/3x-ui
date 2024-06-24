@@ -236,6 +236,25 @@ reset_user() {
     confirm_restart
 }
 
+reset_webbasepath() {
+    echo -e "${yellow}Resetting Web Base Path${plain}"
+    
+    # Prompt user to set a new web base path
+    read -rp "Please set the new web base path [default is a random path]: " config_webBasePath
+    
+    # If user input is empty, generate a random path
+    if [[ -z $config_webBasePath ]]; then
+        config_webBasePath=$(head -c 6 /dev/urandom | base64)
+    fi
+    
+    # Apply the new web base path setting
+    /usr/local/x-ui/x-ui setting -webBasePath "${config_webBasePath}" >/dev/null 2>&1
+    
+    # Display confirmation message
+    echo -e "Web base path has been reset to: ${green} ${config_webBasePath} ${plain}"
+    echo -e "${green} Please use the new web base path to access the panel. ${plain}"
+}
+
 reset_config() {
     confirm "您确定要重置所有面板设置，帐户数据不会丢失，用户名和密码不会更改" "n"
     if [[ $? != 0 ]]; then
@@ -1275,11 +1294,13 @@ show_usage() {
     echo -e "x-ui stop         - 关闭 3x-ui 面板"
     echo -e "x-ui restart      - 重启 3x-ui 面板"
     echo -e "x-ui status       - 查看 3x-ui 状态"
+    echo -e "x-ui settings     - 查看当前设置信息"
     echo -e "x-ui enable       - 启用 3x-ui 开机启动"
     echo -e "x-ui disable      - 禁用 3x-ui 开机启动"
     echo -e "x-ui log          - 查看 3x-ui 运行日志"
     echo -e "x-ui banlog       - 检查 Fail2ban 禁止日志"
     echo -e "x-ui update       - 更新 3x-ui 面板"
+    echo -e "x-ui custom       - 自定义 3x-ui 版本"
     echo -e "x-ui install      - 安装 3x-ui 面板"
     echo -e "x-ui uninstall    - 卸载 3x-ui 面板"
     echo -e "--------------------------------------------"
@@ -1299,29 +1320,30 @@ show_menu() {
   ${green}4.${plain} 卸载面板
 ——————————————————————
   ${green}5.${plain} 重置用户名、密码和Secret Token
-  ${green}6.${plain} 重置面板设置
-  ${green}7.${plain} 修改面板端口
-  ${green}8.${plain} 查看面板设置
+  ${green}6.${plain} 修改访问路径
+  ${green}7.${plain} 重置面板设置
+  ${green}8.${plain} 修改面板端口
+  ${green}9.${plain} 查看面板设置
 ——————————————————————
-  ${green}9.${plain} 启动面板
-  ${green}10.${plain} 关闭面板
-  ${green}11.${plain} 重启面板
-  ${green}12.${plain} 检查面板状态
-  ${green}13.${plain} 检查面板日志
+  ${green}10.${plain} 启动面板
+  ${green}11.${plain} 关闭面板
+  ${green}12.${plain} 重启面板
+  ${green}13.${plain} 检查面板状态
+  ${green}14.${plain} 检查面板日志
 ——————————————————————
-  ${green}14.${plain} 启用开机启动
-  ${green}15.${plain} 禁用开机启动
+  ${green}15.${plain} 启用开机启动
+  ${green}16.${plain} 禁用开机启动
 ——————————————————————
-  ${green}16.${plain} SSL 证书管理
-  ${green}17.${plain} CF SSL 证书
-  ${green}18.${plain} IP 限制管理
-  ${green}19.${plain} WARP 管理
-  ${green}20.${plain} 防火墙管理
+  ${green}17.${plain} SSL 证书管理
+  ${green}18.${plain} CF SSL 证书
+  ${green}19.${plain} IP 限制管理
+  ${green}20.${plain} WARP 管理
+  ${green}21.${plain} 防火墙管理
 ——————————————————————
-  ${green}21.${plain} 启用 BBR 
-  ${green}22.${plain} 更新 Geo 文件
-  ${green}23.${plain} Speedtest by Ookla
-  ${green}24.${plain} 安装订阅转换 
+  ${green}22.${plain} 启用 BBR 
+  ${green}23.${plain} 更新 Geo 文件
+  ${green}24.${plain} Speedtest by Ookla
+  ${green}25.${plain} 安装订阅转换 
 ——————————————————————
   ${green}若在使用过程中有任何问题${plain}
   ${yellow}请加入〔3X-UI〕中文交流群${plain}
@@ -1333,7 +1355,7 @@ show_menu() {
 ——————————————————————
 "
     show_status
-    echo && read -p "请输入选项 [0-24]: " num
+    echo && read -p "请输入选项 [0-25]: " num
 
     case "${num}" in
     0)
@@ -1355,64 +1377,67 @@ show_menu() {
         check_install && reset_user
         ;;
     6)
-        check_install && reset_config
+        check_install && reset_webbasepath
         ;;
     7)
-        check_install && set_port
+        check_install && reset_config
         ;;
     8)
-        check_install && check_config
+        check_install && set_port
         ;;
     9)
-        check_install && start
+        check_install && check_config
         ;;
     10)
-        check_install && stop
+        check_install && start
         ;;
     11)
-        check_install && restart
+        check_install && stop
         ;;
     12)
-        check_install && status
+        check_install && restart
         ;;
     13)
-        check_install && show_log
+        check_install && status
         ;;
     14)
-        check_install && enable
+        check_install && show_log
         ;;
     15)
-        check_install && disable
+        check_install && enable
         ;;
     16)
-        ssl_cert_issue_main
+        check_install && disable
         ;;
     17)
-        ssl_cert_issue_CF
+        ssl_cert_issue_main
         ;;
     18)
-        iplimit_main
+        ssl_cert_issue_CF
         ;;
     19)
-        warp_cloudflare
+        iplimit_main
         ;;
     20)
-        firewall_menu
+        warp_cloudflare
         ;;
     21)
-        bbr_menu
+        firewall_menu
         ;;
     22)
-        update_geo
+        bbr_menu
         ;;
     23)
-        run_speedtest
+        update_geo
         ;;
     24)
+        run_speedtest
+        ;;
+    25)
         subconverter
         ;;
     *)
-        LOGE "请输入正确的选项 [0-24]"
+        LOGE "请输入正确的选项 [0-25]"
         ;;
     esac
 }
@@ -1431,6 +1456,9 @@ if [[ $# > 0 ]]; then
     "status")
         check_install 0 && status 0
         ;;
+    "settings")
+        check_install 0 && check_config 0
+        ;;
     "enable")
         check_install 0 && enable 0
         ;;
@@ -1445,6 +1473,9 @@ if [[ $# > 0 ]]; then
         ;;
     "update")
         check_install 0 && update 0
+        ;;
+    "custom")
+        check_install 0 && custom_version 0
         ;;
     "install")
         check_uninstall 0 && install 0
