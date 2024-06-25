@@ -4,8 +4,8 @@ class AllSetting {
         this.webListen = "";
         this.webDomain = "";
         this.webPort = 2053;
-        this.webCertFile = "/root/.acme.sh/域名_ecc/域名.cer";
-        this.webKeyFile = "/root/.acme.sh/域名_ecc/域名.key";
+        this.webCertFile = "/root/.acme.sh/xxx_ecc/xxx.cer";
+        this.webKeyFile = "/root/.acme.sh/xxx_ecc/xxx.key";
         this.webBasePath = "/";
         this.sessionMaxAge = "";
         this.pageSize = 0;
