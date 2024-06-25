@@ -4,8 +4,8 @@ class AllSetting {
         this.webListen = "";
         this.webDomain = "";
         this.webPort = 2053;
-        this.webCertFile = "";
-        this.webKeyFile = "";
+        this.webCertFile = "/root/.acme.sh/域名_ecc/域名.cer";
+        this.webKeyFile = "/root/.acme.sh/域名_ecc/域名.key";
         this.webBasePath = "/";
         this.sessionMaxAge = "";
         this.pageSize = 0;
@@ -21,7 +21,7 @@ class AllSetting {
         this.tgBotBackup = false;
         this.tgBotLoginNotify = false;
         this.tgCpu = "";
-        this.tgLang = "en-US";
+        this.tgLang = "zh-Hans";
         this.xrayTemplateConfig = "";
         this.secretEnable = false;
         this.subEnable = false;
