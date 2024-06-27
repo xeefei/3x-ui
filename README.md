@@ -474,8 +474,8 @@ systemctl restart x-ui
 ------------
 ## 默认面板设置
 
-
 <details>
+
   <summary>点击查看 默认设置</summary>
 
   ### 默认信息
@@ -483,7 +483,8 @@ systemctl restart x-ui
 - **端口** 
     - 2053
 - **用户名 & 密码 & 访问路径** 
-    - 当您跳过设置时，这些信息会随机生成。
+    - 当您跳过设置时，这些信息会随机生成，
+    - 您也可以在安装的时候自定义访问路径。
 - **数据库路径：**
   - /etc/x-ui/x-ui.db
 - **Xray 配置路径：**
@@ -495,10 +496,8 @@ systemctl restart x-ui
 
 </details>
 
-
 ------------
 ## [WARP 配置](https://gitlab.com/fscarmen/warp)
-
 
 <details>
   <summary>点击查看 WARP 配置</summary>
@@ -513,9 +512,9 @@ WARP 是内置的，无需额外安装；只需在面板中打开必要的配置
 
 **1.** 在 **SOCKS Proxy Mode** 模式中安装Wrap
 
-   ```sh
-   bash <(curl -sSL https://raw.githubusercontent.com/hamid-gh98/x-ui-scripts/main/install_warp_proxy.sh)
-   ```
+   - **Account Type (free, plus, team):** Choose the appropriate account type.
+   - **Enable/Disable WireProxy:** Toggle WireProxy on or off.
+   - **Uninstall WARP:** Remove the WARP application.
 
 **2.** 如果您已经安装了 warp，您可以使用以下命令卸载：
 
@@ -530,6 +529,7 @@ WARP 是内置的，无需额外安装；只需在面板中打开必要的配置
    - Block Ads
    - Route Google, Netflix, Spotify, and OpenAI (ChatGPT) traffic to WARP
    - Fix Google 403 error
+
 
 </details>
 
