@@ -564,9 +564,7 @@ WARP 是内置的，无需额外安装；只需在面板中打开必要的配置
       "loglevel": "warning"
     },
     ```
-
-- **For versions `v2.1.3` and newer:**
-  - There is an option for configuring `access.log` directly from the panel.
+  - 您需要在Xray配置中手动设置〔访问日志〕的路径。
 
 </details>
 
