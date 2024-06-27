@@ -444,6 +444,18 @@
 "add" = "添加规则"
 "edit" = "编辑规则"
 "useComma" = "逗号分隔的项目"
+"Domain Matcher" = "域匹配类型"
+"Source IPs" = "源IP"
+"Source Port" = "源端口"
+"Network" = "网络类型"
+"Protocol" = "传输协议"
+"Attributes" = "属性"
+"Domain" = "域地址"
+"User" = "用户"
+"Port" = "端口"
+"Inbound Tag" = "入站 Tag"
+"Outbound Tag" = "出站 Tag"
+"Balancer Tag" = "负载均衡 Tag"
 
 [pages.xray.outbound]
 "addOutbound" = "添加出站"
