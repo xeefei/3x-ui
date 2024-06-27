@@ -43,7 +43,8 @@ To manage SSL certificates using ACME:
 
 1. Ensure your domain is correctly resolved to the server.
 2. Access the `x-ui` command and navigate to `SSL Certificate Management`.
-3. You will be presented with the following options:
+3. Select `SSL Certificate Management`.
+4. You will be presented with the following options:
 
    - **Get SSL:** Obtain SSL certificates.
    - **Revoke:** Revoke existing SSL certificates.
@@ -309,25 +310,15 @@ WARP is built-in, and no additional installation is required. Simply turn on the
 
 **For versions before `v2.1.0`:**
 
-**1.** Install WARP in **SOCKS Proxy Mode**:
+1. Open the `x-ui` command and navigate to the `WARP Management` section.
+2. Select `WARP Management`.
+3. You will see the following options:
 
-   ```sh
-   bash <(curl -sSL https://raw.githubusercontent.com/hamid-gh98/x-ui-scripts/main/install_warp_proxy.sh)
-   ```
+   - **Account Type (free, plus, team):** Choose the appropriate account type.
+   - **Enable/Disable WireProxy:** Toggle WireProxy on or off.
+   - **Uninstall WARP:** Remove the WARP application.
 
-**2.** If you already have WARP installed, you can uninstall it using the command below:
-
-   ```sh
-   warp u
-   ```
-
-**3.** Enable the configuration you need in the panel.
-
-   Config Features:
-
-   - Block Ads
-   - Route Google, Netflix, Spotify, and OpenAI (ChatGPT) traffic to WARP
-   - Fix Google 403 error
+4. Configure the settings as needed in the panel.
 
 </details>
 
@@ -343,11 +334,22 @@ WARP is built-in, and no additional installation is required. Simply turn on the
 - **For versions up to `v1.6.1`:**
   - The IP limit is built-in to the panel
 
-- **For versions `v1.7.0` and newer:**
-  - To enable IP Limit functionality, you need to install `fail2ban` and its required files by following these steps:
-    1. Use the `x-ui` command inside the shell.
-    2. Select `IP Limit Management`.
-    3. Choose the appropriate options based on your needs.
+**For versions `v1.7.0` and newer:**
+
+To enable the IP Limit functionality, you need to install `fail2ban` and its required files by following these steps:
+
+1. Open the `x-ui` command and navigate to the `IP Limit Management` section.
+2. Select `IP Limit Management`.
+3. You will see the following options:
+
+   - **Change Ban Duration:** Adjust the duration of bans.
+   - **Unban Everyone:** Lift all current bans.
+   - **Check Logs:** Review the logs.
+   - **Fail2ban Status:** Check the status of `fail2ban`.
+   - **Restart Fail2ban:** Restart the `fail2ban` service.
+   - **Uninstall Fail2ban:** Uninstall Fail2ban with configuration.
+
+4. Add a path for the access log on the panel by setting `Xray Configs/log/Access log` to `./access.log` then save and restart xray.
    
 - **For versions before `v2.1.3`:**
   - You need to set the access log path manually in your Xray configuration:
