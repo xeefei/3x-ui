@@ -121,6 +121,9 @@ install_base() {
     arch | manjaro)
         pacman -Syu && pacman -Syu --noconfirm wget curl tar tzdata
         ;;
+    alpine)
+        apk update && apk add --no-cache wget curl tar tzdata
+        ;;
     opensuse-tumbleweed)
         zypper refresh && zypper -q install -y wget curl tar timezone
         ;;
