@@ -56,6 +56,8 @@ elif [[ "${release}" == "manjaro" ]]; then
     echo "您的操作系统是 Manjaro"
 elif [[ "${release}" == "armbian" ]]; then
     echo "您的操作系统是 Armbian"
+elif [[ "${release}" == "alpine" ]]; then
+    echo "您的操作系统是 Alpine Linux"
 elif [[ "${release}" == "opensuse-tumbleweed" ]]; then
     echo "您的操作系统是 OpenSUSE Tumbleweed"
 elif [[ "${release}" == "centos" ]]; then
@@ -96,6 +98,7 @@ else
     echo "- Arch Linux"
     echo "- Manjaro"
     echo "- Armbian"
+    echo "- Alpine Linux"
     echo "- AlmaLinux 9+"
     echo "- Rocky Linux 9+"
     echo "- Oracle Linux 8+"
