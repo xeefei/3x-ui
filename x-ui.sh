@@ -1137,7 +1137,7 @@ iplimit_main() {
     echo -e "${green}\t4.${plain} 查看日志"
     echo -e "${green}\t5.${plain} Fail2ban 状态"
     echo -e "${green}\t6.${plain} 重启 Fail2ban"
-    echo -e "${green}\t7.${plain} 卸载 IP 限制"
+    echo -e "${green}\t7.${plain} 卸载 Fail2ban"
     echo -e "${green}\t0.${plain} 返回主菜单"
     read -p "请输入选项: " choice
     case "$choice" in
