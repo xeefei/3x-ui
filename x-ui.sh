@@ -273,10 +273,9 @@ reset_webbasepath() {
     echo -e "${yellow}修改访问路径${plain}"
     
     # Prompt user to set a new web base path
-    read -rp "请设置新的访问路径（若默认则为随机路径）: " config_webBasePath
+    read -rp "请设置新的访问路径（若回车默认或输入y则为随机路径）: " config_webBasePath
     
-    # If user input is empty, generate a random path
-    if [[ -z $config_webBasePath ]]; then
+    if [[ $config_webBasePath == "y" ]]; then
         config_webBasePath=$(gen_random_string 10)
     fi
     

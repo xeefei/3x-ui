@@ -8,7 +8,7 @@ class AllSetting {
         this.webKeyFile = "/root/.acme.sh/xxx_ecc/xxx.key";
         this.webBasePath = "/";
         this.sessionMaxAge = "";
-        this.pageSize = 0;
+        this.pageSize = 50;
         this.expireDiff = "";
         this.trafficDiff = "";
         this.remarkModel = "-ieo";
