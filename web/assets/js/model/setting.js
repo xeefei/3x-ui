@@ -4,8 +4,8 @@ class AllSetting {
         this.webListen = "";
         this.webDomain = "";
         this.webPort = 2053;
-        this.webCertFile = "";
-        this.webKeyFile = "";
+        this.webCertFile = "/root/.acme.sh/xxx_ecc/xxx.cer";
+        this.webKeyFile = "/root/.acme.sh/xxx_ecc/xxx.key";
         this.webBasePath = "/";
         this.sessionMaxAge = "";
         this.pageSize = 50;
@@ -21,7 +21,7 @@ class AllSetting {
         this.tgBotBackup = false;
         this.tgBotLoginNotify = false;
         this.tgCpu = "";
-        this.tgLang = "en-US";
+        this.tgLang = "zh-Hans";
         this.xrayTemplateConfig = "";
         this.secretEnable = false;
         this.subEnable = false;
@@ -41,7 +41,7 @@ class AllSetting {
         this.subJsonMux = "";
         this.subJsonRules = "";
 
-        this.timeLocation = "Asia/Tehran";
+        this.timeLocation = "Asia/Shanghai";
 
         if (data == null) {
             return
