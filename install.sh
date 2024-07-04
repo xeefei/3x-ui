@@ -41,9 +41,21 @@ arch() {
 echo ""
 echo -e "${yellow}---------->>>>>当前系统的架构为: $(arch)${plain}"
 echo ""
-xui_version=$(/usr/local/x-ui/x-ui -v)
 last_version=$(curl -Ls "https://api.github.com/repos/xeefei/3x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-echo -e "${green}---------->>>>>当前代理面板的版本为: ${red}〔3X-UI优化版〕v${xui_version}${plain}"
+# 获取 x-ui 版本
+xui_version=$(/usr/local/x-ui/x-ui -v)
+
+# 检查 xui_version 是否为空
+if [[ -z "$xui_version" ]]; then
+    echo -e "${red}当前服务器没有安装任何 x-ui 系列代理面板${plain}"
+else
+    # 检查版本号中是否包含冒号
+    if [[ "$xui_version" == *:* ]]; then
+        echo -e "${green}---------->>>>>当前代理面板的版本为: ${red}其他 x-ui 分支版本${plain}"
+    else
+        echo -e "${green}---------->>>>>当前代理面板的版本为: ${red}〔3X-UI优化版〕v${xui_version}${plain}"
+    fi
+fi
 echo ""
 echo -e "${yellow}---------------------->>>>>〔3X-UI优化版〕最新版为：${last_version}${plain}"
 sleep 4
