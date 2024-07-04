@@ -47,7 +47,8 @@ xui_version=$(/usr/local/x-ui/x-ui -v)
 
 # 检查 xui_version 是否为空
 if [[ -z "$xui_version" ]]; then
-    echo -e "${red}当前服务器没有安装任何 x-ui 系列代理面板${plain}"
+    echo ""
+    echo -e "${red}------>>>当前服务器没有安装任何 x-ui 系列代理面板${plain}"
 else
     # 检查版本号中是否包含冒号
     if [[ "$xui_version" == *:* ]]; then
