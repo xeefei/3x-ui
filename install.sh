@@ -55,6 +55,8 @@ else
     # 检查版本号中是否包含冒号
     if [[ "$xui_version" == *:* ]]; then
         echo -e "${green}---------->>>>>当前代理面板的版本为: ${red}其他 x-ui 分支版本${plain}"
+        echo ""
+        echo -e "${green}-------->>>>片刻之后脚本将会自动引导安装〔3X-UI优化版〕${plain}"
     else
         echo -e "${green}---------->>>>>当前代理面板的版本为: ${red}〔3X-UI优化版〕v${xui_version}${plain}"
     fi
