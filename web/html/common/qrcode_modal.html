@@ -88,33 +88,43 @@ const qrModalApp = new Vue({
         qrModal: qrModal,
     },
     methods: {
-        copyToClipboard(elmentId, content) {
-            this.qrModal.clipboard = new ClipboardJS('#' + elmentId, {
-                text: () => content,
-            });
-            this.qrModal.clipboard.on('success', () => {
-                app.$message.success('{{ i18n "copied" }}')
-                this.qrModal.clipboard.destroy();
-            });
-        },
-        setQrCode(elmentId, content) {
-            new QRious({
-                element: document.querySelector('#' + elmentId),
-                size: 500,
-                value: content,
-                background: 'white',
-                backgroundAlpha: 0,
-                foreground: 'black',
-                padding: 4,
-                level: 'L'
-            });
-        },
-        genSubLink(subID) {
-            return app.subSettings.subURI+subID;
-        },
-        genSubJsonLink(subID) {
-            return app.subSettings.subJsonURI+subID;
-        }
+      copyToClipboard(elementId, content) {
+        this.qrModal.clipboard = new ClipboardJS('#' + elementId, {
+          text: () => content,
+        });
+        this.qrModal.clipboard.on('success', () => {
+          app.$message.success('{{ i18n "copied" }}')
+          this.qrModal.clipboard.destroy();
+        });
+      },
+      setQrCode(elementId, content) {
+        new QRious({
+          element: document.querySelector('#' + elementId),
+          size: 500,
+          value: content,
+          background: 'white',
+          backgroundAlpha: 0,
+          foreground: 'black',
+          padding: 4,
+          level: 'L'
+        });
+      },
+      genSubLink(subID) {
+        return app.subSettings.subURI + subID;
+      },
+      genSubJsonLink(subID) {
+        return app.subSettings.subJsonURI + subID;
+      },
+      revertOverflow() {
+        const elements = document.querySelectorAll(".qr-tag");
+        elements.forEach((element) => {
+          element.classList.remove("tr-marquee");
+          element.children[0].style.animation = '';
+          while (element.children.length > 1) {
+            element.removeChild(element.lastChild);
+          }
+        });
+      }
     },
     updated() {
         if (qrModal.client && qrModal.client.subId) {
