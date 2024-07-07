@@ -36,7 +36,7 @@
 "status" = "Status"
 "enabled" = "Enabled"
 "disabled" = "Disabled"
-"depleted" = "Ended"
+"depleted" = "Depleted"
 "depletingSoon" = "Depleting"
 "offline" = "Offline"
 "online" = "Online"
@@ -68,6 +68,7 @@
 "xray" = "Xray Configs"
 "logout" = "Log Out"
 "link" = "Manage"
+"navigation" = "navigation"
 
 [pages.login]
 "hello" = "Hello"
@@ -423,6 +424,9 @@
 "accessLogDesc" = "The file path for the access log. The special value 'none' disabled access logs"
 "errorLog" = "Error Log"
 "errorLogDesc" = "The file path for the error log. The special value 'none' disabled error logs"
+
+[pages.navigation]
+"title" = "navigation"
 
 [pages.xray.rules]
 "first" = "First"
