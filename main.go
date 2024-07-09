@@ -23,7 +23,7 @@ import (
 )
 
 func runWebServer() {
-	log.Printf("%v %v", config.GetName(), config.GetVersion())
+	log.Printf("Starting %v %v", config.GetName(), config.GetVersion())
 
 	switch config.GetLogLevel() {
 	case config.Debug:
@@ -37,31 +37,29 @@ func runWebServer() {
 	case config.Error:
 		logger.InitLogger(logging.ERROR)
 	default:
-		log.Fatal("unknown log level:", config.GetLogLevel())
+		log.Fatalf("Unknown log level: %v", config.GetLogLevel())
 	}
 
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Error initializing database（初始化数据库出错）: %v", err)
 	}
 
 	var server *web.Server
-
 	server = web.NewServer()
 	global.SetWebServer(server)
 	err = server.Start()
 	if err != nil {
-		log.Println(err)
+		log.Fatalf("Error starting web server: %v", err)
 		return
 	}
 
 	var subServer *sub.Server
 	subServer = sub.NewServer()
 	global.SetSubServer(subServer)
-
 	err = subServer.Start()
 	if err != nil {
-		log.Println(err)
+		log.Fatalf("Error starting sub server: %v", err)
 		return
 	}
 
@@ -73,34 +71,39 @@ func runWebServer() {
 
 		switch sig {
 		case syscall.SIGHUP:
+			logger.Info("Received SIGHUP signal. Restarting servers...")
+
 			err := server.Stop()
 			if err != nil {
-				logger.Warning("stop server err:", err)
+				logger.Warning("Error stopping web server:", err)
 			}
 			err = subServer.Stop()
 			if err != nil {
-				logger.Warning("stop server err:", err)
+				logger.Warning("Error stopping sub server:", err)
 			}
 
 			server = web.NewServer()
 			global.SetWebServer(server)
 			err = server.Start()
 			if err != nil {
-				log.Println(err)
+				log.Fatalf("Error restarting web server: %v", err)
 				return
 			}
+			log.Println("Web server restarted successfully.")
 
 			subServer = sub.NewServer()
 			global.SetSubServer(subServer)
-
 			err = subServer.Start()
 			if err != nil {
-				log.Println(err)
+				log.Fatalf("Error restarting sub server: %v", err)
 				return
 			}
+			log.Println("Sub server restarted successfully.")
+
 		default:
 			server.Stop()
 			subServer.Stop()
+			log.Println("Shutting down servers.")
 			return
 		}
 	}
@@ -109,7 +112,7 @@ func runWebServer() {
 func resetSetting() {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Failed to initialize database（初始化数据库失败）:", err)
 		return
 	}
 
@@ -247,7 +250,7 @@ func updateTgbotEnableSts(status bool) {
 func updateTgbotSetting(tgBotToken string, tgBotChatid string, tgBotRuntime string) {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error initializing database（初始化数据库出错）:", err)
 		return
 	}
 
@@ -256,68 +259,65 @@ func updateTgbotSetting(tgBotToken string, tgBotChatid string, tgBotRuntime stri
 	if tgBotToken != "" {
 		err := settingService.SetTgBotToken(tgBotToken)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Printf("Error setting Telegram bot token（设置TG电报机器人令牌出错）: %v\n", err)
 			return
-		} else {
-			logger.Info("updateTgbotSetting tgBotToken success----->>更新电报机器人令牌成功")
 		}
+		logger.Info("Successfully updated Telegram bot token----->>已成功更新TG电报机器人令牌")
 	}
 
 	if tgBotRuntime != "" {
 		err := settingService.SetTgbotRuntime(tgBotRuntime)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Printf("Error setting Telegram bot runtime（设置TG电报机器人通知周期出错）: %v\n", err)
 			return
-		} else {
-			logger.Infof("updateTgbotSetting tgBotRuntime[%s] success", tgBotRuntime)
 		}
+		logger.Infof("Successfully updated Telegram bot runtime to（已成功将TG电报机器人通知周期设置为） [%s].", tgBotRuntime)
 	}
 
 	if tgBotChatid != "" {
 		err := settingService.SetTgBotChatId(tgBotChatid)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Printf("Error setting Telegram bot chat ID（设置TG电报机器人管理者聊天ID出错）: %v\n", err)
 			return
-		} else {
-			logger.Info("updateTgbotSetting tgBotChatid success----->>更新电报机器人管理者ID成功")
 		}
+		logger.Info("Successfully updated Telegram bot chat ID----->>已成功更新TG电报机器人管理者聊天ID")
 	}
 }
 
 func updateSetting(port int, username string, password string, webBasePath string) {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Database initialization failed（初始化数据库失败）:", err)
 		return
 	}
 
 	settingService := service.SettingService{}
+	userService := service.UserService{}
 
 	if port > 0 {
 		err := settingService.SetPort(port)
 		if err != nil {
-			fmt.Println("set port failed（设置端口失败）:", err)
+			fmt.Println("Failed to set port（设置端口失败）:", err)
 		} else {
-			fmt.Printf("set port %v success", port)
+			fmt.Printf("Port set successfully（端口设置成功）: %v\n", port)
 		}
 	}
 
 	if username != "" || password != "" {
-		userService := service.UserService{}
 		err := userService.UpdateFirstUser(username, password)
 		if err != nil {
-			fmt.Println("set username and password failed（设置用户名和密码失败）:", err)
+			fmt.Println("Failed to update username and password（更新用户名和密码失败）:", err)
 		} else {
-			fmt.Println("set username and password success------>>用户名和密码设置成功")
+			fmt.Println("Username and password updated successfully------>>用户名和密码更新成功")
 		}
 	}
 
 	if webBasePath != "" {
 		err := settingService.SetBasePath(webBasePath)
 		if err != nil {
-			fmt.Println("set base URI path failed（设置访问路径失败）:", err)
+			fmt.Println("Failed to set base URI path（设置访问路径失败）:", err)
 		} else {
-			fmt.Println("set base URI path success------>>设置访问路径成功")
+			fmt.Println("Base URI path set successfully------>>设置访问路径成功")
 		}
 	}
 }
@@ -345,7 +345,7 @@ func updateCert(publicKey string, privateKey string) {
 			fmt.Println("set certificate private key success--------->>设置证书私钥成功")
 		}
 	} else {
-		fmt.Println("both public and private key should be entered.------>>须输入证书公钥和私钥")
+		fmt.Println("both public and private key should be entered.------>>必须同时输入证书公钥和私钥")
 	}
 }
 
@@ -417,19 +417,19 @@ func main() {
 	var reset bool
 	var show bool
 	var remove_secret bool
-	settingCmd.BoolVar(&reset, "reset", false, "reset all settings")
-	settingCmd.BoolVar(&show, "show", false, "show current settings")
-	settingCmd.BoolVar(&remove_secret, "remove_secret", false, "remove secret")
-	settingCmd.IntVar(&port, "port", 0, "set panel port")
-	settingCmd.StringVar(&username, "username", "", "set login username")
-	settingCmd.StringVar(&password, "password", "", "set login password")
-	settingCmd.StringVar(&webBasePath, "webBasePath", "", "set web base path")
-	settingCmd.StringVar(&webCertFile, "webCert", "", "set web public key path")
-	settingCmd.StringVar(&webKeyFile, "webCertKey", "", "set web private key path")
-	settingCmd.StringVar(&tgbottoken, "tgbottoken", "", "set telegram bot token")
-	settingCmd.StringVar(&tgbotRuntime, "tgbotRuntime", "", "set telegram bot cron time")
-	settingCmd.StringVar(&tgbotchatid, "tgbotchatid", "", "set telegram bot chat id")
-	settingCmd.BoolVar(&enabletgbot, "enabletgbot", false, "enable telegram bot notify")
+	settingCmd.BoolVar(&reset, "reset", false, "Reset all settings")
+	settingCmd.BoolVar(&show, "show", false, "Display current settings")
+	settingCmd.BoolVar(&remove_secret, "remove_secret", false, "Remove secret key")
+	settingCmd.IntVar(&port, "port", 0, "Set panel port number")
+	settingCmd.StringVar(&username, "username", "", "Set login username")
+	settingCmd.StringVar(&password, "password", "", "Set login password")
+	settingCmd.StringVar(&webBasePath, "webBasePath", "", "Set base path for Panel")
+	settingCmd.StringVar(&webCertFile, "webCert", "", "Set path to public key file for panel")
+	settingCmd.StringVar(&webKeyFile, "webCertKey", "", "Set path to private key file for panel")
+	settingCmd.StringVar(&tgbottoken, "tgbottoken", "", "Set token for Telegram bot")
+	settingCmd.StringVar(&tgbotRuntime, "tgbotRuntime", "", "Set cron time for Telegram bot notifications")
+	settingCmd.StringVar(&tgbotchatid, "tgbotchatid", "", "Set chat ID for Telegram bot notifications")
+	settingCmd.BoolVar(&enabletgbot, "enabletgbot", false, "Enable notifications via Telegram bot")
 
 	oldUsage := flag.Usage
 	flag.Usage = func() {
