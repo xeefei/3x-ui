@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实用导航&技巧</title>
+    <style>
+        body {
+            background-color: #151F31;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 150px;
+            background-color: #151F31;
+            padding: 20px;
+        }
+        .sidebar h2 {
+            color: #fff;
+            margin-top: 0;
+        }
+        .sidebar button {
+            background-color: #2C3E56;
+            color: #008000; /* 绿色字体 */
+            border: none;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            border-radius: 15px; /* 增加圆角幅度 */
+            font-weight: bold; /* 加粗字体 */
+        }
+        .sidebar button:hover {
+            background-color: #4A90E2;
+        }
+        .sidebar .friend-links {
+            margin-top: auto;
+            text-align: center;
+            margin-bottom: 12px; /* 调整友情链接下边距 */
+        }
+        .sidebar .friend-links a {
+            color: #0080FF; /* 蓝色字体 */
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .separator {
+            width: 15px;
+            background-color: #34495e;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            padding-top: 0; /* 移除顶部空白 */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <button onclick="history.back()">返回上一步</button>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div class="friend-links">
+            <a href="https://chat.openai.com/">ChatGPT</a>
+            <a href="https://github.com/xeefei/3x-ui">项目地址</a>
+            <a href="https://t.me/XUI_CN">3X-UI交流群</a>
+            <a href="https://www.youtube.com/results?search_query=4k%E6%B5%8B%E9%80%9F">油管4K测速</a>
+            <a href="https://whatismyipaddress.com/">我的IP查询</a>
+            <a href="https://translate.google.com/?hl=zh-CN">Google翻译</a>
+            <a href="https://xtls.github.io/">Project X</a>
+            <a href="https://t.me/Kensimon_xee">预留&占位</a>
+            <a href="https://t.me/is_Chat_Bot">联系作者</a>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <button onclick="window.scrollTo(0, 0)">回滚至顶部</button>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <button onclick="history.back()">返回到面板</button>
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="content">
+        <h3>一、【3x-ui】中文交流群：<a href="https://t.me/XUI_CN">https://t.me/XUI_CN</a></h3>
+        <h3>       【3x-ui】详细安装流程步骤：<a href="https://xeefei.github.io/xufei/2024/05/3x-ui/">https://xeefei.github.io/xufei/2024/05/3x-ui/</a></h3>
+
+        <h3>二、判断VPS服务器的IP是否【送中】？</h3>
+        <p>***点击打开：<a href="https://music.youtube.com/">https://music.youtube.com/</a>，能正常打开访问，就代表【没送中】，反之就是送中了。</p>
+        <p>***如果送中了如何解决去【拉回来】？</p>
+        <p>1：关闭/取消登录了谷歌账户的APP定位权限/授权；2：将常用的一个谷歌账号的位置记录功能打开；3：在电脑上打开Chrome/谷歌浏览器，登录开了位置记录功能的谷歌账号，安装Location Guard拓展插件<a href="https://chrome.google.com/webstore/detail/location-guard/cfohepagpmnodfdmjliccbbigdkfcgia">https://chrome.google.com/webstore/detail/location-guard/cfohepagpmnodfdmjliccbbigdkfcgia</a>（也可在其他支持此插件的浏览器使用）；4：打开Location Guard插件，选择Fixed Location，并在给出的地图上单击，即可标记上你想要IP所处的国家/地区
+Google IP定位错误，使用Location Guard修改；5：转换到Options选项，Default level默认设置为Use fixed location；6：打开谷歌地图google.com/maps，点击右下角定位授权图标，使google maps获取当前“我的GPS位置”
+Google IP定位错误，使用Location Guard修改GPS位置地址；7：谷歌搜索my ip，即可看到谷歌IP定位到了刚才地图上标记的位置；8：在此网页向谷歌报告IP问题：<a href="https://support.google.com/websearch/workflow/9308722">https://support.google.com/websearch/workflow/9308722</a></p>
+
+        <h3>三、在自己的VPS服务器部署【订阅转换】功能</h3>
+        <p>如何把vless/vmess等协议转换成Clash/Surge等软件支持的格式？
+ 1、进入脚本输入x-ui命令调取面板，选择第【24】选项安装订阅转换模块，
+ 2、等待安装【订阅转换】成功之后，访问地址：你的IP:18080（端口号）进行转换，
+ 3、因为在转换过程中需要调取后端API，所以请确保端口25500是打开放行的，
+4、在得到【转换链接】之后，只要你的VPS服务器25500端口是能ping通的，就能导入Clash/Surge等软件成功下载配置，
+5、此功能集成到3x-ui面板中，是为了保证安全，通过调取24选项把【订阅转换】功能部署在自己的VPS中，不会造成链接泄露。</p>
+
+        <h3>四、如何保护自己的IP不被墙被封？</h3>
+        <p>1、使用的代理协议要安全，加密是必备，推荐使用vless+reality+vision协议组合，
+2、因为有时节点会共享，在不同的地区，多个省份之间不要共同连接同一个IP，
+3、连接同一个IP就算了，不要同一个端口，不要同IP+同端口到处漫游，要分开，
+4、同一台VPS，不要在一天内一直大流量去下载东西使用，不要流量过高要切换，
+5、创建【入站协议】的时候，尽量用【高位端口】，比如40000--65000之间的端口号。
+提醒：为什么在特殊时期，比如：两会，春节等被封得最严重最惨？
+尼玛同一个IP+同一个端口号，多个省份去漫游，跟开飞机场一样！不封你，封谁的IP和端口？
+总结：不要多终端/多省份/多个朋友/共同使用同一个IP和端口号！使用3x-ui多创建几个【入站】，
+多做几条备用，各用各的！各行其道才比较安全！GFW的思维模式是干掉机场，机场的特征个人用户不要去沾染，自然IP就保护好了。</p>
+
+        <h3>五、检测IP纯净度的方法：</h3>
+        <p>网址：<a href="https://scamalytics.com/">https://scamalytics.com/</a>，输入IP进行检测，看【欺诈分数】，分数越高IP越脏。</p>
+
+        <h3>六、常见的软件工具：</h3>
+        <ol>
+            <p>1、Windows系统v2rayN：<a href="https://github.com/2dust/v2rayN">https://github.com/2dust/v2rayN</a></p>
+            <p>2、安卓手机版【v2rayNG】：<a href="https://github.com/2dust/v2rayNG">https://github.com/2dust/v2rayNG</a></p>
+            <p>3、苹果手机IOS【小火箭】：<a href="https://apple02.com/">https://apple02.com/</a></p>
+            <p>4、苹果MacOS电脑【Clash Verge】：<a href="https://github.com/clash-verge-rev/clash-verge-rev/releases">https://github.com/clash-verge-rev/clash-verge-rev/releases</a></p>
+        </ol>
+
+        <h3>七、查看节点【指定端口】的网络连接数/命令：</h3>
+        <p>netstat -ntu | grep :节点端口 | grep ESTABLISHED | awk '{print $5}'</p>
+
+        <h3>八、用3x-ui如何实现【自己偷自己】？</h3>
+                <p>其实很简单，只要你为面板设置了证书，
+                       开启了HTTPS登录，就可以将3x-ui自身作为web server，
+                       无需Nginx等，这里给一个示例：
+                       其中目标网站（Dest）请填写面板监听端口，
+                       可选域名（SNI）填写面板登录域名，
+                       如果您使用其他web server（如nginx）等，
+                       将目标网站改为对应监听端口也可。
+                       需要说明的是，如果您处于白名单地区，自己“偷”自己并不适合你；其次，可选域名一项实际上可以填写任意SNI，只要客户端保持一致即可，不过并不推荐这样做。</p>
+
+        <h3>九、【接码】网站：</h3>
+        <p>网址：<a href="https://sms-activate.org/cn">https://sms-activate.org/cn</a>，直接注册账号购买。</p>
+
+        <h3>十、一些MJJ经常逛的网站和群组：</h3>
+        <ol>
+            <p>1、NodeSeek论坛：<a href="https://www.nodeseek.com/">https://www.nodeseek.com/</a></p>
+            <p>2、V2EX论坛：<a href="https://www.v2ex.com/">https://www.v2ex.com/</a></p>
+            <p>3、搬瓦工TG群：<a href="https://t.me/BWHOfficial">https://t.me/BWHOfficial</a></p>
+            <p>4、Xray的官方群：<a href="https://t.me/projectXray">https://t.me/projectXray</a></p>
+            <p>5、Dmit交流群：<a href="https://t.me/DmitChat">https://t.me/DmitChat</a></p>
+            <p>6、白丝云用户群：<a href="https://t.me/+VHZLKELTQyzPNgOV">https://t.me/+VHZLKELTQyzPNgOV</a></p>
+            <p>7、NameSilo域名注册：<a href="https://www.namesilo.com/">https://www.namesilo.com/</a></p>
+        </ol>
+
+        <h3>十一、若此项目对你有帮助，你正想购买VPS的话，可以走一下我的AFF：</h3>
+        <ol>
+            <p>1、搬瓦工GIA线路：<a href="https://bandwagonhost.com/aff.php?aff=75015">https://bandwagonhost.com/aff.php?aff=75015</a></p>
+            <p>2、Dmit高端GIA：<a href="https://www.dmit.io/aff.php?aff=9326">https://www.dmit.io/aff.php?aff=9326</a></p>
+            <p>3、白丝云【4837】：<a href="https://cloudsilk.io/aff.php?aff=706">https://cloudsilk.io/aff.php?aff=706</a></p>
+        </ol>
+
+        <h3>十二、若需要进行GV保号，请主动发信息到：+1 215 346 6666</h3>
+
+        <h3>十三、项目〔声明和注意〕</h3>
+        <ol>
+            <p>1、声明： 此项目仅供个人学习、交流使用，请遵守当地法律法规，勿用于非法用途；请勿用于生产环境；</a></p>
+            <p>2、注意： 在使用此项目和〔教程〕过程中，若因违反以上声明使用规则而产生的一切后果由使用者自负。</a></p>
+        </ol>
+    </div>
+</body>
+</html>
