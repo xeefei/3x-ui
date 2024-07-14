@@ -570,7 +570,7 @@ class TlsStreamSettings extends XrayCommonClass {
                 disableSystemRoot = false,
                 enableSessionResumption = false,
                 certificates=[new TlsStreamSettings.Cert()],
-                alpn=[ALPN_OPTION.H2,ALPN_OPTION.HTTP1],
+                alpn=[ALPN_OPTION.H3,ALPN_OPTION.H2,ALPN_OPTION.HTTP1],
                 settings=new TlsStreamSettings.Settings()) {
         super();
         this.sni = serverName;
@@ -712,7 +712,7 @@ TlsStreamSettings.Settings = class extends XrayCommonClass {
 class XtlsStreamSettings extends XrayCommonClass {
     constructor(serverName='',
                 certificates=[new XtlsStreamSettings.Cert()],
-                alpn=[ALPN_OPTION.H2,ALPN_OPTION.HTTP1],
+                alpn=[ALPN_OPTION.H3,ALPN_OPTION.H2,ALPN_OPTION.HTTP1],
                 settings=new XtlsStreamSettings.Settings()) {
         super();
         this.sni = serverName;
