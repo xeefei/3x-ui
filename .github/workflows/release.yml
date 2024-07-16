@@ -83,7 +83,7 @@ jobs:
           cd x-ui/bin
           
           # Download dependencies
-          Xray_URL="https://github.com/XTLS/Xray-core/releases/download/v1.8.17/"
+          Xray_URL="https://github.com/XTLS/Xray-core/releases/download/v1.8.18/"
           if [ "${{ matrix.platform }}" == "amd64" ]; then
             wget ${Xray_URL}Xray-linux-64.zip
             unzip Xray-linux-64.zip
@@ -125,7 +125,13 @@ jobs:
           
       - name: Package
         run: tar -zcvf x-ui-linux-${{ matrix.platform }}.tar.gz x-ui
-        
+
+      - name: Upload files to Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: x-ui-linux-${{ matrix.platform }}
+          path: ./x-ui-linux-${{ matrix.platform }}
+
       - name: Upload files to GH release
         uses: svenstaro/upload-release-action@v2
         with:
