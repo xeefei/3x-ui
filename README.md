@@ -668,7 +668,7 @@ Web 面板通过 Telegram Bot 支持每日流量、面板登录、数据库备�
 | `POST` | `"/delDepletedClients/:id"`        | 删除入站耗尽的客户端 （-1： all）             |
 | `POST` | `"/onlines"`                       | 获取在线用户 （ 电子邮件列表 ）               |
 
-\*- 使用`clientId` 项应该填写下列数据：
+- 使用`clientId` 项应该填写下列数据：
 
 - `client.id` for VMESS and VLESS
 - `client.password` for TROJAN
