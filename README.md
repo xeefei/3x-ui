@@ -652,6 +652,7 @@ Web 面板通过 Telegram Bot 支持每日流量、面板登录、数据库备�
 | `GET`  | `"/list"`                          | 获取所有入站                                 |
 | `GET`  | `"/get/:id"`                       | 获取所有入站以及inbound.id                   |
 | `GET`  | `"/getClientTraffics/:email"`      | 通过电子邮件获取客户端流量                    |
+| `GET`  | `"/getClientTrafficsById/:id"`     | 通过用户ID获取客户端流量                      |
 | `GET`  | `"/createbackup"`                  | Telegram 机器人向管理员发送备份               |
 | `POST` | `"/add"`                           | 添加入站                                    |
 | `POST` | `"/del/:id"`                       | 删除入站                                    |
@@ -667,11 +668,11 @@ Web 面板通过 Telegram Bot 支持每日流量、面板登录、数据库备�
 | `POST` | `"/delDepletedClients/:id"`        | 删除入站耗尽的客户端 （-1： all）             |
 | `POST` | `"/onlines"`                       | 获取在线用户 （ 电子邮件列表 ）               |
 
-\*- `clientId` 项应该使用下列数据
+\*- 使用`clientId` 项应该填写下列数据：
 
-- `client.id`  VMESS and VLESS
-- `client.password`  TROJAN
-- `client.email`  Shadowsocks
+- `client.id` for VMESS and VLESS
+- `client.password` for TROJAN
+- `client.email` for Shadowsocks
 
 
 - [API 文档](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm)
