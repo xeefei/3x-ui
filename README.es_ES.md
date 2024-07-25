@@ -15,7 +15,7 @@
 **Si este proyecto te es útil, podrías considerar darle una**:star2:
 
 <p align="left">
-  <a href="https://buymeacoffee.com/xeefei" target="_blank">
+  <a href="https://buymeacoffee.com/xeefeiz" target="_blank">
     <img src="./media/buymeacoffe.png" alt="Image">
   </a>
 </p>
