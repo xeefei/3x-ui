@@ -13,6 +13,13 @@
 > **注意：** 在使用此项目和〔教程〕过程中，若因违反以上声明使用规则而产生的一切后果由使用者自负。
 
 **如果此项目对你有用，请给一个**:star2:
+
+<p align="left">
+  <a href="https://buymeacoffee.com/xeefei" target="_blank">
+    <img src="./media/buymeacoffe.png" alt="Image">
+  </a>
+</p>
+
 - 赞助地址（USDT/TRC20）：`TYQEmQp1P65u9bG7KPehgJdvuokfb72YkZ`
 
 ## [【3X-UI】中文交流群：https://t.me/XUI_CN](https://t.me/XUI_CN)
