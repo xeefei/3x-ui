@@ -112,7 +112,6 @@ apt update -y&&apt install -y curl&&apt install -y socat
 - 在到这一步必须要注意：要保留旧设置的话，需要输入【n】
 ![11](./media/11.png)
 
-
 ------------
 ## 安装指定版本
 
