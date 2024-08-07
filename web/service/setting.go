@@ -45,7 +45,7 @@ var defaultValueMap = map[string]string{
 	"tgRunTime":          "@daily",
 	"tgBotBackup":        "false",
 	"tgBotLoginNotify":   "true",
-	"tgCpu":              "0",
+	"tgCpu":              "30",
 	"tgLang":             "zh-Hans",
 	"secretEnable":       "false",
 	"subEnable":          "false",
