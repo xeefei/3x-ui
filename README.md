@@ -451,7 +451,7 @@ systemctl restart x-ui
 
 ------------
 ## Languages
-
+  
 - English（英语）
 - Farsi（伊朗语）
 - Chinese（中文）
@@ -460,6 +460,7 @@ systemctl restart x-ui
 - Spanish（西班牙语）
 - Indonesian （印度尼西亚语）
 - Ukrainian（乌克兰语）
+- Turkish（土耳其语）
 
 ------------
 ## 项目特点

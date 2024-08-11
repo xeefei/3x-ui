@@ -30,10 +30,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 
 ## 安装指定版本
 
-若需要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.12`:
+若需要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.13`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.12
+bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.13
 ```
 
 ## SSL 认证

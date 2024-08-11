@@ -75,11 +75,11 @@ func runWebServer() {
 
 			err := server.Stop()
 			if err != nil {
-				logger.Warning("Error stopping web server:", err)
+				logger.Debug("Error stopping web server:", err)
 			}
 			err = subServer.Stop()
 			if err != nil {
-				logger.Warning("Error stopping sub server:", err)
+				logger.Debug("Error stopping sub server:", err)
 			}
 
 			server = web.NewServer()
