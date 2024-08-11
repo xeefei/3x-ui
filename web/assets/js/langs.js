@@ -56,11 +56,11 @@ function getLang() {
             if (isSupportLang(lang)) {
                 setCookie('lang', lang, 150);
             } else {
-                setCookie('lang', 'en-US', 150);
+                setCookie('lang', 'zh-Hans', 150);
                 window.location.reload();
             }
         } else {
-            setCookie('lang', 'en-US', 150);
+            setCookie('lang', 'zh-Hans', 150);
             window.location.reload();
         }
     }
@@ -70,7 +70,7 @@ function getLang() {
 
 function setLang(lang) {
     if (!isSupportLang(lang)) {
-        lang = 'en-US';
+        lang = 'zh-Hans';
     }
 
     setCookie('lang', lang, 150);
