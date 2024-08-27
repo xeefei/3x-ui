@@ -610,7 +610,7 @@ func (s *InboundService) UpdateInboundClient(data *model.Inbound, clientId strin
 
 	oldEmail := ""
 	newClientId := ""
-	clientIndex := -1
+	clientIndex := 0
 	for index, oldClient := range oldClients {
 		oldClientId := ""
 		if oldInbound.Protocol == "trojan" {
@@ -631,7 +631,7 @@ func (s *InboundService) UpdateInboundClient(data *model.Inbound, clientId strin
 	}
 
 	// Validate new client ID
-	if newClientId == "" || clientIndex == -1 {
+	if newClientId == "" {
 		return false, common.NewError("empty client ID")
 	}
 
