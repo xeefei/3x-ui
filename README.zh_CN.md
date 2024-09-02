@@ -15,12 +15,14 @@
 **如果此项目对你有用，请给一个**:star2:
 
 <p align="left">
-  <a href="https://buymeacoffee.com/xeefeiz" target="_blank">
+  <a href="https://buymeacoffee.com/mhsanaei" target="_blank">
     <img src="./media/buymeacoffe.png" alt="Image">
   </a>
 </p>
 
-- USDT (TRC20): `TYQEmQp1P65u9bG7KPehgJdvuokfb72YkZ`
+- USDT (TRC20): `TXncxkvhkDWGts487Pjqq1qT9JmwRUz8CC`
+- MATIC (polygon): `0x41C9548675D044c6Bfb425786C765bc37427256A`
+- LTC (Litecoin): `ltc1q2ach7x6d2zq0n4l0t4zl7d7xe2s6fs7a3vspwv`
 
 ## 安装 & 升级
 
@@ -30,10 +32,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.
 
 ## 安装指定版本
 
-要安装所需的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.13`:
+要安装所需的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.14`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.3.13
+bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.3.14
 ```
 
 ## SSL 认证
@@ -175,6 +177,42 @@ systemctl restart x-ui
 
 </details>
 
+
+## Nginx 设置
+<details>
+  <summary>点击查看 反向代理配置</summary>
+
+#### Nginx反向代理
+```nginx
+location / {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Range $http_range;
+    proxy_set_header If-Range $http_if_range; 
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:2053;
+}
+```
+
+#### Nginx子路径
+- 确保 `/sub` 面板设置中的"面板url根路径"一致
+- 面板设置中的 `url` 需要以 `/` 结尾   
+
+```nginx
+location /sub {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Range $http_range;
+    proxy_set_header If-Range $http_if_range; 
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:2053;
+}
+```
+</details>
 
 ## 建议使用的操作系统
 

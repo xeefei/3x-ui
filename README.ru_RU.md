@@ -15,12 +15,14 @@
 **Если этот проект оказался полезным для вас, вы можете оценить его, постативив звёздочку** :star2:
 
 <p align="left">
-  <a href="https://buymeacoffee.com/xeefeiz" target="_blank">
+  <a href="https://buymeacoffee.com/mhsanaei" target="_blank">
     <img src="./media/buymeacoffe.png" alt="Image">
   </a>
 </p>
 
-- USDT (TRC20): `TYQEmQp1P65u9bG7KPehgJdvuokfb72YkZ`
+- USDT (TRC20): `TXncxkvhkDWGts487Pjqq1qT9JmwRUz8CC`
+- MATIC (polygon): `0x41C9548675D044c6Bfb425786C765bc37427256A`
+- LTC (Litecoin): `ltc1q2ach7x6d2zq0n4l0t4zl7d7xe2s6fs7a3vspwv`
 
 ## Установка и обновление
 
@@ -30,10 +32,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.
 
 ## Установка определённой версии
 
-Чтобы установить нужную вам версию, добавьте номер версии в конец команды установки. Например, `v2.3.13`:
+Чтобы установить нужную вам версию, добавьте номер версии в конец команды установки. Например, `v2.3.14`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.3.13
+bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.3.14
 ```
 
 ## SSL Сертификат
@@ -199,6 +201,41 @@ systemctl restart x-ui
 
 </details>
 
+## Настройки Nginx
+<details>
+  <summary>Нажмите чтобы просмотреть конфигурацию обратного прокси-сервера</summary>
+
+#### Обратный прокси-сервер Nginx
+```nginx
+location / {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Range $http_range;
+    proxy_set_header If-Range $http_if_range; 
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:2053;
+}
+```
+
+#### Nginx sub-path
+- Убедитесь, что "корневой путь URL адреса панели" в настройках панели и `/sub` совпадают.
+- В настройках панели `url` должен заканчиваться на `/`.    
+
+```nginx
+location /sub {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Range $http_range;
+    proxy_set_header If-Range $http_if_range; 
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:2053;
+}
+```
+</details>
 
 ## Рекомендуемые ОС
 

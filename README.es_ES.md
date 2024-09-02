@@ -1,13 +1,13 @@
-[English](/README.md) | [Chinese](/README.zh.md) | [Español](/README.es_ES.md)
+[English](/README.md) | [中文](/README.zh_CN.md) | [Español](/README.es_ES.md) | [Русский](/README.ru_RU.md)
 
 <p align="center"><a href="#"><img src="./media/3X-UI.png" alt="Image"></a></p>
 
 **Un Panel Web Avanzado • Construido sobre Xray Core**
 
-[![](https://img.shields.io/github/v/release/xeefei/3x-ui.svg)](https://github.com/xeefei/3x-ui/releases)
-[![](https://img.shields.io/github/actions/workflow/status/xeefei/3x-ui/release.yml.svg)](#)
-[![GO Version](https://img.shields.io/github/go-mod/go-version/xeefei/3x-ui.svg)](#)
-[![Downloads](https://img.shields.io/github/downloads/xeefei/3x-ui/total.svg)](#)
+[![](https://img.shields.io/github/v/release/mhsanaei/3x-ui.svg)](https://github.com/MHSanaei/3x-ui/releases)
+[![](https://img.shields.io/github/actions/workflow/status/mhsanaei/3x-ui/release.yml.svg)](#)
+[![GO Version](https://img.shields.io/github/go-mod/go-version/mhsanaei/3x-ui.svg)](#)
+[![Downloads](https://img.shields.io/github/downloads/mhsanaei/3x-ui/total.svg)](#)
 [![License](https://img.shields.io/badge/license-GPL%20V3-blue.svg?longCache=true)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 > **Descargo de responsabilidad:** Este proyecto es solo para aprendizaje personal y comunicación, por favor no lo uses con fines ilegales, por favor no lo uses en un entorno de producción
@@ -15,26 +15,27 @@
 **Si este proyecto te es útil, podrías considerar darle una**:star2:
 
 <p align="left">
-  <a href="https://buymeacoffee.com/xeefeiz" target="_blank">
+  <a href="https://buymeacoffee.com/mhsanaei" target="_blank">
     <img src="./media/buymeacoffe.png" alt="Image">
   </a>
 </p>
 
-- USDT (TRC20): `TYQEmQp1P65u9bG7KPehgJdvuokfb72YkZ`
+- USDT (TRC20): `TXncxkvhkDWGts487Pjqq1qT9JmwRUz8CC`
+- MATIC (polygon): `0x41C9548675D044c6Bfb425786C765bc37427256A`
+- LTC (Litecoin): `ltc1q2ach7x6d2zq0n4l0t4zl7d7xe2s6fs7a3vspwv`
 
 ## Instalar y Actualizar
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
 ```
 
 ## Instalar una Versión Personalizada
 
-
-Para instalar la versión deseada, agrega la versión al final del comando de instalación. Por ejemplo, ver `v2.3.13`:
+Para instalar la versión deseada, agrega la versión al final del comando de instalación. Por ejemplo, ver `v2.3.14`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.13
+bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.3.14
 ```
 
 ## Certificado SSL
@@ -86,7 +87,7 @@ case "${ARCH}" in
 esac
 
 
-wget https://github.com/xeefei/3x-ui/releases/latest/download/x-ui-linux-${XUI_ARCH}.tar.gz
+wget https://github.com/MHSanaei/3x-ui/releases/latest/download/x-ui-linux-${XUI_ARCH}.tar.gz
 ```
 
 2. Una vez que se haya descargado el paquete comprimido, ejecuta los siguientes comandos para instalar o actualizar x-ui:
@@ -133,7 +134,7 @@ systemctl restart x-ui
 2. Clona el Repositorio del Proyecto:
 
    ```sh
-   git clone https://github.com/xeefei/3x-ui.git
+   git clone https://github.com/MHSanaei/3x-ui.git
    cd 3x-ui
    ```
 
@@ -153,7 +154,7 @@ systemctl restart x-ui
       --network=host \
       --restart=unless-stopped \
       --name 3x-ui \
-      ghcr.io/xeefei/3x-ui:latest
+      ghcr.io/mhsanaei/3x-ui:latest
    ```
 
 actualizar a la última versión
@@ -176,6 +177,41 @@ eliminar 3x-ui de docker
 
 </details>
 
+## Configuración de Nginx
+<details>
+  <summary>Haga clic aquí para configurar el proxy inverso</summary>
+
+#### Proxy inverso Nginx
+```nginx
+location / {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Range $http_range;
+    proxy_set_header If-Range $http_if_range; 
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:2053;
+}
+```
+
+#### Nginx sub-path
+- EAsegúrese de que la "Ruta Raíz de la URL del Panel" en la configuración del panel `/sub` es la misma.
+- El `url` en la configuración del panel debe terminar con `/`.   
+
+```nginx
+location /sub {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Range $http_range;
+    proxy_set_header If-Range $http_if_range; 
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:2053;
+}
+```
+</details>
 
 ## SO Recomendados
 
@@ -258,7 +294,7 @@ Nuestra plataforma ofrece compatibilidad con una amplia gama de arquitecturas y 
   - http://domain:2053/panel
 - **Ruta del Panel Web con Implementación de SSL:**
   - https://domain:2053/panel
- 
+
 </details>
 
 ## Configuración WARP
@@ -312,9 +348,9 @@ Si deseas usar enrutamiento a WARP antes de la versión v2.1.0, sigue los pasos 
     1. Usa el comando `x-ui` dentro de la terminal.
     2. Selecciona `Gestión de Límite de IP`.
     3. Elige las opciones apropiadas según tus necesidades.
-   
+
   - asegúrate de tener ./access.log en tu Configuración de Xray después de la v2.1.3 tenemos una opción para ello
-  
+
   ```sh
     "log": {
       "access": "./access.log",
@@ -372,7 +408,7 @@ El panel web admite tráfico diario, inicio de sesión en el panel, copia de seg
 
 - Inicia [Botfather](https://t.me/BotFather) en tu cuenta de Telegram:
     ![Botfather](./media/botfather.png)
-  
+
 - Crea un nuevo bot usando el comando /newbot: Te hará 2 preguntas, Un nombre y un nombre de usuario para tu bot. Ten en cuenta que el nombre de usuario debe terminar con la palabra "bot".
     ![Create new bot](./media/newbot.png)
 
@@ -475,4 +511,4 @@ XUI_BIN_FOLDER="bin" XUI_DB_FOLDER="/etc/x-ui" go build main.go
 
 ## Estrellas a lo largo del tiempo
 
-[![Stargazers over time](https://starchart.cc/xeefei/3x-ui.svg)](https://starchart.cc/xeefei/3x-ui)
+[![Stargazers over time](https://starchart.cc/MHSanaei/3x-ui.svg)](https://starchart.cc/MHSanaei/3x-ui)
