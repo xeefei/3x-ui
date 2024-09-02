@@ -616,7 +616,7 @@
 "confirmRemoveTGUser" = "✅ 确认移除 Telegram 用户？"
 "confirmToggle" = "✅ 确认启用/禁用用户？"
 "dbBackup" = "获取数据库备份"
-"serverUsage" = "查询✰服务器✰使用状态"
+"serverUsage" = "服务器状态"
 "getInbounds" = "获取入站信息"
 "depleteSoon" = "即将耗尽"
 "clientUsage" = "获取使用情况"
