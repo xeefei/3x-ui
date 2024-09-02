@@ -857,8 +857,8 @@ func checkAdmin(tgId int64) bool {
 func (t *Tgbot) SendAnswer(chatId int64, msg string, isAdmin bool) {
 	numericKeyboard := tu.InlineKeyboard(
 		tu.InlineKeyboardRow(
-			tu.InlineKeyboardButton(t.I18nBot("tgbot.buttons.serverUsage")).WithCallbackData(t.encodeQuery("get_usage")),
 			tu.InlineKeyboardButton(t.I18nBot("tgbot.buttons.allClients")).WithCallbackData(t.encodeQuery("get_inbounds")),
+			tu.InlineKeyboardButton(t.I18nBot("tgbot.buttons.serverUsage")).WithCallbackData(t.encodeQuery("get_usage")),
 		),
 		tu.InlineKeyboardRow(
 			tu.InlineKeyboardButton(t.I18nBot("tgbot.buttons.commands")).WithCallbackData(t.encodeQuery("commands")),
