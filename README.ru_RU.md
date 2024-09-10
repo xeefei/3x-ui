@@ -30,10 +30,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.
 
 ## Установка определённой версии
 
-Чтобы установить нужную вам версию, добавьте номер версии в конец команды установки. Например, `v2.3.15`:
+Чтобы установить нужную вам версию, добавьте номер версии в конец команды установки. Например, `v2.4.0`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.3.15
+bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.4.0
 ```
 
 ## SSL Сертификат
@@ -351,17 +351,6 @@ location /sub {
 **Для версий `v2.1.0` и новее:**
 
 WARP встроен, и дополнительная установка не требуется. Просто включите необходимую конфигурацию в панели.
-
-**Для версий до `v2.1.0`:**
-
-1. Выполните команду `x-ui` в терминале, затем выберите `WARP Management`.
-2. Вам будут предложены следующие опции:
-
-   - **Account Type (free, plus, team):** Выбрать соответствующий тип учетной записи.
-   - **Enable/Disable WireProxy:** Включить или отключить WireProxy.
-   - **Uninstall WARP:** Удалить приложение WARP.
-
-3. Настройте параметры по мере необходимости в панели.
 
 </details>
 

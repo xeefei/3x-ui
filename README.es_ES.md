@@ -30,11 +30,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 
 ## Instalar una Versión Personalizada
 
-
-Para instalar la versión deseada, agrega la versión al final del comando de instalación. Por ejemplo, ver `v2.3.16`:
+Para instalar la versión deseada, agrega la versión al final del comando de instalación. Por ejemplo, ver `v2.4.0`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.16
+bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.4.0
 ```
 
 ## Certificado SSL
@@ -240,16 +239,22 @@ Nuestra plataforma ofrece compatibilidad con una amplia gama de arquitecturas y 
 - Soporta exportar/importar base de datos desde el panel
 
 
-## Configuraciones por Defecto
+## Configuración Predeterminada del Panel
 
 <details>
-  <summary>Haz clic para detalles de las configuraciones por defecto</summary>
+  <summary>Haz clic para ver los detalles de la configuración predeterminada</summary>
 
-  ### Información
+### Nombre de Usuario & Contraseña & Ruta Base Web:
 
-- **Puerto:** 2053
-- **Usuario y Contraseña:** Se generarán aleatoriamente si omites la modificación.
-- **Ruta de la Base de Datos:**
+  Estos se generarán aleatoriamente si no los modificas.
+
+  - **Puerto:** el puerto predeterminado para el panel es `2053`
+
+### Gestión de la Base de Datos:
+
+  Puedes realizar copias de seguridad y restauraciones de la base de datos directamente desde el panel.
+
+### Ruta Base Web
   - /etc/x-ui/x-ui.db
 - **Ruta de Configuración de Xray:**
   - /usr/local/x-ui/bin/config.json
@@ -261,67 +266,80 @@ Nuestra plataforma ofrece compatibilidad con una amplia gama de arquitecturas y 
  
 </details>
 
-## Configuración WARP
+1. **Restablecer la Ruta Base Web:**
+   - Abre tu terminal.
+   - Ejecuta el comando `x-ui`.
+   - Selecciona la opción `Restablecer la Ruta Base Web`.
+
+2. **Generar o Personalizar la Ruta:**
+   - La ruta se generará aleatoriamente, o puedes ingresar una ruta personalizada.
+
+3. **Ver Configuración Actual:**
+   - Para ver tu configuración actual, utiliza el comando `x-ui settings` en el terminal o selecciona `Ver Configuración Actual` en `x-ui`.
+
+### Recomendación de Seguridad:
+- Para mayor seguridad, utiliza una palabra larga y aleatoria en la estructura de tu URL.
+
+**Ejemplos:**
+- `http://ip:port/*webbasepath*/panel`
+- `http://domain:port/*webbasepath*/panel`
+
+</details>
+
+## Configuración de WARP
 
 <details>
-  <summary>Haz clic para detalles de la configuración WARP</summary>
+  <summary>Haz clic para ver los detalles de la configuración de WARP</summary>
 
 #### Uso
 
-Si deseas usar enrutamiento a WARP antes de la versión v2.1.0, sigue los pasos a continuación:
+**Para versiones `v2.1.0` y posteriores:**
 
-**1.** Instala WARP en **Modo de Proxy SOCKS**:
-
-   ```sh
-   bash <(curl -sSL https://raw.githubusercontent.com/hamid-gh98/x-ui-scripts/main/install_warp_proxy.sh)
-   ```
-
-**2.** Si ya instalaste warp, puedes desinstalarlo usando el siguiente comando:
-
-   ```sh
-   warp u
-   ```
-
-**3.** Activa la configuración que necesites en el panel
-
-   Características de Configuración:
-
-   - Bloquear Anuncios
-   - Enrutar Google + Netflix + Spotify + OpenAI (ChatGPT) a WARP
-   - Corregir error 403 de Google
+WARP está integrado, no se requiere instalación adicional. Simplemente habilita la configuración necesaria en el panel.
 
 </details>
 
 ## Límite de IP
 
 <details>
-  <summary>Haz clic para más detalles del límite de IP</summary>
+  <summary>Haz clic para ver los detalles del límite de IP</summary>
 
 #### Uso
 
-**Nota:** El Límite de IP no funcionará correctamente cuando se use IP Tunnel
+**Nota:** El Límite de IP no funcionará correctamente cuando uses Túnel IP.
 
-- Para versiones hasta `v1.6.1`:
-
+- **Para versiones hasta `v1.6.1`:**
   - El límite de IP está integrado en el panel.
 
-- Para versiones `v1.7.0` y posteriores:
+**Para versiones `v1.7.0` y posteriores:**
 
-  - Para que el Límite de IP funcione correctamente, necesitas instalar fail2ban y sus archivos requeridos siguiendo estos pasos:
+Para habilitar la funcionalidad de límite de IP, necesitas instalar `fail2ban` y los archivos requeridos siguiendo estos pasos:
 
-    1. Usa el comando `x-ui` dentro de la terminal.
-    2. Selecciona `Gestión de Límite de IP`.
-    3. Elige las opciones apropiadas según tus necesidades.
-   
-  - asegúrate de tener ./access.log en tu Configuración de Xray después de la v2.1.3 tenemos una opción para ello
-  
-  ```sh
+1. Ejecuta el comando `x-ui` en el terminal, luego elige `Gestión de Límite de IP`.
+2. Verás las siguientes opciones:
+
+   - **Cambiar la Duración del Bloqueo:** Ajustar la duración de los bloqueos.
+   - **Desbloquear a Todos:** Levantar todos los bloqueos actuales.
+   - **Revisar los Registros:** Revisar los registros.
+   - **Estado de Fail2ban:** Verificar el estado de `fail2ban`.
+   - **Reiniciar Fail2ban:** Reiniciar el servicio `fail2ban`.
+   - **Desinstalar Fail2ban:** Desinstalar Fail2ban con la configuración.
+
+3. Agrega una ruta para el registro de acceso en el panel configurando `Xray Configs/log/Access log` a `./access.log`, luego guarda y reinicia Xray.
+
+- **Para versiones anteriores a `v2.1.3`:**
+  - Necesitas configurar manualmente la ruta del registro de acceso en tu configuración de Xray:
+
+    ```sh
     "log": {
       "access": "./access.log",
       "dnsLog": false,
       "loglevel": "warning"
     },
-  ```
+    ```
+
+- **Para versiones `v2.1.3` y posteriores:**
+  - Hay una opción para configurar `access.log` directamente desde el panel.
 
 </details>
 

@@ -1371,13 +1371,12 @@ show_menu() {
   ${green}18.${plain} SSL 证书管理
   ${green}19.${plain} CF SSL 证书
   ${green}20.${plain} IP 限制管理
-  ${green}21.${plain} WARP 管理
-  ${green}22.${plain} 防火墙管理
+  ${green}21.${plain} 防火墙管理
 ——————————————————————
-  ${green}23.${plain} 启用 BBR 
-  ${green}24.${plain} 更新 Geo 文件
-  ${green}25.${plain} Speedtest by Ookla
-  ${green}26.${plain} 安装订阅转换 
+  ${green}22.${plain} 启用 BBR 
+  ${green}23.${plain} 更新 Geo 文件
+  ${green}24.${plain} Speedtest by Ookla
+  ${green}25.${plain} 安装订阅转换 
 ——————————————————————
   ${green}若在使用过程中有任何问题${plain}
   ${yellow}请加入〔3X-UI〕中文交流群${plain}
@@ -1389,7 +1388,7 @@ show_menu() {
 ——————————————————————
 "
     show_status
-    echo && read -p "请输入选项 [0-26]: " num
+    echo && read -p "请输入选项 [0-25]: " num
 
     case "${num}" in
     0)
@@ -1456,25 +1455,22 @@ show_menu() {
         iplimit_main
         ;;
     21)
-        warp_cloudflare
-        ;;
-    22)
         firewall_menu
         ;;
-    23)
+    22)
         bbr_menu
         ;;
-    24)
+    23)
         update_geo
         ;;
-    25)
+    24)
         run_speedtest
         ;;
-    26)
+    25)
         subconverter
         ;;
     *)
-        LOGE "请输入正确的数字选项 [0-26]"
+        LOGE "请输入正确的数字选项 [0-25]"
         ;;
     esac
 }
