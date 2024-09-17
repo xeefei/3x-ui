@@ -15,14 +15,12 @@
 **Если этот проект оказался полезным для вас, вы можете оценить его, поставив звёздочку** :star2:
 
 <p align="left">
-  <a href="https://buymeacoffee.com/mhsanaei" target="_blank">
+  <a href="https://buymeacoffee.com/xeefeiz" target="_blank">
     <img src="./media/buymeacoffe.png" alt="Image">
   </a>
 </p>
 
-- USDT (TRC20): `TXncxkvhkDWGts487Pjqq1qT9JmwRUz8CC`
-- MATIC (polygon): `0x41C9548675D044c6Bfb425786C765bc37427256A`
-- LTC (Litecoin): `ltc1q2ach7x6d2zq0n4l0t4zl7d7xe2s6fs7a3vspwv`
+- USDT (TRC20): `TYQEmQp1P65u9bG7KPehgJdvuokfb72YkZ`
 
 ## Установка и обновление
 

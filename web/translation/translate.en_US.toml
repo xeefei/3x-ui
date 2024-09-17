@@ -36,7 +36,7 @@
 "status" = "Status"
 "enabled" = "Enabled"
 "disabled" = "Disabled"
-"depleted" = "Ended"
+"depleted" = "Depleted"
 "depletingSoon" = "Depleting"
 "offline" = "Offline"
 "online" = "Online"
@@ -68,6 +68,7 @@
 "xray" = "Xray Configs"
 "logout" = "Log Out"
 "link" = "Manage"
+"navigation" = "navigation"
 
 [pages.login]
 "hello" = "Hello"
@@ -426,6 +427,9 @@
 "dnsLogDesc" = "Whether to enable DNS query logs"
 "maskAddress" = "Mask Address"
 "maskAddressDesc" = "IP address mask, when enabled, will automatically replace the IP address that appears in the log."
+
+[pages.navigation]
+"title" = "navigation"
 
 [pages.xray.rules]
 "first" = "First"
