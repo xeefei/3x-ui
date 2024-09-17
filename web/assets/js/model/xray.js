@@ -529,6 +529,12 @@ class SplitHTTPStreamSettings extends XrayCommonClass {
         scMinPostsIntervalMs = "10-50",
         noSSEHeader = false,
         xPaddingBytes = "100-1000",
+        xmux = { 
+            maxConnections: 0, 
+            maxConcurrency: 0, 
+            cMaxReuseTimes: 0, 
+            cMaxLifetimeMs: 0 
+        }
     ) {
         super();
         this.path = path;
@@ -539,6 +545,7 @@ class SplitHTTPStreamSettings extends XrayCommonClass {
         this.scMinPostsIntervalMs = scMinPostsIntervalMs;
         this.noSSEHeader = noSSEHeader;
         this.xPaddingBytes = xPaddingBytes;
+        this.xmux = xmux;   
     }
 
     addHeader(name, value) {
@@ -559,6 +566,7 @@ class SplitHTTPStreamSettings extends XrayCommonClass {
             json.scMinPostsIntervalMs,
             json.noSSEHeader,
             json.xPaddingBytes,
+            json.xmux,
         );
     }
 
@@ -572,6 +580,12 @@ class SplitHTTPStreamSettings extends XrayCommonClass {
             scMinPostsIntervalMs: this.scMinPostsIntervalMs,
             noSSEHeader: this.noSSEHeader,
             xPaddingBytes: this.xPaddingBytes,
+            xmux: {
+                maxConnections: this.xmux.maxConnections,
+                maxConcurrency: this.xmux.maxConcurrency,
+                cMaxReuseTimes: this.xmux.cMaxReuseTimes,
+                cMaxLifetimeMs: this.xmux.cMaxLifetimeMs
+            }
         };
     }
 }
@@ -1197,6 +1211,27 @@ class Sniffing extends XrayCommonClass {
     }
 }
 
+class Allocate extends XrayCommonClass {
+    constructor(
+        strategy = "always",
+        refresh = 5,
+        concurrency = 3,
+    ) {
+        super();
+        this.strategy = strategy;
+        this.refresh = refresh;
+        this.concurrency = concurrency;
+    }
+
+    static fromJson(json = {}) {
+        return new Allocate(
+            json.strategy,
+            json.refresh,
+            json.concurrency,
+        );
+    }
+}
+
 class Inbound extends XrayCommonClass {
     constructor(
         port = RandomUtil.randomIntRange(10000, 60000),
@@ -1206,6 +1241,7 @@ class Inbound extends XrayCommonClass {
         streamSettings = new StreamSettings(),
         tag = '',
         sniffing = new Sniffing(),
+        allocate = new Allocate(),
         clientStats = '',
     ) {
         super();
@@ -1216,6 +1252,7 @@ class Inbound extends XrayCommonClass {
         this.stream = streamSettings;
         this.tag = tag;
         this.sniffing = sniffing;
+        this.allocate = allocate;
         this.clientStats = clientStats;
     }
     getClientStats() {
@@ -1406,6 +1443,7 @@ class Inbound extends XrayCommonClass {
         this.stream = new StreamSettings();
         this.tag = '';
         this.sniffing = new Sniffing();
+        this.allocate = new Allocate();
     }
 
     genVmessLink(address = '', port = this.port, forceTls, remark = '', clientId, security) {
@@ -1885,6 +1923,7 @@ class Inbound extends XrayCommonClass {
             StreamSettings.fromJson(json.streamSettings),
             json.tag,
             Sniffing.fromJson(json.sniffing),
+            Allocate.fromJson(json.allocate),
             json.clientStats
         )
     }
@@ -1902,6 +1941,7 @@ class Inbound extends XrayCommonClass {
             streamSettings: streamSettings,
             tag: this.tag,
             sniffing: this.sniffing.toJson(),
+            allocate: this.allocate.toJson(),
             clientStats: this.clientStats
         };
     }
@@ -2561,9 +2601,14 @@ Inbound.SocksSettings.SocksAccount = class extends XrayCommonClass {
 };
 
 Inbound.HttpSettings = class extends Inbound.Settings {
-    constructor(protocol, accounts = [new Inbound.HttpSettings.HttpAccount()]) {
+    constructor(
+        protocol, 
+        accounts = [new Inbound.HttpSettings.HttpAccount()],
+        allowTransparent = false,
+    ) {
         super(protocol);
         this.accounts = accounts;
+        this.allowTransparent = allowTransparent;
     }
 
     addAccount(account) {
@@ -2578,12 +2623,14 @@ Inbound.HttpSettings = class extends Inbound.Settings {
         return new Inbound.HttpSettings(
             Protocols.HTTP,
             json.accounts.map(account => Inbound.HttpSettings.HttpAccount.fromJson(account)),
+            json.allowTransparent,
         );
     }
 
     toJson() {
         return {
             accounts: Inbound.HttpSettings.toJsonArray(this.accounts),
+            allowTransparent: this.allowTransparent,
         };
     }
 };

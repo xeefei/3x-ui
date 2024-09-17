@@ -115,10 +115,10 @@ apt update -y&&apt install -y curl&&apt install -y socat
 ------------
 ## 安装指定版本
 
-若要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.0`:
+若要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.1`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.4.0
+bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.4.1
 ```
 ------------
 ## 若你的VPS默认有防火墙，请在安装完成之后放行指定端口
@@ -380,6 +380,8 @@ systemctl restart x-ui
    ```sh
    docker compose up -d
    ```
+
+   添加 ```--pull always``` 标志使 docker 在拉取更新的镜像时自动重新创建容器。有关更多信息，请参阅：https://docs.docker.com/reference/cli/docker/container/run/#pull
 
    **或**
 

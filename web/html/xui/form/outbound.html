@@ -46,15 +46,20 @@
             <a-input v-model.trim="outbound.settings.fragment.interval"></a-input>
           </a-form-item>
         </template>
-        <a-form-item label='Noise'>
-          <a-switch :checked="Object.keys(outbound.settings.noise).length >0" @change="checked => outbound.settings.noise = checked ? new Outbound.FreedomSettings.Noise() : {}"></a-switch>
+        <a-form-item label='Noises'>
+          <a-switch :checked="Object.keys(outbound.settings.noises).length >0" @change="checked => outbound.settings.noises = checked ? new Outbound.FreedomSettings.Noises() : {}"></a-switch>
         </a-form-item>
-        <template v-if="Object.keys(outbound.settings.noise).length >0">
+        <template v-if="Object.keys(outbound.settings.noises).length >0">
+          <a-form-item label='Type'>
+            <a-select v-model="outbound.settings.noises.type" :dropdown-class-name="themeSwitcher.currentTheme">
+              <a-select-option v-for="s in ['rand','base64','str']" :value="s">[[ s ]]</a-select-option>
+            </a-select>
+          </a-form-item>
           <a-form-item label='Packet'>
-            <a-input v-model.trim="outbound.settings.noise.packet"></a-input>
+            <a-input v-model.trim="outbound.settings.noises.packet"></a-input>
           </a-form-item>
           <a-form-item label='Delay'>
-            <a-input v-model.trim="outbound.settings.noise.delay"></a-input>
+            <a-input v-model.trim="outbound.settings.noises.delay"></a-input>
           </a-form-item>
         </template>
       </template>
@@ -74,6 +79,14 @@
           <a-select v-model="outbound.settings.network" :dropdown-class-name="themeSwitcher.currentTheme">
             <a-select-option v-for="s in ['udp','tcp']" :value="s">[[ s ]]</a-select-option>
           </a-select>
+        </a-form-item>
+        <a-form-item label='non-IP queries'>
+          <a-select v-model="outbound.settings.nonIPQuery" :dropdown-class-name="themeSwitcher.currentTheme">
+            <a-select-option v-for="s in ['drop','skip']" :value="s">[[ s ]]</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item v-if="outbound.settings.nonIPQuery === 'skip'" label='Block Types' >
+          <a-input v-model.number="outbound.settings.blockTypes"></a-input>
         </a-form-item>
       </template>
 
@@ -179,11 +192,15 @@
         <a-form-item label='ID'>
           <a-input v-model.trim="outbound.settings.id"></a-input>
         </a-form-item>
-        <a-form-item label='Security'>
-          <a-select v-model="outbound.settings.security" :dropdown-class-name="themeSwitcher.currentTheme">
-            <a-select-option v-for="key in USERS_SECURITY" :value="key">[[ key ]]</a-select-option>
-          </a-select>
-        </a-form-item>
+
+        <!-- vmess settings -->
+        <template v-if="outbound.protocol === Protocols.VMess">
+          <a-form-item label='Security'>
+            <a-select v-model="outbound.settings.security" :dropdown-class-name="themeSwitcher.currentTheme">
+              <a-select-option v-for="key in USERS_SECURITY" :value="key">[[ key ]]</a-select-option>
+            </a-select>
+          </a-form-item>
+        </template>
 
         <!-- vless settings -->
         <template v-if="outbound.canEnableTlsFlow()">

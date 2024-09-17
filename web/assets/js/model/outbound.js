@@ -851,17 +851,17 @@ Outbound.Settings = class extends CommonClass {
 Outbound.FreedomSettings = class extends CommonClass {
     constructor(
         domainStrategy = '',
-        timeout = '',
+        timeout = 10,
         redirect = '',
         fragment = {},
-        noise = {}
+        noises = {}
     ) {
         super();
         this.domainStrategy = domainStrategy;
         this.timeout = timeout;
         this.redirect = redirect;
         this.fragment = fragment;
-        this.noise = noise;
+        this.noises = noises;
     }
 
     static fromJson(json = {}) {
@@ -870,7 +870,7 @@ Outbound.FreedomSettings = class extends CommonClass {
             json.timeout,
             json.redirect,
             json.fragment ? Outbound.FreedomSettings.Fragment.fromJson(json.fragment) : undefined,
-            json.noise ? Outbound.FreedomSettings.Noise.fromJson(json.noise) : undefined,
+            json.noises ? Outbound.FreedomSettings.Noises.fromJson(json.noises) : undefined,
         );
     }
 
@@ -880,7 +880,7 @@ Outbound.FreedomSettings = class extends CommonClass {
             timeout: this.timeout,
             redirect: this.redirect,
             fragment: Object.keys(this.fragment).length === 0 ? undefined : this.fragment,
-            noise: Object.keys(this.noise).length === 0 ? undefined : this.noise,
+            noises: Object.keys(this.noises).length === 0 ? undefined : this.noises,
         };
     }
 };
@@ -900,15 +900,21 @@ Outbound.FreedomSettings.Fragment = class extends CommonClass {
         );
     }
 };
-Outbound.FreedomSettings.Noise = class extends CommonClass {
-    constructor(packet = '', delay = '') {
+Outbound.FreedomSettings.Noises = class extends CommonClass {
+    constructor(
+        type = 'rand',
+        packet = '10-20',
+        delay = '10-16'
+    ) {
         super();
+        this.type = type;
         this.packet = packet;
         this.delay = delay;
     }
 
     static fromJson(json = {}) {
-        return new Outbound.FreedomSettings.Noise(
+        return new Outbound.FreedomSettings.Noises(
+            json.type,
             json.packet,
             json.delay,
         );
@@ -934,11 +940,19 @@ Outbound.BlackholeSettings = class extends CommonClass {
     }
 };
 Outbound.DNSSettings = class extends CommonClass {
-    constructor(network = 'udp', address = '1.1.1.1', port = 53) {
+    constructor(
+        network = 'udp',
+        address = '1.1.1.1',
+        port = 53,
+        nonIPQuery = 'drop',
+        blockTypes = []
+    ) {
         super();
         this.network = network;
         this.address = address;
         this.port = port;
+        this.nonIPQuery = nonIPQuery;
+        this.blockTypes = blockTypes;
     }
 
     static fromJson(json = {}) {
@@ -946,6 +960,8 @@ Outbound.DNSSettings = class extends CommonClass {
             json.network,
             json.address,
             json.port,
+            json.nonIPQuery,
+            json.blockTypes,
         );
     }
 };
