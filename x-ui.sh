@@ -42,14 +42,25 @@ echo -e "${green}当前代理面板的版本为: ${red}〔3X-UI优化版〕v${xu
 echo ""
 echo -e "${yellow}〔3X-UI优化版〕最新版为---------->>> ${last_version}${plain}"
 
-os_version=$(grep -i version_id /etc/os-release | cut -d \" -f2 | cut -d . -f1)
+os_version=""
+os_version=$(grep "^VERSION_ID" /etc/os-release | cut -d '=' -f2 | tr -d '"' | tr -d '.')
 
-if [[ "${release}" == "centos" ]]; then
+if [[ "${release}" == "arch" ]]; then
+    echo "您的操作系统是 ArchLinux"
+elif [[ "${release}" == "parch" ]]; then
+    echo "您的操作系统是 ParchLinux"
+elif [[ "${release}" == "manjaro" ]]; then
+    echo "您的操作系统是 Manjaro"
+elif [[ "${release}" == "armbian" ]]; then
+    echo "您的操作系统是 Armbian"
+elif [[ "${release}" == "opensuse-tumbleweed" ]]; then
+    echo "您的操作系统是 OpenSUSE Tumbleweed"
+elif [[ "${release}" == "centos" ]]; then
     if [[ ${os_version} -lt 8 ]]; then
         echo -e "${red} 请使用 CentOS 8 或更高版本 ${plain}\n" && exit 1
     fi
 elif [[ "${release}" == "ubuntu" ]]; then
-    if [[ ${os_version} -lt 20 ]]; then
+    if [[ ${os_version} -lt 2004 ]]; then
         echo -e "${red} 请使用 Ubuntu 20 或更高版本!${plain}\n" && exit 1
     fi
 
@@ -57,20 +68,23 @@ elif [[ "${release}" == "fedora" ]]; then
     if [[ ${os_version} -lt 36 ]]; then
         echo -e "${red} 请使用 Fedora 36 或更高版本!${plain}\n" && exit 1
     fi
-
+elif [[ "${release}" == "amzn" ]]; then
+    if [[ ${os_version} != "2023" ]]; then
+        echo -e "${red} Please use Amazon Linux 2023!${plain}\n" && exit 1
+    fi
 elif [[ "${release}" == "debian" ]]; then
     if [[ ${os_version} -lt 11 ]]; then
         echo -e "${red} 请使用 Debian 11 或更高版本 ${plain}\n" && exit 1
     fi
 
 elif [[ "${release}" == "almalinux" ]]; then
-    if [[ ${os_version} -lt 9 ]]; then
-        echo -e "${red} 请使用 AlmaLinux 9 或更高版本 ${plain}\n" && exit 1
+    if [[ ${os_version} -lt 80 ]]; then
+        echo -e "${red} 请使用 AlmaLinux 8.0 或更高版本 ${plain}\n" && exit 1
     fi
 
 elif [[ "${release}" == "rocky" ]]; then
-    if [[ ${os_version} -lt 9 ]]; then
-        echo -e "${red} 请使用 RockyLinux 9 或更高版本 ${plain}\n" && exit 1
+    if [[ ${os_version} -lt 8 ]]; then
+        echo -e "${red} 请使用 RockyLinux 8 或更高版本 ${plain}\n" && exit 1
     fi
 elif [[ "${release}" == "arch" ]]; then
     echo "您的操作系统是 ArchLinux"
@@ -98,12 +112,12 @@ else
     echo "- Manjaro"
     echo "- Armbian"
     echo "- Alpine Linux"
-    echo "- AlmaLinux 9+"
-    echo "- Rocky Linux 9+"
+    echo "- AlmaLinux 8.0+"
+    echo "- Rocky Linux 8+"
     echo "- Oracle Linux 8+"
     echo "- OpenSUSE Tumbleweed"
+    echo "- Amazon Linux 2023"
     exit 1
-
 fi
 
 # Declare Variables
@@ -204,7 +218,7 @@ custom_version() {
     download_link="https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh"
 
     # Use the entered panel version in the download link
-    install_command="bash <(curl -Ls $download_link) v$panel_version"
+    install_command="bash <(curl -Ls $download_link) v$tag_version"
 
     echo "下载并安装面板版本 $panel_version..."
     eval $install_command
@@ -278,6 +292,8 @@ reset_webbasepath() {
     if [[ $config_webBasePath == "y" ]]; then
         config_webBasePath=$(gen_random_string 10)
     fi
+
+    config_webBasePath=$(gen_random_string 10)
     
     # Apply the new web base path setting
     /usr/local/x-ui/x-ui setting -webBasePath "${config_webBasePath}" >/dev/null 2>&1
@@ -484,7 +500,7 @@ enable_bbr() {
     centos | almalinux | rocky | oracle)
         yum -y update && yum -y install ca-certificates
         ;;
-    fedora)
+    fedora | amzn)
         dnf -y update && dnf -y install ca-certificates
         ;;
     arch | manjaro)
@@ -811,7 +827,7 @@ ssl_cert_issue() {
     centos | almalinux | rocky | oracle)
         yum -y update && yum -y install socat
         ;;
-    fedora)
+    fedora | amzn)
         dnf -y update && dnf -y install socat
         ;;
     arch | manjaro)
@@ -1209,7 +1225,7 @@ install_iplimit() {
             yum update -y && yum install epel-release -y
             yum -y install fail2ban
             ;;
-        fedora)
+        fedora | amzn)
             dnf -y update && dnf -y install fail2ban
             ;;
         arch | manjaro | parch)
@@ -1290,7 +1306,7 @@ remove_iplimit() {
             yum remove fail2ban -y
             yum autoremove -y
             ;;
-        fedora)
+        fedora | amzn)
             dnf remove fail2ban -y
             dnf autoremove -y
             ;;

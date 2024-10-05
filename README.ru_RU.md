@@ -30,10 +30,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.
 
 ## Установка определённой версии
 
-Чтобы установить нужную вам версию, добавьте номер версии в конец команды установки. Например, `v2.4.1`:
+Чтобы установить нужную вам версию, добавьте номер версии в конец команды установки. Например, `v2.4.3`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.4.1
+bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.4.3
 ```
 
 ## SSL Сертификат
@@ -247,10 +247,11 @@ location /sub {
 - Parch Linux
 - Manjaro
 - Armbian
-- AlmaLinux 9+
-- Rocky Linux 9+
+- AlmaLinux 8.0+
+- Rocky Linux 8+
 - Oracle Linux 8+
 - OpenSUSE Tubleweed
+- Amazon Linux 2023
 
 ## Поддерживаемые архитектуры и устройства
 
@@ -309,11 +310,14 @@ location /sub {
 <details>
   <summary>Нажмите для получения информации о настройках по умолчанию</summary>
 
-### Имя пользователя и пароль & webbasepath:
+### Имя пользователя, Пароль, Порт и Web Base Path
 
-Эти параметры будут сгенерированы случайным образом, если вы пропустите их изменение.
+Если вы не измените эти настройки, они будут сгенерированы случайным образом (это не относится к Docker).
 
-  - **Порт:** порт панели по умолчанию — `2053`
+**Настройки по умолчанию для Docker:**
+- **Имя пользователя:** admin
+- **Пароль:** admin
+- **Порт:** 2053
 
 ### Управление базой данных:
 

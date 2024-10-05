@@ -317,23 +317,29 @@
                       </a-col>
                     </a-row>
                     <a-collapse v-if="noises" style="margin-top: 14px;">
-                      <a-collapse-panel header='{{ i18n "pages.settings.noisesSett"}}' v-if="noises">
+                      <a-collapse-panel v-for="(noise, index) in noisesArray" :key="index" :header="`Noise ${index + 1}`">
                         <a-list-item style="padding: 10px 20px">
                           <a-row>
                             <a-col :lg="24" :xl="12">
                               <a-list-item-meta title='Type'></a-list-item-meta>
                             </a-col>
                             <a-col :lg="24" :xl="12">
-                              <a-select v-model="noisesType" style="width: 100%" :dropdown-class-name="themeSwitcher.currentTheme">
-                                <a-select-option :value="p" :label="p" v-for="p in ['rand', 'base64', 'str']"> [[ p ]] </a-select-option>
+                              <a-select :value="noise.type" style="width: 100%" :dropdown-class-name="themeSwitcher.currentTheme"
+                                @change="(value) => updateNoiseType(index, value)">
+                                <a-select-option :value="p" :label="p" v-for="p in ['rand', 'base64', 'str']" :key="p">
+                                  [[ p ]] </a-select-option>
                               </a-select>
                             </a-col>
                           </a-row>
                         </a-list-item>
-                        <setting-list-item style="padding: 10px 20px" type="text" title='Packet (ms)' v-model="noisesPacket" placeholder="5-10"></setting-list-item>
-                        <setting-list-item style="padding: 10px 20px" type="text" title='Delay (ms)' v-model="noisesDelay" placeholder="10-20"></setting-list-item>
+                        <setting-list-item style="padding: 10px 20px" type="text" title='Packet' :value="noise.packet"
+                          @input="(value) => updateNoisePacket(index, value)" placeholder="5-10"></setting-list-item>
+                        <setting-list-item style="padding: 10px 20px" type="text" title='Delay (ms)' :value="noise.delay"
+                          @input="(value) => updateNoiseDelay(index, value)" placeholder="10-20"></setting-list-item>
+                        <a-button v-if="noisesArray.length > 1" type="danger" @click="removeNoise(index)">Remove</a-button>
                       </a-collapse-panel>
                     </a-collapse>
+                    <a-button v-if="noises" type="primary" @click="addNoise" style="margin-top: 10px">Add Noise</a-button>
                   </a-list-item>
                   <a-list-item style="padding: 20px">
                     <a-row>
@@ -377,9 +383,14 @@
                       </a-col>
                     </a-row>
                     <a-collapse v-if="enableDirect" style="margin-top: 14px;">
-                      <a-collapse-panel header='{{ i18n "pages.settings.directSett"}}'>
+                      <a-collapse-panel header='{{ i18n "pages.xray.directips"}}'>
                         <a-list-item style="padding: 10px 20px">
-                          <a-checkbox-group v-model="directCountries" name="Countries" :options="countryOptions"></a-checkbox-group>
+                          <a-checkbox-group v-model="geoIP" :options="geoIPOptions"></a-checkbox-group>
+                        </a-list-item>
+                      </a-collapse-panel>
+                      <a-collapse-panel header='{{ i18n "pages.xray.directdomains"}}'>
+                        <a-list-item style="padding: 10px 20px">
+                          <a-checkbox-group v-model="geoSite" :options="geoSiteOptions"></a-checkbox-group>
                         </a-list-item>
                       </a-collapse-panel>
                     </a-collapse>
@@ -439,11 +450,9 @@
         protocol: "freedom",
         settings: {
           domainStrategy: "AsIs",
-          noises: {
-            type: "rand",
-            packet: "10-20",
-            delay: "10-16",
-          }
+          noises: [
+            { type: "rand", packet: "10-20", delay: "10-16" },
+          ],
         },
       },
       defaultMux: {
@@ -457,8 +466,7 @@
           type: "field",
           outboundTag: "direct",
           domain: [
-            "geosite:category-ir",
-            "geosite:cn"
+            "geosite:category-ir"
           ],
           "enabled": true
         },
@@ -467,17 +475,30 @@
           outboundTag: "direct",
           ip: [
             "geoip:private",
-            "geoip:ir",
-            "geoip:cn"
+            "geoip:ir"
           ],
           enabled: true
         },
       ],
-      countryOptions: [
-        { label: 'Private IP/Domain', value: 'private' },
+      geoIPOptions: [
+        { label: 'Private IP', value: 'private' },
         { label: '🇮🇷 Iran', value: 'ir' },
         { label: '🇨🇳 China', value: 'cn' },
         { label: '🇷🇺 Russia', value: 'ru' },
+        { label: '🇻🇳 Vietnam', value: 'vn' },
+        { label: '🇪🇸 Spain', value: 'es' },
+        { label: '🇮🇩 Indonesia', value: 'id' },
+        { label: '🇺🇦 Ukraine', value: 'ua' },
+        { label: '🇹🇷 Türkiye', value: 'tr' },
+        { label: '🇧🇷 Brazil', value: 'br' },
+      ],
+      geoSiteOptions: [
+        { label: '🇮🇷 Iran', value: 'ir' },
+        { label: '🇨🇳 China', value: 'cn' },
+        { label: '🇷🇺 Russia', value: 'ru' },
+        { label: 'Apple', value: 'apple' },
+        { label: 'Meta', value: 'meta' },
+        { label: 'Google', value: 'google' },
       ],
       get remarkModel() {
         rm = this.allSetting.remarkModel;
@@ -607,6 +628,30 @@
           this.user.loginSecret = "";
         }
       },
+      addNoise() {
+        const newNoise = { type: "rand", packet: "10-20", delay: "10-16" };
+        this.noisesArray = [...this.noisesArray, newNoise];
+      },
+      removeNoise(index) {
+        const newNoises = [...this.noisesArray];
+        newNoises.splice(index, 1);
+        this.noisesArray = newNoises;
+      },
+      updateNoiseType(index, value) {
+        const updatedNoises = [...this.noisesArray];
+        updatedNoises[index] = { ...updatedNoises[index], type: value };
+        this.noisesArray = updatedNoises;
+      },
+      updateNoisePacket(index, value) {
+        const updatedNoises = [...this.noisesArray];
+        updatedNoises[index] = { ...updatedNoises[index], packet: value };
+        this.noisesArray = updatedNoises;
+      },
+      updateNoiseDelay(index, value) {
+        const updatedNoises = [...this.noisesArray];
+        updatedNoises[index] = { ...updatedNoises[index], delay: value };
+        this.noisesArray = updatedNoises;
+      },
     },
     computed: {
       fragment: {
@@ -646,37 +691,25 @@
         }
       },
       noises: {
-        get: function () { return this.allSetting?.subJsonNoises != ""; },
-        set: function (v) {
-          this.allSetting.subJsonNoises = v ? JSON.stringify(this.defaultNoises) : "";
-        }
-      },
-      noisesType: {
-        get: function () { return this.noises ? JSON.parse(this.allSetting.subJsonNoises).settings.noises.type : ""; },
-        set: function (v) {
-          if (v != "") {
-            newNoises = JSON.parse(this.allSetting.subJsonNoises);
-            newNoises.settings.noises.type = v;
-            this.allSetting.subJsonNoises = JSON.stringify(newNoises);
+        get() {
+          return this.allSetting?.subJsonNoises != "";
+        },
+        set(v) {
+          if (v) {
+            this.allSetting.subJsonNoises = JSON.stringify(this.defaultNoises);
+          } else {
+            this.allSetting.subJsonNoises = "";
           }
         }
       },
-      noisesPacket: {
-        get: function () { return this.noises ? JSON.parse(this.allSetting.subJsonNoises).settings.noises.packet : ""; },
-        set: function (v) {
-          if (v != "") {
-            newNoises = JSON.parse(this.allSetting.subJsonNoises);
-            newNoises.settings.noises.packet = v;
-            this.allSetting.subJsonNoises = JSON.stringify(newNoises);
-          }
-        }
-      },
-      noisesDelay: {
-        get: function () { return this.noises ? JSON.parse(this.allSetting.subJsonNoises).settings.noises.delay : ""; },
-        set: function (v) {
-          if (v != "") {
-            newNoises = JSON.parse(this.allSetting.subJsonNoises);
-            newNoises.settings.noises.delay = v;
+      noisesArray: {
+        get() {
+          return this.noises ? JSON.parse(this.allSetting.subJsonNoises).settings.noises : [];
+        },
+        set(value) {
+          if (this.noises) {
+            const newNoises = JSON.parse(this.allSetting.subJsonNoises);
+            newNoises.settings.noises = value;
             this.allSetting.subJsonNoises = JSON.stringify(newNoises);
           }
         }
@@ -717,26 +750,49 @@
           this.allSetting.subJsonRules = v ? JSON.stringify(this.defaultRules) : "";
         }
       },
-      directCountries: {
+      geoIP: {
         get: function () {
           if (!this.enableDirect) return [];
-          rules = JSON.parse(this.allSetting.subJsonRules);
+          const rules = JSON.parse(this.allSetting.subJsonRules);
           return Array.isArray(rules) ? rules[1].ip.map(d => d.replace("geoip:", "")) : [];
         },
         set: function (v) {
-          rules = JSON.parse(this.allSetting.subJsonRules);
+          const rules = JSON.parse(this.allSetting.subJsonRules);
           if (!Array.isArray(rules)) return;
-          rules[0].domain = [];
+
           rules[1].ip = [];
           v.forEach(d => {
+            rules[1].ip.push("geoip:" + d);
+          });
+          this.allSetting.subJsonRules = JSON.stringify(rules);
+        }
+      },
+      geoSite: {
+        get: function () {
+          if (!this.enableDirect) return [];
+          const rules = JSON.parse(this.allSetting.subJsonRules);
+          return Array.isArray(rules) ?
+            rules[0].domain.map(d => {
+              if (d.startsWith("geosite:category-")) {
+                return d.replace("geosite:category-", ""); 
+              }
+              return d.replace("geosite:", "");
+            })
+            : [];
+        },
+        set: function (v) {
+          const rules = JSON.parse(this.allSetting.subJsonRules);
+          if (!Array.isArray(rules)) return;
+
+          rules[0].domain = [];
+          v.forEach(d => {
             let category = '';
-            if (["cn", "private"].includes(d)) {
+            if (["cn", "apple", "meta", "google"].includes(d)) {
               category = "";
             } else if (["ru", "ir"].includes(d)) {
               category = "category-";
             }
             rules[0].domain.push("geosite:" + category + d);
-            rules[1].ip.push("geoip:" + d);
           });
           this.allSetting.subJsonRules = JSON.stringify(rules);
         }

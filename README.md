@@ -115,10 +115,10 @@ apt update -y&&apt install -y curl&&apt install -y socat
 ------------
 ## 安装指定版本
 
-若要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.1`:
+若要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.3`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.4.1
+bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.4.3
 ```
 ------------
 ## 若你的VPS默认有防火墙，请在安装完成之后放行指定端口
@@ -426,10 +426,11 @@ systemctl restart x-ui
 - Arch Linux
 - Manjaro
 - Armbian
-- AlmaLinux 9+
-- Rocky Linux 9+
+- AlmaLinux 8.0+
+- Rocky Linux 8+
 - Oracle Linux 8+
 - OpenSUSE Tubleweed
+- Amazon Linux 2023
 
 ------------
 ## 支持的架构和设备

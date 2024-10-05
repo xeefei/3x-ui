@@ -65,10 +65,13 @@ echo ""
 echo -e "${yellow}---------------------->>>>>〔3X-UI优化版〕最新版为：${last_version}${plain}"
 sleep 4
 
-os_version=$(grep -i version_id /etc/os-release | cut -d \" -f2 | cut -d . -f1)
+os_version=""
+os_version=$(grep "^VERSION_ID" /etc/os-release | cut -d '=' -f2 | tr -d '"' | tr -d '.')
 
 if [[ "${release}" == "arch" ]]; then
     echo "您的操作系统是 ArchLinux"
+elif [[ "${release}" == "parch" ]]; then
+    echo "您的操作系统是 Parch"
 elif [[ "${release}" == "manjaro" ]]; then
     echo "您的操作系统是 Manjaro"
 elif [[ "${release}" == "armbian" ]]; then
@@ -82,24 +85,28 @@ elif [[ "${release}" == "centos" ]]; then
         echo -e "${red} 请使用 CentOS 8 或更高版本 ${plain}\n" && exit 1
     fi
 elif [[ "${release}" == "ubuntu" ]]; then
-    if [[ ${os_version} -lt 20 ]]; then
+    if [[ ${os_version} -lt 2004 ]]; then
         echo -e "${red} 请使用 Ubuntu 20 或更高版本!${plain}\n" && exit 1
     fi
 elif [[ "${release}" == "fedora" ]]; then
     if [[ ${os_version} -lt 36 ]]; then
         echo -e "${red} 请使用 Fedora 36 或更高版本!${plain}\n" && exit 1
     fi
+elif [[ "${release}" == "amzn" ]]; then
+    if [[ ${os_version} != "2023" ]]; then
+        echo -e "${red} Please use Amazon Linux 2023!${plain}\n" && exit 1
+    fi
 elif [[ "${release}" == "debian" ]]; then
     if [[ ${os_version} -lt 11 ]]; then
         echo -e "${red} 请使用 Debian 11 或更高版本 ${plain}\n" && exit 1
     fi
 elif [[ "${release}" == "almalinux" ]]; then
-    if [[ ${os_version} -lt 9 ]]; then
-        echo -e "${red} 请使用 AlmaLinux 9 或更高版本 ${plain}\n" && exit 1
+    if [[ ${os_version} -lt 80 ]]; then
+        echo -e "${red} 请使用 AlmaLinux 8.0 或更高版本 ${plain}\n" && exit 1
     fi
 elif [[ "${release}" == "rocky" ]]; then
-    if [[ ${os_version} -lt 9 ]]; then
-        echo -e "${red} 请使用 RockyLinux 9 或更高版本 ${plain}\n" && exit 1
+    if [[ ${os_version} -lt 8 ]]; then
+        echo -e "${red} 请使用 RockyLinux 8 或更高版本 ${plain}\n" && exit 1
     fi
 elif [[ "${release}" == "oracle" ]]; then
     if [[ ${os_version} -lt 8 ]]; then
@@ -116,12 +123,12 @@ else
     echo "- Manjaro"
     echo "- Armbian"
     echo "- Alpine Linux"
-    echo "- AlmaLinux 9+"
-    echo "- Rocky Linux 9+"
+    echo "- AlmaLinux 8.0+"
+    echo "- Rocky Linux 8+"
     echo "- Oracle Linux 8+"
     echo "- OpenSUSE Tumbleweed"
+    echo "- Amazon Linux 2023"
     exit 1
-
 fi
 
 install_base() {
@@ -132,7 +139,7 @@ install_base() {
     centos | almalinux | rocky | oracle)
         yum -y update && yum install -y -q wget curl tar tzdata
         ;;
-    fedora)
+    fedora | amzn)
         dnf -y update && dnf install -y -q wget curl tar tzdata
         ;;
     arch | manjaro)
@@ -156,7 +163,6 @@ gen_random_string() {
     echo "$random_string"
 }
 
-# This function will be called when user installed x-ui out of security
 config_after_install() {
     echo -e "${yellow}安装/更新完成！ 为了您的面板安全，建议修改面板设置 ${plain}"
     echo ""

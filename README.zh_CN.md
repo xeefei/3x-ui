@@ -30,10 +30,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.
 
 ## 安装指定版本
 
-要安装所需的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.1`:
+要安装所需的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.3`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.4.1
+bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.4.3
 ```
 
 ### SSL证书
@@ -241,11 +241,14 @@ location /sub {
 - CentOS 8+
 - Fedora 36+
 - Arch Linux
+- Parch Linux
 - Manjaro
 - Armbian
-- AlmaLinux 9+
-- Rockylinux 9+
+- AlmaLinux 8.0+
+- Rocky Linux 8+
+- Oracle Linux 8+
 - OpenSUSE Tubleweed
+- Amazon Linux 2023
 
 ## 支持的架构和设备
 <details>
@@ -301,11 +304,14 @@ location /sub {
 <details>
   <summary>点击查看默认设置详情</summary>
 
-### 用户名 & 密码 & Web基础路径：
+### 用户名、密码、端口和 Web Base Path
 
-  如果不修改这些，它们将会随机生成。
+如果您选择不修改这些设置，它们将随机生成（不适用于 Docker）。
 
-  - **端口号:** 面板的默认端口号是 `2053`
+**Docker 的默认设置：**
+- **用户名：** admin
+- **密码：** admin
+- **端口：** 2053
 
 ### 数据库管理：
 

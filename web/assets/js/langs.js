@@ -1,62 +1,67 @@
 const supportLangs = [
-    {
-        name: 'English',
-        value: 'en-US',
-        icon: '🇺🇸',
-    },
-    {
-        name: 'فارسی',
-        value: 'fa-IR',
-        icon: '🇮🇷',
-    },
-    {
-        name: '中文',
-        value: 'zh-CN',
-        icon: '🇨🇳',
-    },
-    {
-        name: 'Русский',
-        value: 'ru-RU',
-        icon: '🇷🇺',
-    },
-    {
-        name: 'Tiếng Việt',
-        value: 'vi-VN',
-        icon: '🇻🇳',
-    },
-    {
-        name: 'Español',
-        value: 'es-ES',
-        icon: '🇪🇸',
-    },
-    {
-        name: 'Indonesian',
-        value: 'id-ID',
-        icon: '🇮🇩',
-    },
-    {
-        name: 'Український',
-        value: 'uk-UA',
-        icon: '🇺🇦',
-    },
-    {
-        name: 'Türkçe',
-        value: 'tr-TR',
-        icon: '🇹🇷',
-    },
-    {
-        name: "Português",
-        value: "pt-BR",
-        icon: "🇧🇷",
-    },
+	{
+		name: "English",
+		value: "en-US",
+		icon: "🇺🇸",
+	},
+	{
+		name: "فارسی",
+		value: "fa-IR",
+		icon: "🇮🇷",
+	},
+	{
+		name: "簡體中文",
+		value: "zh-CN",
+		icon: "🇨🇳",
+	},
+	{
+		name: "繁體中文",
+		value: "zh-TW",
+		icon: "🇹🇼",
+	},
+	{
+		name: "Русский",
+		value: "ru-RU",
+		icon: "🇷🇺",
+	},
+	{
+		name: "Tiếng Việt",
+		value: "vi-VN",
+		icon: "🇻🇳",
+	},
+	{
+		name: "Español",
+		value: "es-ES",
+		icon: "🇪🇸",
+	},
+	{
+		name: "Indonesian",
+		value: "id-ID",
+		icon: "🇮🇩",
+	},
+	{
+		name: "Український",
+		value: "uk-UA",
+		icon: "🇺🇦",
+	},
+	{
+		name: "Türkçe",
+		value: "tr-TR",
+		icon: "🇹🇷",
+	},
+	{
+		name: "Português",
+		value: "pt-BR",
+		icon: "🇧🇷",
+	},
 ];
 
 function getLang() {
-    let lang = getCookie('lang');
+	let lang = getCookie("lang");
 
-    if (!lang) {
-        if (window.navigator) {
-            lang = window.navigator.language || window.navigator.userLanguage;
+	if (!lang) {
+		if (window.navigator) {
+			lang = window.navigator.language || window.navigator.userLanguage;
 
             if (isSupportLang(lang)) {
                 setCookie('lang', lang, 150);
@@ -70,7 +75,7 @@ function getLang() {
         }
     }
 
-    return lang;
+	return lang;
 }
 
 function setLang(lang) {
@@ -78,16 +83,16 @@ function setLang(lang) {
         lang = 'zh-Hans';
     }
 
-    setCookie('lang', lang, 150);
-    window.location.reload();
+	setCookie("lang", lang, 150);
+	window.location.reload();
 }
 
 function isSupportLang(lang) {
-    for (l of supportLangs) {
-        if (l.value === lang) {
-            return true;
-        }
-    }
+	for (l of supportLangs) {
+		if (l.value === lang) {
+			return true;
+		}
+	}
 
-    return false;
+	return false;
 }
