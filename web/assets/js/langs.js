@@ -63,25 +63,25 @@ function getLang() {
 		if (window.navigator) {
 			lang = window.navigator.language || window.navigator.userLanguage;
 
-			if (isSupportLang(lang)) {
-				setCookie("lang", lang, 150);
-			} else {
-				setCookie("lang", "en-US", 150);
-				window.location.reload();
-			}
-		} else {
-			setCookie("lang", "en-US", 150);
-			window.location.reload();
-		}
-	}
+            if (isSupportLang(lang)) {
+                setCookie('lang', lang, 150);
+            } else {
+                setCookie('lang', 'zh-Hans', 150);
+                window.location.reload();
+            }
+        } else {
+            setCookie('lang', 'zh-Hans', 150);
+            window.location.reload();
+        }
+    }
 
 	return lang;
 }
 
 function setLang(lang) {
-	if (!isSupportLang(lang)) {
-		lang = "en-US";
-	}
+    if (!isSupportLang(lang)) {
+        lang = 'zh-Hans';
+    }
 
 	setCookie("lang", lang, 150);
 	window.location.reload();
