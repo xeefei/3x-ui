@@ -28,12 +28,12 @@
 bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
 ```
 
-## Установка определённой версии
+## Установить старую версию (мы не рекомендуем)
 
-Чтобы установить нужную вам версию, добавьте номер версии в конец команды установки. Например, `v2.4.3`:
+Чтобы установить желаемую версию, используйте следующую команду установки. Например, ver `v1.7.9`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.4.3
+VERSION=v1.7.9 && <(curl -Ls "https://raw.githubusercontent.com/mhsanaei/3x-ui/$VERSION/install.sh") $VERSION
 ```
 
 ## SSL Сертификат
@@ -52,6 +52,8 @@ bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.
    - **Get SSL:** Получить SSL сертификаты.
    - **Revoke:** Отозвать существующие SSL сертификаты.
    - **Force Renew:** Принудительно перевыпустить SSL сертификаты.
+   - **Show Existing Domains:** Отобразить все сертификаты доменов, доступные на сервере.  
+   - **Set Certificate Paths for the Panel:** Укажите сертификат для вашего домена, который будет использоваться панелью.
 
 ### Certbot
 
@@ -242,6 +244,7 @@ location /sub {
 - Ubuntu 20.04+
 - Debian 11+
 - CentOS 8+
+- OpenEuler 22.03+
 - Fedora 36+
 - Arch Linux
 - Parch Linux
@@ -476,6 +479,7 @@ WARP встроен, и дополнительная установка не т�
 
 #### Использование
 
+- [API документация](https://documenter.getpostman.com/view/5146551/2sAXxP8Y12)
 - `/login` с `POST`-данными: `{username: '', password: ''}` для входа
 - `/panel/api/inbounds` это базовый путь для следующих действий:
 
@@ -509,8 +513,7 @@ WARP встроен, и дополнительная установка не т�
 </details>
 
 
-- [API-документация](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm)
-- [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/16802678-1a4c9270-ac77-40ed-959a-7aa56dc4a415?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D16802678-1a4c9270-ac77-40ed-959a-7aa56dc4a415%26entityType%3Dcollection%26workspaceId%3D2cd38c01-c851-4a15-a972-f181c23359d9)
+- [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://god.gw.postman.com/run-collection/5146551-e6aac565-e0e2-46df-acff-2607a51bbd04?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D5146551-e6aac565-e0e2-46df-acff-2607a51bbd04%26entityType%3Dcollection%26workspaceId%3Dd64f609f-485a-4951-9b8f-876b3f917124)
 </details>
 
 ## Переменные среды

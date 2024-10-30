@@ -112,13 +112,13 @@ apt update -y&&apt install -y curl&&apt install -y socat
 - 在到这一步必须要注意：要保留旧设置的话，需要输入【n】
 ![11](./media/11.png)
 
-------------
+
 ## 安装指定版本
 
-若要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.3`:
+若要安装指定的版本，请使用以下安装命令。 e.g., ver `v2.4.5`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.4.3
+VERSION=v2.4.5 && bash <(curl -Ls "https://raw.githubusercontent.com/xeefei/3x-ui/$VERSION/install.sh") $VERSION
 ```
 ------------
 ## 若你的VPS默认有防火墙，请在安装完成之后放行指定端口
@@ -262,6 +262,9 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
    - **获取证书** ----获取SSL证书
    - **吊销证书** ----吊销现有的SSL证书
    - **续签证书** ----强制续签SSL证书
+   - **显示所有证书** ----显示服务器中所有能用的证书
+   - **设置面板证书路径** ----指定面板要使用的证书
+
 
 ### Certbot
 
@@ -422,6 +425,7 @@ systemctl restart x-ui
 - Ubuntu 20.04+
 - Debian 11+
 - CentOS 8+
+- OpenEuler 22.03+
 - Fedora 36+
 - Arch Linux
 - Manjaro
@@ -454,10 +458,11 @@ systemctl restart x-ui
 
 ------------
 ## Languages
-  
+
 - English（英语）
 - Farsi（伊朗语）
-- Chinese（中文）
+- Simplified Chinese（简体中文）
+- Traditional Chinese（繁体中文）            
 - Russian（俄语）
 - Vietnamese（越南语）
 - Spanish（西班牙语）
@@ -484,7 +489,6 @@ systemctl restart x-ui
 - 支持通过面板中提供的不同项目更改配置。
 - 支持从面板导出/导入数据库
 
-------------
 ## 默认面板设置
 
 <details>
@@ -684,6 +688,7 @@ Web 面板通过 Telegram Bot 支持每日流量、面板登录、数据库备�
 - `client.id` for VMESS and VLESS
 - `client.password` for TROJAN
 - `client.email` for Shadowsocks
+
 
 
 - [API 文档](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm)

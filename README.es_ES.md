@@ -28,38 +28,62 @@
 bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh)
 ```
 
-## Instalar una Versión Personalizada
+## Instalar versión antigua (no recomendamos)
 
-Para instalar la versión deseada, agrega la versión al final del comando de instalación. Por ejemplo, ver `v2.4.3`:
+Para instalar la versión deseada, utiliza el siguiente comando de instalación. Por ejemplo, ver `v1.7.9`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.4.3
+VERSION=v1.7.9 && <(curl -Ls "https://raw.githubusercontent.com/xeefei/3x-ui/$VERSION/install.sh") $VERSION
 ```
 
 ## Certificado SSL
 
 <details>
-  <summary>Haz clic para el Certificado SSL</summary>
+  <summary>Haga clic para ver los detalles del certificado SSL</summary>
 
-### Cloudflare
+### ACME
 
-El script de gestión tiene una aplicación de certificado SSL incorporada para Cloudflare. Para usar este script para colocar un certificado, necesitas lo siguiente:
+Para gestionar certificados SSL utilizando ACME:
 
-- Correo electrónico registrado en Cloudflare
-- Clave Global de API de Cloudflare
-- El nombre de dominio se ha resuelto en el servidor actual a través de Cloudflare
+1. Asegúrate de que tu dominio esté correctamente resuelto al servidor.
+2. Ejecuta el comando `x-ui` en la terminal y elige `Gestión de Certificados SSL`.
+3. Se te presentarán las siguientes opciones:
 
-**1:** Ejecuta el comando`x-ui`en la terminal, luego elige `Certificado SSL de Cloudflare`.
-
+   - **Get SSL:** Obtener certificados SSL.
+   - **Revoke:** Revocar certificados SSL existentes.
+   - **Force Renew:** Forzar la renovación de certificados SSL.
+   - **Show Existing Domains:** Mostrar todos los certificados de dominio disponibles en el servidor.  
+   - **Set Certificate Paths for the Panel:** Especificar el certificado para tu dominio que será utilizado por el panel. 
 
 ### Certbot
-```
+
+Para instalar y usar Certbot:
+
+```sh
 apt-get install certbot -y
 certbot certonly --standalone --agree-tos --register-unsafely-without-email -d yourdomain.com
 certbot renew --dry-run
 ```
 
-***Consejo:*** *Certbot también está integrado en el script de gestión. Puedes ejecutar el comando `x-ui` , luego elegir `Gestión de Certificados SSL`.*
+### Cloudflare
+
+El script de gestión incluye una aplicación de certificado SSL integrada para Cloudflare. Para usar este script para solicitar un certificado, necesitas lo siguiente:
+
+- Correo electrónico registrado en Cloudflare
+- Clave API Global de Cloudflare
+- El nombre de dominio debe estar resuelto al servidor actual a través de Cloudflare
+
+**Cómo obtener la Clave API Global de Cloudflare:**
+
+1. Ejecuta el comando `x-ui` en la terminal y elige `Certificado SSL de Cloudflare`.
+2. Visita el enlace: [Tokens de API de Cloudflare](https://dash.cloudflare.com/profile/api-tokens).
+3. Haz clic en "Ver Clave API Global" (consulta la captura de pantalla a continuación):
+   ![](media/APIKey1.PNG)
+4. Es posible que necesites volver a autenticar tu cuenta. Después de eso, se mostrará la Clave API (consulta la captura de pantalla a continuación):
+   ![](media/APIKey2.png)
+
+Al utilizarlo, simplemente ingresa tu `nombre de dominio`, `correo electrónico` y `CLAVE API`. El diagrama es el siguiente:
+   ![](media/DetailEnter.png)
 
 </details>
 
@@ -181,6 +205,7 @@ eliminar 3x-ui de docker
 - Ubuntu 20.04+
 - Debian 11+
 - CentOS 8+
+- OpenEuler 22.03+
 - Fedora 36+
 - Arch Linux
 - Parch Linux
@@ -421,6 +446,7 @@ Ingresa el ID de chat de usuario en el campo de entrada número 4. Las cuentas d
 
 #### Uso
 
+- [Documentación de API](https://documenter.getpostman.com/view/5146551/2sAXxP8Y12)
 - `/login` con `POST` datos de usuario: `{username: '', password: ''}` para iniciar sesión
 - `/panel/api/inbounds` base para las siguientes acciones:
 
@@ -450,9 +476,7 @@ Ingresa el ID de chat de usuario en el campo de entrada número 4. Las cuentas d
 - `client.password` para TROJAN
 - `client.email` para Shadowsocks
 
-
-- [Documentación de API](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm)
-- [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/16802678-1a4c9270-ac77-40ed-959a-7aa56dc4a415?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D16802678-1a4c9270-ac77-40ed-959a-7aa56dc4a415%26entityType%3Dcollection%26workspaceId%3D2cd38c01-c851-4a15-a972-f181c23359d9)
+- [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://god.gw.postman.com/run-collection/5146551-e6aac565-e0e2-46df-acff-2607a51bbd04?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D5146551-e6aac565-e0e2-46df-acff-2607a51bbd04%26entityType%3Dcollection%26workspaceId%3Dd64f609f-485a-4951-9b8f-876b3f917124)
 </details>
 
 ## Variables de Entorno

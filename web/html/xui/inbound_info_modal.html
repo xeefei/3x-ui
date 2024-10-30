@@ -154,15 +154,6 @@
             <a-tag color="orange">{{ i18n "none" }}</a-tag>
           </td>
         </tr>
-        <tr v-if="infoModal.inbound.xtls">
-          <td>Flow</td>
-          <td v-if="infoModal.clientSettings.flow">
-            <a-tag>[[ infoModal.clientSettings.flow ]]</a-tag>
-          </td>
-          <td v-else>
-            <a-tag color="orange">{{ i18n "none" }}</a-tag>
-          </td>
-        </tr>
         <tr v-if="infoModal.clientSettings.password">
           <td>{{ i18n "password" }}</td>
           <td>
@@ -370,8 +361,8 @@
           <td>[[ inbound.settings.mtu ]]</td>
         </tr>
         <tr>
-          <td>Kernel Mode</td>
-          <td>[[ inbound.settings.kernelMode ]]</td>
+          <td>No Kernel Tun</td>
+          <td>[[ inbound.settings.noKernelTun ]]</td>
         </tr>
         <template v-for="(peer, index) in inbound.settings.peers">
           <tr>

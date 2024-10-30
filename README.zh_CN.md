@@ -28,12 +28,12 @@
 bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
 ```
 
-## 安装指定版本
+## 安装旧版本 (我们不建议)
 
-要安装所需的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.3`:
+要安装您想要的版本，请使用以下安装命令。例如，ver `v1.7.9`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.4.3
+VERSION=v1.7.9 && <(curl -Ls "https://raw.githubusercontent.com/mhsanaei/3x-ui/$VERSION/install.sh") $VERSION
 ```
 
 ### SSL证书
@@ -49,9 +49,11 @@ bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.
 2. 在终端中运行 `x-ui` 命令，然后选择 `SSL证书管理`。
 3. 您将看到以下选项：
 
-   - **获取SSL证书:** 获取SSL证书。
-   - **吊销:** 吊销现有的SSL证书。
-   - **强制更新:** 强制更新SSL证书。
+   - **Get SSL:** 获取SSL证书。
+   - **Revoke:** 吊销现有的SSL证书。
+   - **Force Renew:** 强制更新SSL证书。
+   - **Show Existing Domains:** 显示服务器上所有可用的域证书。  
+   - **Set Certificate Paths for the Panel:** 指定用于面板的域证书。
 
 ### Certbot
 
@@ -239,6 +241,7 @@ location /sub {
 - Ubuntu 20.04+
 - Debian 11+
 - CentOS 8+
+- OpenEuler 22.03+
 - Fedora 36+
 - Arch Linux
 - Parch Linux
@@ -471,6 +474,7 @@ Web 面板通过 Telegram Bot 支持每日流量、面板登录、数据库备�
 
 #### 使用
 
+- [API 文档](https://documenter.getpostman.com/view/5146551/2sAXxP8Y12)
 - `/login` 使用 `POST` 用户名称 & 密码： `{username: '', password: ''}` 登录
 - `/panel/api/inbounds` 以下操作的基础：
 
@@ -500,9 +504,7 @@ Web 面板通过 Telegram Bot 支持每日流量、面板登录、数据库备�
 - `client.password`  TROJAN
 - `client.email`  Shadowsocks
 
-
-- [API 文档](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm)
-- [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/16802678-1a4c9270-ac77-40ed-959a-7aa56dc4a415?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D16802678-1a4c9270-ac77-40ed-959a-7aa56dc4a415%26entityType%3Dcollection%26workspaceId%3D2cd38c01-c851-4a15-a972-f181c23359d9)
+- [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://god.gw.postman.com/run-collection/5146551-e6aac565-e0e2-46df-acff-2607a51bbd04?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D5146551-e6aac565-e0e2-46df-acff-2607a51bbd04%26entityType%3Dcollection%26workspaceId%3Dd64f609f-485a-4951-9b8f-876b3f917124)
 </details>
 
 ## 环境变量
