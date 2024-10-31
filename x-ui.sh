@@ -216,7 +216,6 @@ update_menu() {
 custom_version() {
     echo "输入面板版本 (例: 2.3.8):"
     read panel_version
-
     if [ -z "$panel_version" ]; then
         echo "面板版本不能为空。"
         exit 1
@@ -225,7 +224,7 @@ custom_version() {
     download_link="https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh"
 
     # Use the entered panel version in the download link
-    install_command="bash <(curl -Ls $download_link) v$tag_version"
+    install_command="bash <(curl -Ls "https://raw.githubusercontent.com/mhsanaei/3x-ui/v$tag_version/install.sh") v$tag_version"
 
     echo "下载并安装面板版本 $panel_version..."
     eval $install_command
@@ -1510,6 +1509,85 @@ remove_iplimit() {
     esac
 }
 
+SSH_port_forwarding() {
+    local server_ip=$(curl -s https://api.ipify.org)
+    local existing_webBasePath=$(/usr/local/x-ui/x-ui setting -show true | grep -Eo 'webBasePath: .+' | awk '{print $2}')
+    local existing_port=$(/usr/local/x-ui/x-ui setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
+    local existing_listenIP=$(/usr/local/x-ui/x-ui setting -getListen true | grep -Eo 'listenIP: .+' | awk '{print $2}')
+    local existing_cert=$(/usr/local/x-ui/x-ui setting -getCert true | grep -Eo 'cert: .+' | awk '{print $2}')
+    local existing_key=$(/usr/local/x-ui/x-ui setting -getCert true | grep -Eo 'key: .+' | awk '{print $2}')
+
+    local config_listenIP=""
+    local listen_choice=""
+
+    if [[ -n "$existing_cert" && -n "$existing_key" ]]; then
+        echo -e "${green}Panel is secure with SSL.${plain}"
+        return 0
+    fi
+    if [[ -z "$existing_cert" && -z "$existing_key" && -z "$existing_listenIP"  ]]; then
+    echo -e "\n${red}Warning: No Cert and Key found! The panel is not secure.${plain}"
+    echo "Please obtain a certificate or set up SSH port forwarding."
+    fi
+
+    if [[ -n "$existing_listenIP" && (-z "$existing_cert" && -z "$existing_key") ]]; then
+        echo -e "\n${green}Current SSH Port Forwarding Configuration:${plain}"
+        echo -e "Standard SSH command:"
+        echo -e "${yellow}ssh -L 2222:${existing_listenIP}:${existing_port} root@${server_ip}${plain}"
+        echo -e "\nIf using SSH key:"
+        echo -e "${yellow}ssh -i <sshkeypath> -L 2222:${existing_listenIP}:${existing_port} root@${server_ip}${plain}"
+        echo -e "\nAfter connecting, access the panel at:"
+        echo -e "${yellow}http://localhost:2222${existing_webBasePath}${plain}"
+    fi
+    
+    echo -e "\nChoose an option:"
+    echo -e "${green}1.${plain} Set listen IP"
+    echo -e "${green}2.${plain} Clear listen IP"
+    echo -e "${green}0.${plain} Abort"
+    read -p "Choose an option: " num
+
+    case "$num" in
+        1)
+            if [[ -z "$existing_listenIP" ]]; then
+                echo -e "\nNo listenIP configured. Choose an option:"
+                echo -e "1. Use default IP (127.0.0.1)"
+                echo -e "2. Set a custom IP"
+                read -p "Select an option (1 or 2): " listen_choice
+
+                config_listenIP="127.0.0.1"
+                [[ "$listen_choice" == "2" ]] && read -p "Enter custom IP to listen on: " config_listenIP
+
+                /usr/local/x-ui/x-ui setting -listenIP "${config_listenIP}" >/dev/null 2>&1
+                echo -e "${green}listen IP has been set to ${config_listenIP}.${plain}"
+                restart
+            else
+                config_listenIP="${existing_listenIP}"
+                echo -e "${green}Current listen IP is already set to ${config_listenIP}.${plain}"
+            fi
+
+            if [[ -n "${config_listenIP}" ]]; then
+                echo -e "\n${green}SSH Port Forwarding Configuration:${plain}"
+                echo -e "Standard SSH command:"
+                echo -e "${yellow}ssh -L 2222:${config_listenIP}:${existing_port} root@${server_ip}${plain}"
+                echo -e "\nIf using SSH key:"
+                echo -e "${yellow}ssh -i <sshkeypath> -L 2222:${config_listenIP}:${existing_port} root@${server_ip}${plain}"
+                echo -e "\nAfter connecting, access the panel at:"
+                echo -e "${yellow}http://localhost:2222${existing_webBasePath}${plain}"
+            fi
+            ;;
+        2)
+            /usr/local/x-ui/x-ui setting -listenIP ' ' >/dev/null 2>&1
+            echo -e "${green}Listen IP has been cleared.${plain}"
+            restart
+            ;;
+        0)
+            echo "Operation aborted."
+            ;;
+        *)
+            echo "Invalid option. Exiting."
+            ;;
+    esac
+}
+
 show_usage() {
     echo -e "         ---------------------"
     echo -e "         |${green}3X-UI 控制菜单用法 ${plain}|${plain}"
@@ -1598,7 +1676,7 @@ show_menu() {
         check_install && update_menu
         ;;
     4)
-        check_install && custom_version
+        check_install && legacy_version
         ;;
     5)
         check_install && uninstall
@@ -1652,12 +1730,15 @@ show_menu() {
         firewall_menu
         ;;
     22)
-        bbr_menu
+        SSH_port_forwarding
         ;;
     23)
-        update_geo
+        bbr_menu
         ;;
     24)
+        update_geo
+        ;;
+    25)
         run_speedtest
         ;;
     25)
@@ -1701,8 +1782,8 @@ if [[ $# > 0 ]]; then
     "update")
         check_install 0 && update 0
         ;;
-    "custom")
-        check_install 0 && custom_version 0
+    "legacy")
+        check_install 0 && legacy_version 0
         ;;
     "install")
         check_uninstall 0 && install 0
