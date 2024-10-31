@@ -42,31 +42,14 @@ echo -e "${green}当前代理面板的版本为: ${red}〔3X-UI优化版〕v${xu
 echo ""
 echo -e "${yellow}〔3X-UI优化版〕最新版为---------->>> ${last_version}${plain}"
 
-os_version=""
-os_version=$(grep "^VERSION_ID" /etc/os-release | cut -d '=' -f2 | tr -d '"' | tr -d '.')
+os_version=$(grep -i version_id /etc/os-release | cut -d \" -f2 | cut -d . -f1)
 
-if [[ "${release}" == "arch" ]]; then
-    echo "您的操作系统是 ArchLinux"
-elif [[ "${release}" == "parch" ]]; then
-    echo "您的操作系统是 ParchLinux"
-elif [[ "${release}" == "manjaro" ]]; then
-    echo "您的操作系统是 Manjaro"
-elif [[ "${release}" == "armbian" ]]; then
-    echo "您的操作系统是 Armbian"
-elif [[ "${release}" == "alpine" ]]; then
-    echo "您的操作系统是 Alpine Linux"
-elif [[ "${release}" == "opensuse-tumbleweed" ]]; then
-    echo "您的操作系统是 OpenSUSE Tumbleweed"
-elif [[ "${release}" == "openEuler" ]]; then
-    if [[ ${os_version} -lt 2203 ]]; then
-    echo -e "${red} 请使用 OpenEuler 22.03 或更高版本 ${plain}\n" && exit 1
-    fi
-elif [[ "${release}" == "centos" ]]; then
+if [[ "${release}" == "centos" ]]; then
     if [[ ${os_version} -lt 8 ]]; then
         echo -e "${red} 请使用 CentOS 8 或更高版本 ${plain}\n" && exit 1
     fi
 elif [[ "${release}" == "ubuntu" ]]; then
-    if [[ ${os_version} -lt 2004 ]]; then
+    if [[ ${os_version} -lt 20 ]]; then
         echo -e "${red} 请使用 Ubuntu 20 或更高版本!${plain}\n" && exit 1
     fi
 
@@ -74,23 +57,20 @@ elif [[ "${release}" == "fedora" ]]; then
     if [[ ${os_version} -lt 36 ]]; then
         echo -e "${red} 请使用 Fedora 36 或更高版本!${plain}\n" && exit 1
     fi
-elif [[ "${release}" == "amzn" ]]; then
-    if [[ ${os_version} != "2023" ]]; then
-        echo -e "${red} Please use Amazon Linux 2023!${plain}\n" && exit 1
-    fi
+
 elif [[ "${release}" == "debian" ]]; then
     if [[ ${os_version} -lt 11 ]]; then
         echo -e "${red} 请使用 Debian 11 或更高版本 ${plain}\n" && exit 1
     fi
 
 elif [[ "${release}" == "almalinux" ]]; then
-    if [[ ${os_version} -lt 80 ]]; then
-        echo -e "${red} 请使用 AlmaLinux 8.0 或更高版本 ${plain}\n" && exit 1
+    if [[ ${os_version} -lt 9 ]]; then
+        echo -e "${red} 请使用 AlmaLinux 9 或更高版本 ${plain}\n" && exit 1
     fi
 
 elif [[ "${release}" == "rocky" ]]; then
-    if [[ ${os_version} -lt 8 ]]; then
-        echo -e "${red} 请使用 RockyLinux 8 或更高版本 ${plain}\n" && exit 1
+    if [[ ${os_version} -lt 9 ]]; then
+        echo -e "${red} 请使用 RockyLinux 9 或更高版本 ${plain}\n" && exit 1
     fi
 elif [[ "${release}" == "arch" ]]; then
     echo "您的操作系统是 ArchLinux"
@@ -112,19 +92,18 @@ else
     echo "- Ubuntu 20.04+"
     echo "- Debian 11+"
     echo "- CentOS 8+"
-    echo "- OpenEuler 22.03+"
     echo "- Fedora 36+"
     echo "- Arch Linux"
     echo "- Parch Linux"
     echo "- Manjaro"
     echo "- Armbian"
     echo "- Alpine Linux"
-    echo "- AlmaLinux 8.0+"
-    echo "- Rocky Linux 8+"
+    echo "- AlmaLinux 9+"
+    echo "- Rocky Linux 9+"
     echo "- Oracle Linux 8+"
     echo "- OpenSUSE Tumbleweed"
-    echo "- Amazon Linux 2023"
     exit 1
+
 fi
 
 # Declare Variables
@@ -216,6 +195,7 @@ update_menu() {
 custom_version() {
     echo "输入面板版本 (例: 2.3.8):"
     read panel_version
+
     if [ -z "$panel_version" ]; then
         echo "面板版本不能为空。"
         exit 1
@@ -224,7 +204,7 @@ custom_version() {
     download_link="https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh"
 
     # Use the entered panel version in the download link
-    install_command="bash <(curl -Ls "https://raw.githubusercontent.com/mhsanaei/3x-ui/v$tag_version/install.sh") v$tag_version"
+    install_command="bash <(curl -Ls $download_link) v$panel_version"
 
     echo "下载并安装面板版本 $panel_version..."
     eval $install_command
@@ -232,7 +212,7 @@ custom_version() {
 
 # Function to handle the deletion of the script file
 delete_script() {
-    rm "$0" # Remove the script file itself
+    rm "$0"  # Remove the script file itself
     exit 1
 }
 
@@ -298,11 +278,10 @@ reset_webbasepath() {
     if [[ $config_webBasePath == "y" ]]; then
         config_webBasePath=$(gen_random_string 10)
     fi
-
-    config_webBasePath=$(gen_random_string 10)
-
+    
     # Apply the new web base path setting
     /usr/local/x-ui/x-ui setting -webBasePath "${config_webBasePath}" >/dev/null 2>&1
+    systemctl restart x-ui
     
     # Display confirmation message
     echo -e "面板访问路径已重置为: ${green}${config_webBasePath}${plain}"
@@ -323,11 +302,10 @@ reset_config() {
 }
 
 check_config() {
-    local info=$(/usr/local/x-ui/x-ui setting -show true)
+    info=$(/usr/local/x-ui/x-ui setting -show true)
     if [[ $? != 0 ]]; then
         LOGE "获取当前设置错误，请检查日志"
         show_menu
-        return
     fi
     echo -e "${info}${plain}"
 }
@@ -434,31 +412,10 @@ disable() {
 }
 
 show_log() {
-    echo -e "${green}\t1.${plain} Debug Log"
-    echo -e "${green}\t2.${plain} Clear All logs"
-    echo -e "${green}\t0.${plain} Back to Main Menu"
-    read -p "Choose an option: " choice
-
-    case "$choice" in
-    0)
-        return
-        ;;
-    1)
-        journalctl -u x-ui -e --no-pager -f -p debug
-        if [[ $# == 0 ]]; then
+    journalctl -u x-ui.service -e --no-pager -f
+    if [[ $# == 0 ]]; then
         before_show_menu
-        fi
-        ;;
-    2)
-        sudo journalctl --rotate
-        sudo journalctl --vacuum-time=1s
-        echo "All Logs cleared."
-        restart
-        ;;
-    *)
-        echo "Invalid choice"
-        ;;
-    esac
+    fi
 }
 
 show_banlog() {
@@ -524,10 +481,10 @@ enable_bbr() {
     ubuntu | debian | armbian)
         apt-get update && apt-get install -yqq --no-install-recommends ca-certificates
         ;;
-    centos | almalinux | rocky | ol)
+    centos | almalinux | rocky | oracle)
         yum -y update && yum -y install ca-certificates
         ;;
-    fedora | amzn)
+    fedora)
         dnf -y update && dnf -y install ca-certificates
         ;;
     arch | manjaro)
@@ -782,75 +739,36 @@ update_geo() {
     fi
 
     systemctl stop x-ui
-    cd /usr/local/x-ui/bin
-
-    case "$choice" in
-    0)
-        show_menu
-        ;;
-    1)
-        rm -f geoip.dat geosite.dat
-        wget -N https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
-        wget -N https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
-        echo -e "${green}Loyalsoldier datasets have been updated successfully!${plain}"
-        ;;
-    2)
-        rm -f geoip_IR.dat geosite_IR.dat
-        wget -O geoip_IR.dat -N https://github.com/chocolate4u/Iran-v2ray-rules/releases/latest/download/geoip.dat
-        wget -O geosite_IR.dat -N https://github.com/chocolate4u/Iran-v2ray-rules/releases/latest/download/geosite.dat
-        echo -e "${green}chocolate4u datasets have been updated successfully!${plain}"
-        ;;
-    3)
-        rm -f geoip_VN.dat geosite_VN.dat
-        wget -O geoip_VN.dat -N https://github.com/vuong2023/vn-v2ray-rules/releases/latest/download/geoip.dat
-        wget -O geosite_VN.dat -N https://github.com/vuong2023/vn-v2ray-rules/releases/latest/download/geosite.dat
-        echo -e "${green}vuong2023 datasets have been updated successfully!${plain}"
-        ;;
-    *)
-        echo "Invalid option selected! No updates made."
-        ;;
-    esac
-
+    cd ${binFolder}
+    rm -f geoip.dat geosite.dat geoip_IR.dat geosite_IR.dat geoip_VN.dat geosite_VN.dat
+    wget -N https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
+    wget -N https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
+    wget -O geoip_IR.dat -N https://github.com/chocolate4u/Iran-v2ray-rules/releases/latest/download/geoip.dat
+    wget -O geosite_IR.dat -N https://github.com/chocolate4u/Iran-v2ray-rules/releases/latest/download/geosite.dat
+    wget -O geoip_VN.dat https://github.com/vuong2023/vn-v2ray-rules/releases/latest/download/geoip.dat
+    wget -O geosite_VN.dat https://github.com/vuong2023/vn-v2ray-rules/releases/latest/download/geosite.dat
     systemctl start x-ui
     echo -e "${green}Geosite.dat + Geoip.dat + geoip_IR.dat + geosite_IR.dat 在 bin 文件夹: '${binfolder}' 中已经更新成功 !${plain}"
     before_show_menu
 }
 
 install_acme() {
-    # Check if acme.sh is already installed
-    if command -v ~/.acme.sh/acme.sh &>/dev/null; then
-        LOGI "acme.sh is already installed."
-        return 0
-    fi
-
-    LOGI "Installing acme.sh..."
-    cd ~ || return 1 # Ensure you can change to the home directory
-
-    curl -s https://get.acme.sh | sh
+    cd ~
+    LOGI "install acme..."
+    curl https://get.acme.sh | sh
     if [ $? -ne 0 ]; then
         LOGE "安装 acme 失败"
         return 1
     else
         LOGI "安装 acme 成功"
     fi
-
     return 0
 }
 
 ssl_cert_issue_main() {
-    echo -e "${green}\t1.${plain} Get SSL"
-    echo -e "${green}\t2.${plain} Revoke"
-    echo -e "${green}\t3.${plain} Force Renew"
-    echo -e "${green}\t4.${plain} Show Existing Domains"
-    echo -e "${green}\t5.${plain} Set Cert paths for the panel"
-    echo -e "${green}\t0.${plain} Back to Main Menu"
-
-    read -p "Choose an option: " choice
     echo -e "${green}\t1.${plain} 获取 SSL 证书"
     echo -e "${green}\t2.${plain} 吊销证书"
     echo -e "${green}\t3.${plain} 续签证书"
-    echo -e "${green}\t4.${plain} 显示所有证书"
-    echo -e "${green}\t5.${plain} 设置面板证书路径"
     echo -e "${green}\t0.${plain} 返回主菜单"
     read -p "请输入选项: " choice
     case "$choice" in
@@ -861,87 +779,17 @@ ssl_cert_issue_main() {
         ssl_cert_issue
         ;;
     2)
-        local domains=$(find /root/cert/ -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
-        if [ -z "$domains" ]; then
-            echo "未找到可吊销的证书"
-        else
-            echo "现有域名:"
-            echo "$domains"
-            read -p "请输入您的域名以吊销证书: " domain
-            if echo "$domains" | grep -qw "$domain"; then
-                ~/.acme.sh/acme.sh --revoke -d ${domain}
-                LOGI "域名证书被吊销: $domain"
-            else
-                echo "输入的域名无效"
-            fi
-        fi
+        local domain=""
+        read -p "请输入您的域名以吊销证书: " domain
+        ~/.acme.sh/acme.sh --revoke -d ${domain}
+        LOGI "证书吊销成功"
         ;;
     3)
-        local domains=$(find /root/cert/ -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
-        if [ -z "$domains" ]; then
-            echo "未找到可续签的证书"
-        else
-            echo "现有域名:"
-            echo "$domains"
-            read -p "请输入您的域名以续签证书:  " domain
-            if echo "$domains" | grep -qw "$domain"; then
-                ~/.acme.sh/acme.sh --renew -d ${domain} --force
-                LOGI "域名证书已强制续签: $domain"
-            else
-                echo "输入的域名无效"
-            fi
-        fi
+        local domain=""
+        read -p "请输入您的域名以续签 SSL 证书: " domain
+        ~/.acme.sh/acme.sh --renew -d ${domain} --force
         ;;
-    4)
-        local domains=$(find /root/cert/ -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
-        if [ -z "$domains" ]; then
-            echo "没有找到证书"
-        else
-            echo "现有域名及其路径:"
-            for domain in $domains; do
-                local cert_path="/root/cert/${domain}/fullchain.pem"
-                local key_path="/root/cert/${domain}/privkey.pem"
-                if [[ -f "${cert_path}" && -f "${key_path}" ]]; then
-                    echo -e "Domain（域名）: ${domain}"
-                    echo -e "\tCertificate Path（证书路径为）: ${cert_path}"
-                    echo -e "\tPrivate Key Path（私钥路径为）: ${key_path}"
-                else
-                    echo -e "Domain（域名）: ${domain} - 证书或私钥丢失"
-                fi
-            done
-        fi
-        ;;
-    5)
-        local domains=$(find /root/cert/ -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
-        if [ -z "$domains" ]; then
-            echo "没有找到证书"
-        else
-            echo "可用域名:"
-            echo "$domains"
-            read -p "请选择一个域名来设置面板路径: " domain
-
-            if echo "$domains" | grep -qw "$domain"; then
-                local webCertFile="/root/cert/${domain}/fullchain.pem"
-                local webKeyFile="/root/cert/${domain}/privkey.pem"
-
-                if [[ -f "${webCertFile}" && -f "${webKeyFile}" ]]; then
-                    /usr/local/x-ui/x-ui cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
-                    echo "Panel paths set for domain: $domain"
-                    echo "  - Certificate File（证书路径为）: $webCertFile"
-                    echo "  - Private Key File（私钥路径为）: $webKeyFile"
-                    restart
-                else
-                    echo "找不到域名所对应的证书和私钥: $domain."
-                fi
-            else
-                echo "输入的域名无效"
-            fi
-        fi
-        ;;
-
-    *)
-        echo "无效选择"
-        ;;
+    *) echo "无效选项" ;;
     esac
 }
 
@@ -955,16 +803,15 @@ ssl_cert_issue() {
             exit 1
         fi
     fi
-
     # install socat second
     case "${release}" in
     ubuntu | debian | armbian)
         apt update && apt install socat -y
         ;;
-    centos | almalinux | rocky | ol)
+    centos | almalinux | rocky | oracle)
         yum -y update && yum -y install socat
         ;;
-    fedora | amzn)
+    fedora)
         dnf -y update && dnf -y install socat
         ;;
     arch | manjaro)
@@ -982,31 +829,25 @@ ssl_cert_issue() {
         LOGI "安装 socat 成功..."
     fi
 
-    # get the domain here, and we need to verify it
+    # get the domain here,and we need verify it
     local domain=""
-    read -p "Please enter your domain name: " domain
-    LOGD "Your domain is: ${domain}, checking it..."
     read -p "请输入您的域名:" domain
     LOGD "您的域名是：${domain}，正在检查..."
     # here we need to judge whether there exists cert already
     local currentCert=$(~/.acme.sh/acme.sh --list | tail -1 | awk '{print $1}')
 
-    # check if there already exists a certificate
-    local currentCert=$(~/.acme.sh/acme.sh --list | tail -1 | awk '{print $1}')
-    if [ "${currentCert}" == "${domain}" ]; then
+    if [ ${currentCert} == ${domain} ]; then
         local certInfo=$(~/.acme.sh/acme.sh --list)
-        LOGE "System already has certificates for this domain. Cannot issue again. Current certificate details:"
         LOGE "系统已经有证书，无法再次颁发，当前证书详细信息:"
         LOGI "$certInfo"
         echo ""
         echo -e "${green}如果要申请安装证书并每3个月〔自动续签〕证书，请确保${red} 80 ${green}和 ${red}443 ${green}端口已打开放行${plain}"
         exit 1
     else
-        LOGI "Your domain is ready for issuing certificates now..."
         LOGI "您的域现在已准备好颁发证书..."
     fi
 
-    # create a directory for the certificate
+    # create a directory for install cert
     certPath="/root/cert/${domain}"
     if [ ! -d "$certPath" ]; then
         mkdir -p "$certPath"
@@ -1015,7 +856,7 @@ ssl_cert_issue() {
         mkdir -p "$certPath"
     fi
 
-    # get the port number for the standalone server
+    # get needed port here
     local WebPort=80
     read -p "请选择您使用的端口，默认为 80 端口:" WebPort
     if [[ ${WebPort} -gt 65535 || ${WebPort} -lt 1 ]]; then
@@ -1033,18 +874,12 @@ ssl_cert_issue() {
     else
         LOGE "颁发证书成功，安装证书..."
     fi
-
-    # install the certificate
+    # install cert
     ~/.acme.sh/acme.sh --installcert -d ${domain} \
         --key-file /root/cert/${domain}/privkey.pem \
         --fullchain-file /root/cert/${domain}/fullchain.pem
 
     if [ $? -ne 0 ]; then
-        LOGE "Installing certificate failed, exiting."
-        rm -rf ~/.acme.sh/${domain}
-        exit 1
-    else
-        LOGI "Installing certificate succeeded, enabling auto renew..."
         LOGE "安装证书失败"
         rm -rf ~/.acme.sh/${domain}
         exit 1
@@ -1054,7 +889,6 @@ ssl_cert_issue() {
         echo -e "${green}如果要申请安装证书并每3个月〔自动续签〕证书，请确保${red} 80 ${green}和 ${red}443 ${green}端口已打开放行${plain}"
     fi
 
-    # enable auto-renew
     ~/.acme.sh/acme.sh --upgrade --auto-upgrade
     if [ $? -ne 0 ]; then
         LOGE "自动续订失败，证书详细信息:"
@@ -1067,25 +901,6 @@ ssl_cert_issue() {
         chmod 755 $certPath/*
         echo ""
         echo -e "${green}如果要申请安装证书并每3个月〔自动续签〕证书，请确保${red} 80 ${green}和 ${red}443 ${green}端口已打开放行${plain}"
-    fi
-
-    # Prompt user to set panel paths after successful certificate installation
-    read -p "Would you like to set this certificate for the panel? (y/n): " setPanel
-    if [[ "$setPanel" == "y" || "$setPanel" == "Y" ]]; then
-        local webCertFile="/root/cert/${domain}/fullchain.pem"
-        local webKeyFile="/root/cert/${domain}/privkey.pem"
-
-        if [[ -f "$webCertFile" && -f "$webKeyFile" ]]; then
-            /usr/local/x-ui/x-ui cert -webCert "$webCertFile" -webCertKey "$webKeyFile"
-            LOGI "Panel paths set for domain: $domain"
-            LOGI "  - Certificate File: $webCertFile"
-            LOGI "  - Private Key File: $webKeyFile"
-            restart
-        else
-            LOGE "Error: Certificate or private key file not found for domain: $domain."
-        fi
-    else
-        LOGI "Skipping panel path setting."
     fi
 }
 
@@ -1248,7 +1063,7 @@ create_iplimit_jails() {
     # Uncomment 'allowipv6 = auto' in fail2ban.conf
     sed -i 's/#allowipv6 = auto/allowipv6 = auto/g' /etc/fail2ban/fail2ban.conf
 
-    # On Debian 12+ fail2ban's default backend should be changed to systemd
+    #On Debian 12+ fail2ban's default backend should be changed to systemd
     if [[  "${release}" == "debian" && ${os_version} -ge 12 ]]; then
         sed -i '0,/action =/s/backend = auto/backend = systemd/' /etc/fail2ban/jail.conf
     fi
@@ -1258,7 +1073,7 @@ create_iplimit_jails() {
 enabled=true
 backend=auto
 filter=3x-ipl
-action = %(known/action)s[name=%(__name__)s, protocol="%(protocol)s", chain="%(chain)s"]
+action=3x-ipl
 logpath=${iplimit_log_path}
 maxretry=2
 findtime=32
@@ -1274,7 +1089,7 @@ EOF
 
     cat << EOF > /etc/fail2ban/action.d/3x-ipl.conf
 [INCLUDES]
-before = iptables-common.conf
+before = iptables-allports.conf
 
 [Definition]
 actionstart = <iptables> -N f2b-<name>
@@ -1294,11 +1109,6 @@ actionunban = <iptables> -D f2b-<name> -s <ip> -j <blocktype>
               echo "\$(date +"%%Y/%%m/%%d %%H:%%M:%%S")   UNBAN   [Email] = <F-USER> [IP] = <ip> unbanned." >> ${iplimit_banned_log_path}
 
 [Init]
-# Use default settings from iptables-common.conf
-# This will automatically handle both IPv4 and IPv6
-name = default
-protocol = tcp
-chain = INPUT
 EOF
 
     echo -e "${green}使用 ${bantime} 分钟的禁止时间以创建的 IP Limit 限制文件。${plain}"
@@ -1367,15 +1177,12 @@ iplimit_main() {
         show_banlog
         ;;
     5)
-        tail -f /var/log/fail2ban.log
-        ;;
-    6)
         service fail2ban status
         ;;
-    7)
+    6)
         systemctl restart fail2ban
         ;;
-    8)
+    7)
         remove_iplimit
         ;;
     *) echo "无效选项" ;;
@@ -1398,11 +1205,11 @@ install_iplimit() {
         debian | armbian)
             apt update && apt install fail2ban -y
             ;;
-        centos | almalinux | rocky | ol)
+        centos | almalinux | rocky | oracle)
             yum update -y && yum install epel-release -y
             yum -y install fail2ban
             ;;
-        fedora | amzn)
+        fedora)
             dnf -y update && dnf -y install fail2ban
             ;;
         arch | manjaro | parch)
@@ -1479,11 +1286,11 @@ remove_iplimit() {
             apt-get purge -y fail2ban -y
             apt-get autoremove -y
             ;;
-        centos | almalinux | rocky | ol)
+        centos | almalinux | rocky | oracle)
             yum remove fail2ban -y
             yum autoremove -y
             ;;
-        fedora | amzn)
+        fedora)
             dnf remove fail2ban -y
             dnf autoremove -y
             ;;
@@ -1506,85 +1313,6 @@ remove_iplimit() {
         echo -e "${red}无效选项。 请选择一个有效的选项。${plain}\n"
         remove_iplimit
         ;;
-    esac
-}
-
-SSH_port_forwarding() {
-    local server_ip=$(curl -s https://api.ipify.org)
-    local existing_webBasePath=$(/usr/local/x-ui/x-ui setting -show true | grep -Eo 'webBasePath: .+' | awk '{print $2}')
-    local existing_port=$(/usr/local/x-ui/x-ui setting -show true | grep -Eo 'port: .+' | awk '{print $2}')
-    local existing_listenIP=$(/usr/local/x-ui/x-ui setting -getListen true | grep -Eo 'listenIP: .+' | awk '{print $2}')
-    local existing_cert=$(/usr/local/x-ui/x-ui setting -getCert true | grep -Eo 'cert: .+' | awk '{print $2}')
-    local existing_key=$(/usr/local/x-ui/x-ui setting -getCert true | grep -Eo 'key: .+' | awk '{print $2}')
-
-    local config_listenIP=""
-    local listen_choice=""
-
-    if [[ -n "$existing_cert" && -n "$existing_key" ]]; then
-        echo -e "${green}Panel is secure with SSL.${plain}"
-        return 0
-    fi
-    if [[ -z "$existing_cert" && -z "$existing_key" && -z "$existing_listenIP"  ]]; then
-    echo -e "\n${red}Warning: No Cert and Key found! The panel is not secure.${plain}"
-    echo "Please obtain a certificate or set up SSH port forwarding."
-    fi
-
-    if [[ -n "$existing_listenIP" && (-z "$existing_cert" && -z "$existing_key") ]]; then
-        echo -e "\n${green}Current SSH Port Forwarding Configuration:${plain}"
-        echo -e "Standard SSH command:"
-        echo -e "${yellow}ssh -L 2222:${existing_listenIP}:${existing_port} root@${server_ip}${plain}"
-        echo -e "\nIf using SSH key:"
-        echo -e "${yellow}ssh -i <sshkeypath> -L 2222:${existing_listenIP}:${existing_port} root@${server_ip}${plain}"
-        echo -e "\nAfter connecting, access the panel at:"
-        echo -e "${yellow}http://localhost:2222${existing_webBasePath}${plain}"
-    fi
-    
-    echo -e "\nChoose an option:"
-    echo -e "${green}1.${plain} Set listen IP"
-    echo -e "${green}2.${plain} Clear listen IP"
-    echo -e "${green}0.${plain} Abort"
-    read -p "Choose an option: " num
-
-    case "$num" in
-        1)
-            if [[ -z "$existing_listenIP" ]]; then
-                echo -e "\nNo listenIP configured. Choose an option:"
-                echo -e "1. Use default IP (127.0.0.1)"
-                echo -e "2. Set a custom IP"
-                read -p "Select an option (1 or 2): " listen_choice
-
-                config_listenIP="127.0.0.1"
-                [[ "$listen_choice" == "2" ]] && read -p "Enter custom IP to listen on: " config_listenIP
-
-                /usr/local/x-ui/x-ui setting -listenIP "${config_listenIP}" >/dev/null 2>&1
-                echo -e "${green}listen IP has been set to ${config_listenIP}.${plain}"
-                restart
-            else
-                config_listenIP="${existing_listenIP}"
-                echo -e "${green}Current listen IP is already set to ${config_listenIP}.${plain}"
-            fi
-
-            if [[ -n "${config_listenIP}" ]]; then
-                echo -e "\n${green}SSH Port Forwarding Configuration:${plain}"
-                echo -e "Standard SSH command:"
-                echo -e "${yellow}ssh -L 2222:${config_listenIP}:${existing_port} root@${server_ip}${plain}"
-                echo -e "\nIf using SSH key:"
-                echo -e "${yellow}ssh -i <sshkeypath> -L 2222:${config_listenIP}:${existing_port} root@${server_ip}${plain}"
-                echo -e "\nAfter connecting, access the panel at:"
-                echo -e "${yellow}http://localhost:2222${existing_webBasePath}${plain}"
-            fi
-            ;;
-        2)
-            /usr/local/x-ui/x-ui setting -listenIP ' ' >/dev/null 2>&1
-            echo -e "${green}Listen IP has been cleared.${plain}"
-            restart
-            ;;
-        0)
-            echo "Operation aborted."
-            ;;
-        *)
-            echo "Invalid option. Exiting."
-            ;;
     esac
 }
 
@@ -1676,7 +1404,7 @@ show_menu() {
         check_install && update_menu
         ;;
     4)
-        check_install && legacy_version
+        check_install && custom_version
         ;;
     5)
         check_install && uninstall
@@ -1730,15 +1458,12 @@ show_menu() {
         firewall_menu
         ;;
     22)
-        SSH_port_forwarding
-        ;;
-    23)
         bbr_menu
         ;;
-    24)
+    23)
         update_geo
         ;;
-    25)
+    24)
         run_speedtest
         ;;
     25)
@@ -1782,8 +1507,8 @@ if [[ $# > 0 ]]; then
     "update")
         check_install 0 && update 0
         ;;
-    "legacy")
-        check_install 0 && legacy_version 0
+    "custom")
+        check_install 0 && custom_version 0
         ;;
     "install")
         check_uninstall 0 && install 0
