@@ -10,6 +10,7 @@ type XUIController struct {
 	inboundController     *InboundController
 	settingController     *SettingController
 	xraySettingController *XraySettingController
+	
 }
 
 func NewXUIController(g *gin.RouterGroup) *XUIController {
@@ -26,10 +27,12 @@ func (a *XUIController) initRouter(g *gin.RouterGroup) {
 	g.GET("/inbounds", a.inbounds)
 	g.GET("/settings", a.settings)
 	g.GET("/xray", a.xraySettings)
+	g.GET("/navigation", a.navigation)
 
 	a.inboundController = NewInboundController(g)
 	a.settingController = NewSettingController(g)
 	a.xraySettingController = NewXraySettingController(g)
+	
 }
 
 func (a *XUIController) index(c *gin.Context) {
@@ -46,4 +49,8 @@ func (a *XUIController) settings(c *gin.Context) {
 
 func (a *XUIController) xraySettings(c *gin.Context) {
 	html(c, "xray.html", "pages.xray.title", nil)
+}
+
+func (a *XUIController) navigation(c *gin.Context) {
+	html(c, "navigation.html", "pages.navigation.title", nil)
 }

@@ -6,6 +6,8 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"os/exec"
+        "strings"
 	"syscall"
 	_ "unsafe"
 
@@ -40,7 +42,7 @@ func runWebServer() {
 
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
-		log.Fatalf("Error initializing database: %v", err)
+		log.Fatalf("Error initializing database（初始化数据库出错）: %v", err)
 	}
 
 	var server *web.Server
@@ -110,30 +112,55 @@ func runWebServer() {
 func resetSetting() {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
-		fmt.Println("Failed to initialize database:", err)
+		fmt.Println("Failed to initialize database（初始化数据库失败）:", err)
 		return
 	}
 
 	settingService := service.SettingService{}
 	err = settingService.ResetSettings()
 	if err != nil {
-		fmt.Println("Failed to reset settings:", err)
+		fmt.Println("reset setting failed（重置设置失败）:", err)
 	} else {
-		fmt.Println("Settings successfully reset.")
+		fmt.Println("reset setting success---->>重置设置成功")
 	}
 }
 
 func showSetting(show bool) {
+	// 执行 shell 命令获取 IPv4 地址
+        cmdIPv4 := exec.Command("sh", "-c", "curl -s4m8 ip.p3terx.com -k | sed -n 1p")
+        outputIPv4, err := cmdIPv4.Output()
+        if err != nil {
+        log.Fatal(err)
+    }
+
+    // 执行 shell 命令获取 IPv6 地址
+        cmdIPv6 := exec.Command("sh", "-c", "curl -s6m8 ip.p3terx.com -k | sed -n 1p")
+        outputIPv6, err := cmdIPv6.Output()
+        if err != nil {
+        log.Fatal(err)
+    }
+
+    // 去除命令输出中的换行符
+    ipv4 := strings.TrimSpace(string(outputIPv4))
+    ipv6 := strings.TrimSpace(string(outputIPv6))
+    // 定义转义字符，定义不同颜色的转义字符
+	const (
+		Reset      = "\033[0m"
+		Red        = "\033[31m"
+		Green      = "\033[32m"
+		Yellow     = "\033[33m"
+	)
+	
 	if show {
 		settingService := service.SettingService{}
 		port, err := settingService.GetPort()
 		if err != nil {
-			fmt.Println("get current port failed, error info:", err)
+			fmt.Println("get current port failed, error info（获取当前端口失败，错误信息）:", err)
 		}
 
 		webBasePath, err := settingService.GetBasePath()
 		if err != nil {
-			fmt.Println("get webBasePath failed, error info:", err)
+			fmt.Println("get webBasePath failed, error info（获取访问路径失败，错误信息）:", err)
 		}
 
 		certFile, err := settingService.GetCertFile()
@@ -148,25 +175,65 @@ func showSetting(show bool) {
 		userService := service.UserService{}
 		userModel, err := userService.GetFirstUser()
 		if err != nil {
-			fmt.Println("get current user info failed, error info:", err)
+			fmt.Println("get current user info failed, error info（获取当前用户信息失败，错误信息）:", err)
 		}
 
 		username := userModel.Username
 		userpasswd := userModel.Password
 		if username == "" || userpasswd == "" {
-			fmt.Println("current username or password is empty")
+			fmt.Println("current username or password is empty--->>当前用户名或密码为空")
 		}
-
-		fmt.Println("current panel settings as follows:")
-		if certFile == "" || keyFile == "" {
-			fmt.Println("Warning: Panel is not secure with SSL")
+		fmt.Println("")
+                fmt.Println(Yellow + "----->>>以下为面板重要信息，请自行记录保存<<<-----" + Reset)
+		fmt.Println(Green + "Current panel settings as follows (当前面板设置如下):" + Reset)
+		fmt.Println("")
+	        fmt.Println(Green + fmt.Sprintf("username（用户名）: %s", username) + Reset)
+	        fmt.Println(Green + fmt.Sprintf("password（密 码）: %s", userpasswd) + Reset)
+	        fmt.Println(Green + fmt.Sprintf("port（端口号）: %d", port) + Reset)
+		if webBasePath != "" {
+			fmt.Println(Green + fmt.Sprintf("webBasePath（访问路径）: %s", webBasePath) + Reset)
 		} else {
-			fmt.Println("Panel is secure with SSL")
+			fmt.Println("webBasePath is not set----->>未设置访问路径")
 		}
-		fmt.Println("username:", username)
-		fmt.Println("password:", userpasswd)
-		fmt.Println("port:", port)
-		fmt.Println("webBasePath:", webBasePath)
+                fmt.Println("")
+		fmt.Println("--------------------------------------------------")
+  // 根据条件打印带颜色的字符串
+        if ipv4 != "" {
+		fmt.Println("")
+		formattedIPv4 := fmt.Sprintf("%s %s%s:%d%s" + Reset,
+			Green+"面板 IPv4 访问地址------>>",
+		  	Yellow+"http://",
+			ipv4,
+			port,
+			Yellow+webBasePath + Reset)
+		fmt.Println(formattedIPv4)
+		fmt.Println("")
+	}
+
+	if ipv6 != "" {
+		fmt.Println("")
+		formattedIPv6 := fmt.Sprintf("%s %s[%s%s%s]:%d%s%s",
+	        	Green+"面板 IPv6 访问地址------>>", // 绿色的提示信息
+		        Yellow+"http://",                 // 黄色的 http:// 部分
+		        Yellow,                           // 黄色的[ 左方括号
+		        ipv6,                             // IPv6 地址
+		        Yellow,                           // 黄色的] 右方括号
+		        port,                             // 端口号
+	        	Yellow+webBasePath,               // 黄色的 Web 基础路径
+	         	Reset)                            // 重置颜色
+		fmt.Println(formattedIPv6)
+		fmt.Println("")
+	}
+	fmt.Println(Green + ">>>>>>>>注：若您安装了〔证书〕，请把IP换成您的域名用https方式登录" + Reset)
+	fmt.Println("")
+	fmt.Println("--------------------------------------------------")
+	fmt.Println("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
+	fmt.Println(fmt.Sprintf("%s请确保 %s%d%s 端口已打开放行%s",Green, Red, port, Green, Reset))	
+	fmt.Println("请自行确保此端口没有被其他程序占用")
+	fmt.Println(Green + "若要登录访问面板，请复制上面的地址到浏览器" + Reset)
+	fmt.Println("")
+	fmt.Println("--------------------------------------------------")
+	fmt.Println("")
 	}
 }
 
@@ -192,7 +259,7 @@ func updateTgbotEnableSts(status bool) {
 func updateTgbotSetting(tgBotToken string, tgBotChatid string, tgBotRuntime string) {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
-		fmt.Println("Error initializing database:", err)
+		fmt.Println("Error initializing database（初始化数据库出错）:", err)
 		return
 	}
 
@@ -201,35 +268,35 @@ func updateTgbotSetting(tgBotToken string, tgBotChatid string, tgBotRuntime stri
 	if tgBotToken != "" {
 		err := settingService.SetTgBotToken(tgBotToken)
 		if err != nil {
-			fmt.Printf("Error setting Telegram bot token: %v\n", err)
+			fmt.Printf("Error setting Telegram bot token（设置TG电报机器人令牌出错）: %v\n", err)
 			return
 		}
-		logger.Info("Successfully updated Telegram bot token.")
+		logger.Info("Successfully updated Telegram bot token----->>已成功更新TG电报机器人令牌")
 	}
 
 	if tgBotRuntime != "" {
 		err := settingService.SetTgbotRuntime(tgBotRuntime)
 		if err != nil {
-			fmt.Printf("Error setting Telegram bot runtime: %v\n", err)
+			fmt.Printf("Error setting Telegram bot runtime（设置TG电报机器人通知周期出错）: %v\n", err)
 			return
 		}
-		logger.Infof("Successfully updated Telegram bot runtime to [%s].", tgBotRuntime)
+		logger.Infof("Successfully updated Telegram bot runtime to（已成功将TG电报机器人通知周期设置为） [%s].", tgBotRuntime)
 	}
 
 	if tgBotChatid != "" {
 		err := settingService.SetTgBotChatId(tgBotChatid)
 		if err != nil {
-			fmt.Printf("Error setting Telegram bot chat ID: %v\n", err)
+			fmt.Printf("Error setting Telegram bot chat ID（设置TG电报机器人管理者聊天ID出错）: %v\n", err)
 			return
 		}
-		logger.Info("Successfully updated Telegram bot chat ID.")
+		logger.Info("Successfully updated Telegram bot chat ID----->>已成功更新TG电报机器人管理者聊天ID")
 	}
 }
 
 func updateSetting(port int, username string, password string, webBasePath string, listenIP string) {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
-		fmt.Println("Database initialization failed:", err)
+		fmt.Println("Database initialization failed（初始化数据库失败）:", err)
 		return
 	}
 
@@ -239,27 +306,27 @@ func updateSetting(port int, username string, password string, webBasePath strin
 	if port > 0 {
 		err := settingService.SetPort(port)
 		if err != nil {
-			fmt.Println("Failed to set port:", err)
+			fmt.Println("Failed to set port（设置端口失败）:", err)
 		} else {
-			fmt.Printf("Port set successfully: %v\n", port)
+			fmt.Printf("Port set successfully（端口设置成功）: %v\n", port)
 		}
 	}
 
 	if username != "" || password != "" {
 		err := userService.UpdateFirstUser(username, password)
 		if err != nil {
-			fmt.Println("Failed to update username and password:", err)
+			fmt.Println("Failed to update username and password（更新用户名和密码失败）:", err)
 		} else {
-			fmt.Println("Username and password updated successfully")
+			fmt.Println("Username and password updated successfully------>>用户名和密码更新成功")
 		}
 	}
 
 	if webBasePath != "" {
 		err := settingService.SetBasePath(webBasePath)
 		if err != nil {
-			fmt.Println("Failed to set base URI path:", err)
+			fmt.Println("Failed to set base URI path（设置访问路径失败）:", err)
 		} else {
-			fmt.Println("Base URI path set successfully")
+			fmt.Println("Base URI path set successfully------>>设置访问路径成功")
 		}
 	}
 
@@ -284,19 +351,19 @@ func updateCert(publicKey string, privateKey string) {
 		settingService := service.SettingService{}
 		err = settingService.SetCertFile(publicKey)
 		if err != nil {
-			fmt.Println("set certificate public key failed:", err)
+			fmt.Println("set certificate public key failed（设置证书公钥失败）:", err)
 		} else {
-			fmt.Println("set certificate public key success")
+			fmt.Println("set certificate public key success--------->>设置证书公钥成功")
 		}
 
 		err = settingService.SetKeyFile(privateKey)
 		if err != nil {
-			fmt.Println("set certificate private key failed:", err)
+			fmt.Println("set certificate private key failed（设置证书私钥失败）:", err)
 		} else {
-			fmt.Println("set certificate private key success")
+			fmt.Println("set certificate private key success--------->>设置证书私钥成功")
 		}
 	} else {
-		fmt.Println("both public and private key should be entered.")
+		fmt.Println("both public and private key should be entered.------>>必须同时输入证书公钥和私钥")
 	}
 }
 
@@ -338,9 +405,10 @@ func migrateDb() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Start migrating database...")
+	fmt.Println("Start migrating database...---->>开始迁移数据库...")
 	inboundService.MigrateDB()
-	fmt.Println("Migration done!")
+	fmt.Println("")
+	fmt.Println("Migration done!------------>>迁移完成！")
 }
 
 func removeSecret() {
@@ -485,7 +553,7 @@ func main() {
 			updateCert(webCertFile, webKeyFile)
 		}
 	default:
-		fmt.Println("Invalid subcommands")
+		fmt.Println("Invalid subcommands----->>无效命令")
 		fmt.Println()
 		runCmd.Usage()
 		fmt.Println()
