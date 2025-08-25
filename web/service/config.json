@@ -1,9 +1,9 @@
 {
   "log": {
-    "access": "none",
-    "dnsLog": false,
-    "error": "",
-    "loglevel": "warning",
+    "access": "./access.log",
+    "dnsLog": true,
+    "error": "./error.log",
+    "loglevel": "debug",
     "maskAddress": ""
   },
   "api": {
