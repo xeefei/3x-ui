@@ -255,3 +255,12 @@ func mapToSlice[T any](m map[string]*T) []*T {
 	}
 	return result
 }
+
+// =================================================================
+// 中文注释: 在文件末尾新增 UpdateUser 方法
+// Xray API没有直接的“更新用户”，但“添加同email用户”有覆盖效果，我们用它实现更新。
+// =================================================================
+func (a *XrayAPI) UpdateUser(protocol, tag string, user map[string]interface{}) error {
+	// 中文注释: 更新用户的操作，其gRPC请求的本质和添加用户是一样的
+	return a.AddUser(protocol, tag, user)
+}
