@@ -203,10 +203,11 @@ func (j *CheckDeviceLimitJob) checkAllClientsLimit() {
 			continue
 		}
 
-		limit, ok := inboundLimits[traffic.InboundId]
-		if !ok || limit <= 0 {
+		info, ok := inboundInfo[traffic.InboundId]
+		if !ok || info.Limit <= 0 {
 			continue
 		}
+
 
 		isBanned := ClientStatus[email]
 		activeIPCount := len(ips)
