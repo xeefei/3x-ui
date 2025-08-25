@@ -11,6 +11,8 @@ import (
 	"sort"
 	"time"
 	"sync"
+                 "crypto/rand"
+                 "encoding/hex"
 
 	"x-ui/database"
 	"x-ui/database/model"
@@ -23,7 +25,7 @@ import (
 // 中文注释: 以下是用于实现设备限制功能的核心代码
 // =================================================================
 
-// ActiveClientIPs 中文注释: 用于在内存中跟踪每个用户的活跃IP
+// ActiveClientIPs 中文注释: 用于在内存中跟踪每个用户的活跃IP (TTL机制)
 // 结构: map[用户email] -> map[IP地址] -> 最后活跃时间
 var ActiveClientIPs = make(map[string]map[string]time.Time)
 var activeClientsLock sync.RWMutex
@@ -41,6 +43,15 @@ type CheckDeviceLimitJob struct {
 	xrayApi xray.XrayAPI
 	// lastPosition 中文注释: 用于记录上次读取 access.log 的位置，避免重复读取
 	lastPosition int64
+}
+
+// RandomUUID 中文注释: 新增一个辅助函数，用于生成一个随机的 UUID
+func RandomUUID() string {
+	uuid := make([]byte, 16)
+	rand.Read(uuid)
+	uuid[6] = (uuid[6] & 0x0f) | 0x40
+	uuid[8] = (uuid[8] & 0x3f) | 0x80
+	return hex.EncodeToString(uuid[0:4]) + "-" + hex.EncodeToString(uuid[4:6]) + "-" + hex.EncodeToString(uuid[6:8]) + "-" + hex.EncodeToString(uuid[8:10]) + "-" + hex.EncodeToString(uuid[10:16])
 }
 
 // NewCheckDeviceLimitJob 中文注释: 创建一个新的任务实例
@@ -75,10 +86,12 @@ func (j *CheckDeviceLimitJob) cleanupExpiredIPs() {
 	defer activeClientsLock.Unlock()
 
 	now := time.Now()
+	// 中文注释: 活跃判断窗口(TTL): 近3分钟内出现过就算“活跃”
+	const activeTTL = 3 * time.Minute
 	for email, ips := range ActiveClientIPs {
 		for ip, lastSeen := range ips {
 			// 中文注释: 如果一个IP超过3分钟没有新的连接日志，我们就认为它已经下线
-			if now.Sub(lastSeen) > 3*time.Minute {
+			if now.Sub(lastSeen) > activeTTL {
 				delete(ActiveClientIPs[email], ip)
 			}
 		}
@@ -106,6 +119,7 @@ func (j *CheckDeviceLimitJob) parseAccessLog() {
 	file.Seek(j.lastPosition, 0)
 
 	scanner := bufio.NewScanner(file)
+
 	// 中文注释: 使用正则表达式从日志行中提取 email 和 IP
 	emailRegex := regexp.MustCompile(`email: ([^ ]+)`)
 	ipRegex := regexp.MustCompile(`from (?:tcp:|udp:)?\[?([0-9a-fA-F\.:]+)\]?:\d+ accepted`)
@@ -164,11 +178,18 @@ func (j *CheckDeviceLimitJob) checkAllClientsLimit() {
 	j.xrayApi.Init(apiPort)
 	defer j.xrayApi.Close()
 
-	inboundLimits := make(map[int]int)
-	inboundTags := make(map[int]string)
+	// 中文注释: 优化 - 在一次循环中同时获取 tag 和 protocol
+	inboundInfo := make(map[int]struct {
+		Limit    int
+		Tag      string
+		Protocol model.Protocol
+	})
 	for _, inbound := range inbounds {
-		inboundLimits[inbound.Id] = inbound.DeviceLimit
-		inboundTags[inbound.Id] = inbound.Tag
+		inboundInfo[inbound.Id] = struct {
+			Limit    int
+			Tag      string
+			Protocol model.Protocol
+		}{Limit: inbound.DeviceLimit, Tag: inbound.Tag, Protocol: inbound.Protocol}
 	}
 
 	activeClientsLock.RLock()
@@ -190,47 +211,54 @@ func (j *CheckDeviceLimitJob) checkAllClientsLimit() {
 		isBanned := ClientStatus[email]
 		activeIPCount := len(ips)
 
-		if activeIPCount > limit && !isBanned {
-			tag, tagOk := inboundTags[traffic.InboundId]
-			if tagOk {
-				logger.Infof("设备限制超限: 用户 %s. 限制: %d, 当前活跃: %d. 禁用该用户。", email, limit, activeIPCount)
-				// 中文注释: 修正 API 调用方式
-				err := j.xrayApi.RemoveUser(tag, email)
-				if err != nil {
-					logger.Warningf("通过API禁用用户 %s 失败: %v", email, err)
-				} else {
-					ClientStatus[email] = true
-				}
-			}
-		}
-
-		if activeIPCount <= limit && isBanned {
+		// 情况一: IP数量超限，且用户当前未被封禁 -> 执行封禁 (UUID 替换)
+		if activeIPCount > info.Limit && !isBanned {
 			_, client, err := j.inboundService.GetClientByEmail(email)
 			if err != nil || client == nil {
 				continue
 			}
+			logger.Infof("设备限制超限: 用户 %s. 限制: %d, 当前活跃: %d. 禁用该用户。", email, info.Limit, activeIPCount)
+			tempClient := *client
+                                                   
+                                                   // 适用于 VMess/VLESS
+			if tempClient.ID != "" {
+				tempClient.ID = RandomUUID()
+			}
 
-			tag, tagOk := inboundTags[traffic.InboundId]
-			if tagOk {
-				logger.Infof("设备数量已恢复: 用户 %s. 限制: %d, 当前活跃: %d. 重新启用该用户。", email, limit, activeIPCount)
-				
-				inbound, err := j.inboundService.GetInbound(traffic.InboundId)
-				if err != nil {
-					continue
-				}
+                                                   // 适用于 Trojan 
+			if tempClient.Password != "" {
+				tempClient.Password = RandomUUID()
+			}
+			var clientMap map[string]interface{}
+			clientJson, _ := json.Marshal(tempClient)
+			json.Unmarshal(clientJson, &clientMap)
 
-				var clientMap map[string]interface{}
-				clientJson, _ := json.Marshal(client)
-				json.Unmarshal(clientJson, &clientMap)
-				
-				// 中文注释: 修正 API 调用方式
-				err = j.xrayApi.AddUser(string(inbound.Protocol), tag, clientMap)
+			// 中文注释: 调用 UpdateUser，用临时用户信息覆盖 Xray 内存中的原始用户信息
+			err = j.xrayApi.UpdateUser(string(info.Protocol), info.Tag, clientMap)
+			if err != nil {
+				logger.Warningf("通过API限制用户 %s 失败: %v", email, err)
+			} else {
+				ClientStatus[email] = true
+			}
+		}
 
-				if err != nil {
-					logger.Warningf("通过API重新启用用户 %s 失败: %v", email, err)
-				} else {
-					delete(ClientStatus, email)
-				}
+		// 情况二: IP数量已恢复正常，但用户当前处于封禁状态 -> 执行解封 (恢复原始 UUID)
+		if activeIPCount <= info.Limit && isBanned {
+			_, client, err := j.inboundService.GetClientByEmail(email)
+			if err != nil || client == nil {
+				continue
+			}
+			logger.Infof("设备数量已恢复: 用户 %s. 限制: %d, 当前活跃: %d. 恢复用户。", email, info.Limit, activeIPCount)
+			var clientMap map[string]interface{}
+			clientJson, _ := json.Marshal(client)
+			json.Unmarshal(clientJson, &clientMap)
+
+			// 中文注释: 调用 UpdateUser，用数据库中原始的用户信息覆盖 Xray 内存中的临时用户信息
+			err = j.xrayApi.UpdateUser(string(info.Protocol), info.Tag, clientMap)
+			if err != nil {
+				logger.Warningf("通过API恢复用户 %s 失败: %v", email, err)
+			} else {
+				delete(ClientStatus, email)
 			}
 		}
 	}
