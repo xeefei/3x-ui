@@ -1267,6 +1267,7 @@ warp_cloudflare() {
 
 # --------- 【订阅转换】模块 ---------- 
 subconverter() {
+echo ""
 echo -e "${green}==============================================="
 echo -e "〔订阅转换〕一键部署"
 echo -e "1. 自动申请 SSL 证书"
@@ -1276,10 +1277,12 @@ echo -e "4. 自动配置反向代理 + SSL 证书"
 echo -e "5. 自动检测域名解析是否正确"
 echo -e "作者：〔3X-UI中文优化版〕专属定制"
 echo -e "===============================================${plain}"
+echo ""
 
 # --------- 域名输入 ----------
 read -rp "请输入订阅转换访问域名（例如: sub.xxxxx.com 请务必以sub开头）: " SUB_DOMAIN
 read -rp "请输入订阅后端 API 域名（例如: api.xxxxx.com 请务必以api开头）: " API_DOMAIN
+echo ""
 
 # --------- 检测域名格式 ----------
 domain_regex="^([a-zA-Z0-9][-a-zA-Z0-9]{0,62}\.)+[a-zA-Z]{2,}$"
@@ -1299,6 +1302,7 @@ LOCAL_IP=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
 echo -e "${yellow}正在检测域名解析情况...${plain}"
 SUB_IP=$(dig +short $SUB_DOMAIN | tail -n1)
 API_IP=$(dig +short $API_DOMAIN | tail -n1)
+echo ""
 
 if [[ -z $SUB_IP ]]; then
     echo -e "${red}错误: 无法解析订阅转换访问域名 $SUB_DOMAIN，请检查 DNS 设置！${plain}"
@@ -1335,7 +1339,7 @@ fi
 # --------- 申请 SSL 证书（standalone 占用 80 端口） ----------
 for domain in $SUB_DOMAIN $API_DOMAIN; do
     if [ ! -f ~/.acme.sh/${domain}_ecc/${domain}.cer ]; then
-        echo -e "${yellow}为域名 $domain 申请 SSL 证书...${plain}"
+        echo -e "${yellow}-------------->>>>>>>>为域名 $domain 申请 SSL 证书...${plain}"
         ~/.acme.sh/acme.sh --issue -d "$domain" --standalone --keylength ec-256
     else
         echo -e "${green}检测到域名 $domain 已存在证书，跳过申请${plain}"
@@ -1344,7 +1348,7 @@ done
 
 # --------- 安装 Docker ----------
 if ! command -v docker &>/dev/null; then
-    echo -e "${yellow}未检测到 Docker，正在安装...${plain}"
+    echo -e "${yellow}-------------->>>>>>>>未检测到 Docker，正在安装...${plain}"
     curl -fsSL https://get.docker.com | bash -s docker
     systemctl enable docker
     systemctl start docker
@@ -1354,7 +1358,7 @@ fi
 
 # --------- 安装 Nginx ----------
 if ! command -v nginx &>/dev/null; then
-    echo -e "${yellow}未检测到 Nginx，正在安装...${plain}"
+    echo -e "${yellow}-------------->>>>>>>>未检测到 Nginx，正在安装...${plain}"
     apt update && apt install -y nginx
     systemctl enable nginx
     systemctl start nginx
@@ -1376,7 +1380,7 @@ NGINX_CONF="/etc/nginx/conf.d/subconverter.conf"
 cat > $NGINX_CONF <<EOF
 server {
     listen 80;
-    server_name $SUB_DOMAIN $API_DOMAIN;
+    server_name $SUB_DOMAIN;
     return 301 https://\$host\$request_uri;
 }
 
@@ -1396,25 +1400,7 @@ server {
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-    }
-}
-
-server {
-    listen 443 ssl http2; # 优化：启用 http2
-    server_name $API_DOMAIN;
-
-    ssl_certificate /etc/nginx/ssl/${API_DOMAIN}.crt;
-    ssl_certificate_key /etc/nginx/ssl/${API_DOMAIN}.key;
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY135-SHA256:EECDH+CHACHA20:EECDH+AESGCM:EECDH+AES;
-    ssl_prefer_server_ciphers on;
-    ssl_session_cache shared:SSL:10m;
-
-    location / {
-        proxy_pass http://127.0.0.1:25500;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
 EOF
@@ -1422,54 +1408,15 @@ EOF
 # --------- 检查并重启 Nginx ----------
 nginx -t && systemctl restart nginx
 
-# ================================
-# 【修改】创建独立的后端和前端配置文件
-# ================================
-mkdir -p /opt/sub/conf
-
-# --- 1. 创建后端 subconverter 配置文件 (config.yml) ---
-cat > /opt/sub/conf/config.yml <<EOF
-# subconverter 默认配置文件
-listen: 0.0.0.0:25500
-api_access: true
-EOF
-
-# --- 2. 创建前端 subweb 配置文件 (config.js) ---
-cat > /opt/sub/conf/config.js <<EOF
-// 前端配置文件
-window.GlobalConfig = {
-  // 网站标题
-  siteName: 'SubConverter Web',
-  
-  // 【关键】后端 API 地址，使用您的公网 API 域名
-  apiUrl: 'https://${API_DOMAIN}',
-  
-  // 短域名服务地址, 可留空
-  shortUrl: '',
-  
-  // 首页菜单
-  menuItem: [
-    {
-      title: '首页',
-      link: '/'
-    },
-    {
-      title: 'GitHub',
-      link: 'https://github.com/xeefei/3x-ui',
-      target: '_blank'
-    }
-  ]
-};
-EOF
 
 # --------- 启动 Docker 容器 ----------
 docker rm -f sub >/dev/null 2>&1
-# 【修改】使用两个独立的 -v 参数，精确挂载前后端配置文件
+
 docker run -d --name sub --restart always \
-    -p 18080:80 -p 25500:25500 \
-    -v /opt/sub/conf/config.yml:/base/config.yml \
-    -v /opt/sub/conf/config.js:/usr/share/nginx/html/conf/config.js \
-    stilleshan/sub:latest
+  -p 18080:80 \
+  -e SITE_NAME=sub \
+  -e API_URL='https://$API_DOMAIN' \
+  stilleshan/sub
 
 # --------- 完成提示 ----------
 echo ""
@@ -1477,7 +1424,7 @@ echo -e "${green}【订阅转换模块】安装完成！！！${plain}"
 echo ""
 echo -e "${green}Web 界面访问地址：https://${SUB_DOMAIN}${plain}"
 echo ""
-echo -e "${green}API 拉取地址：https://${API_DOMAIN}${plain}"
+echo -e "${green}后端 API 拉取地址：https://${API_DOMAIN}${plain}"
 echo ""
 echo -e "${green}PS：即使 VPS 重启，Docker 容器会自动启动，无需手动操作${plain}"
 
