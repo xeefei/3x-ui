@@ -1379,26 +1379,42 @@ server {
     server_name $SUB_DOMAIN $API_DOMAIN;
     return 301 https://\$host\$request_uri;
 }
+
 server {
-    listen 443 ssl;
+    listen 443 ssl http2; # 优化：启用 http2
     server_name $SUB_DOMAIN;
+
     ssl_certificate /etc/nginx/ssl/${SUB_DOMAIN}.crt;
     ssl_certificate_key /etc/nginx/ssl/${SUB_DOMAIN}.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY135-SHA256:EECDH+CHACHA20:EECDH+AESGCM:EECDH+AES;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+
     location / {
         proxy_pass http://127.0.0.1:18080;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     }
 }
+
 server {
-    listen 443 ssl;
+    listen 443 ssl http2; # 优化：启用 http2
     server_name $API_DOMAIN;
+
     ssl_certificate /etc/nginx/ssl/${API_DOMAIN}.crt;
     ssl_certificate_key /etc/nginx/ssl/${API_DOMAIN}.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY135-SHA256:EECDH+CHACHA20:EECDH+AESGCM:EECDH+AES;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+
     location / {
         proxy_pass http://127.0.0.1:25500;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     }
 }
 EOF
@@ -1407,26 +1423,62 @@ EOF
 nginx -t && systemctl restart nginx
 
 # ================================
-# 创建配置目录 + 默认配置文件
+# 【修改】创建独立的后端和前端配置文件
 # ================================
 mkdir -p /opt/sub/conf
+
+# --- 1. 创建后端 subconverter 配置文件 (config.yml) ---
 cat > /opt/sub/conf/config.yml <<EOF
 # subconverter 默认配置文件
 listen: 0.0.0.0:25500
 api_access: true
 EOF
 
+# --- 2. 创建前端 subweb 配置文件 (config.js) ---
+cat > /opt/sub/conf/config.js <<EOF
+// 前端配置文件
+window.GlobalConfig = {
+  // 网站标题
+  siteName: 'SubConverter Web',
+  
+  // 【关键】后端 API 地址，使用您的公网 API 域名
+  apiUrl: 'https://${API_DOMAIN}',
+  
+  // 短域名服务地址, 可留空
+  shortUrl: '',
+  
+  // 首页菜单
+  menuItem: [
+    {
+      title: '首页',
+      link: '/'
+    },
+    {
+      title: 'GitHub',
+      link: 'https://github.com/xeefei/3x-ui',
+      target: '_blank'
+    }
+  ]
+};
+EOF
+
 # --------- 启动 Docker 容器 ----------
 docker rm -f sub >/dev/null 2>&1
+# 【修改】使用两个独立的 -v 参数，精确挂载前后端配置文件
 docker run -d --name sub --restart always \
     -p 18080:80 -p 25500:25500 \
-    -v /opt/sub/conf:/base \
+    -v /opt/sub/conf/config.yml:/base/config.yml \
+    -v /opt/sub/conf/config.js:/usr/share/nginx/html/conf/config.js \
     stilleshan/sub:latest
 
 # --------- 完成提示 ----------
+echo ""
 echo -e "${green}【订阅转换模块】安装完成！！！${plain}"
+echo ""
 echo -e "${green}Web 界面访问地址：https://${SUB_DOMAIN}${plain}"
+echo ""
 echo -e "${green}API 拉取地址：https://${API_DOMAIN}${plain}"
+echo ""
 echo -e "${green}PS：即使 VPS 重启，Docker 容器会自动启动，无需手动操作${plain}"
 
 # --------- 返回菜单 ----------
